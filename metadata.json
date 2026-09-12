@@ -1,0 +1,6 @@
+{
+  "name": "Khet Link - Direct Farmer & FPO Marketplace",
+  "description": "Modern agricultural platform connecting farmers and FPOs directly with consumers, institutional buyers, and hostel messes, featuring AI demand & price prediction, order tracking, and farmgate logistics.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
