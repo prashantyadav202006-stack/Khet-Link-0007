@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Navbar } from './components/Navbar';
 import { LandingHero } from './components/LandingHero';
 import { Marketplace } from './components/Marketplace';
@@ -12,6 +12,8 @@ import { CartDrawer } from './components/CartDrawer';
 import { NotificationsPopover } from './components/NotificationsPopover';
 import { AuthModal } from './components/AuthModal';
 import { AIAssistant } from './components/AIAssistant';
+import { subscribeToAuthState } from './firebase/authService';
+import { fetchCropsFromDb, fetchOrdersFromDb, saveCropToDb, saveOrderToDb } from './firebase/dbService';
 
 import { 
   AppView, 
@@ -84,6 +86,53 @@ export default function App() {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState<boolean>(false);
   const [authModalRole, setAuthModalRole] = useState<'farmer' | 'buyer'>('farmer');
 
+  // Sync with Firebase Auth & Cloud Firestore
+  useEffect(() => {
+    // 1. Fetch live crops from Firestore
+    fetchCropsFromDb().then((dbCrops) => {
+      if (dbCrops && dbCrops.length > 0) {
+        setCrops((prev) => {
+          const map = new Map<string, CropProduct>();
+          dbCrops.forEach((c) => map.set(c.id, c));
+          prev.forEach((c) => {
+            if (!map.has(c.id)) map.set(c.id, c);
+          });
+          return Array.from(map.values());
+        });
+      }
+    });
+
+    // 2. Fetch live orders from Firestore
+    fetchOrdersFromDb().then((dbOrders) => {
+      if (dbOrders && dbOrders.length > 0) {
+        setOrders((prev) => {
+          const map = new Map<string, Order>();
+          dbOrders.forEach((o) => map.set(o.id, o));
+          prev.forEach((o) => {
+            if (!map.has(o.id)) map.set(o.id, o);
+          });
+          return Array.from(map.values());
+        });
+      }
+    });
+
+    // 3. Listen to Firebase auth changes to restore user session
+    const unsubscribe = subscribeToAuthState((user, profile) => {
+      if (user && profile) {
+        setUserRole(profile.role);
+        if (profile.role === 'farmer') {
+          if (profile.farmerProfile) {
+            setActiveFarmer(profile.farmerProfile);
+          }
+        } else if (profile.role === 'buyer') {
+          setActiveBuyerName(profile.buyerOrgName || profile.name || 'Procurement Buyer');
+        }
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
   // -------------------------------------------------------------
   // Cart Actions
   // -------------------------------------------------------------
@@ -135,6 +184,7 @@ export default function App() {
 
   const handleCheckoutComplete = (newOrder: Order) => {
     setOrders((prev) => [newOrder, ...prev]);
+    saveOrderToDb(newOrder);
     setCartItems([]);
     setCurrentView('order-tracking');
 
@@ -183,6 +233,7 @@ export default function App() {
     };
 
     setCrops((prev) => [newCrop, ...prev]);
+    saveCropToDb(newCrop);
 
     const notif: AppNotification = {
       id: `notif-${Date.now()}`,
