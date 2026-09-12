@@ -111,3 +111,23 @@ export async function fetchOrdersFromDb(): Promise<Order[]> {
     return [];
   }
 }
+
+/**
+ * Fetch all registered farmers from Firestore
+ */
+export async function fetchFarmersFromDb(): Promise<FarmerProfile[]> {
+  try {
+    const farmersCol = collection(db, FARMERS_COLLECTION);
+    const snapshot = await getDocs(farmersCol);
+    if (snapshot.empty) return [];
+    
+    return snapshot.docs.map(d => ({
+      id: d.id,
+      ...d.data()
+    })) as FarmerProfile[];
+  } catch (error) {
+    console.warn('Could not fetch farmers from Firestore:', error);
+    return [];
+  }
+}
+

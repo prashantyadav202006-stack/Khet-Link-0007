@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence, useDragControls } from 'motion/react';
 import { 
   Bot, 
   Sparkles, 
@@ -20,7 +20,10 @@ import {
   PhoneCall,
   Mic,
   MicOff,
-  Volume2
+  Volume2,
+  Move,
+  GripVertical,
+  RotateCcw
 } from 'lucide-react';
 import { AppView } from '../types';
 import { useLanguage } from '../context/LanguageContext';
@@ -45,6 +48,7 @@ interface Message {
 export const AIAssistant: React.FC<AIAssistantProps> = ({ onNavigate, onOpenAuth }) => {
   const { t, language, currentLangOption } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
+  const [chatResetKey, setChatResetKey] = useState(0);
   const [inputMessage, setInputMessage] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [isListening, setIsListening] = useState(false);
@@ -53,6 +57,8 @@ export const AIAssistant: React.FC<AIAssistantProps> = ({ onNavigate, onOpenAuth
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const toggleButtonRef = useRef<HTMLButtonElement>(null);
+  const dragAreaRef = useRef<HTMLDivElement>(null);
+  const chatDragControls = useDragControls();
   const recognitionRef = useRef<any>(null);
   const baseTextRef = useRef<string>('');
   const typingTimerRef = useRef<any>(null);
@@ -706,79 +712,115 @@ export const AIAssistant: React.FC<AIAssistantProps> = ({ onNavigate, onOpenAuth
 
   return (
     <>
-      {/* 1. Floating AI Trigger Button (Right Down Corner with gentle floating animation) */}
+      {/* Viewport boundary area to keep KhetAI within screen bounds when dragging */}
+      <div 
+        ref={dragAreaRef} 
+        className="fixed inset-2 sm:inset-4 pointer-events-none z-40 overflow-hidden" 
+        aria-hidden="true" 
+      />
+
+      {/* 1. Floating AI Trigger Button (Movable & Draggable anywhere on screen) */}
       <motion.div 
-        className="fixed bottom-6 right-6 z-50 select-none flex flex-col items-end gap-2"
-        animate={{ y: [0, -6, 0] }}
-        transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }}
+        drag
+        dragConstraints={dragAreaRef}
+        dragMomentum={false}
+        dragElastic={0.08}
+        whileDrag={{ scale: 1.05 }}
+        className="fixed bottom-6 right-6 z-50 select-none flex flex-col items-end gap-2 touch-none cursor-grab active:cursor-grabbing"
+        title="Click to open or drag to reposition anywhere on screen"
       >
-        {/* Animated Friendly Speech Balloon */}
-        {!isOpen && (
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.8, y: 10 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ delay: 0.5, type: 'spring' }}
-            onClick={() => setIsOpen(true)}
-            className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/95 text-[#0F3829] text-[11px] font-bold shadow-lg border border-emerald-200 cursor-pointer hover:bg-white transition"
-          >
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            <span>Need Mandi rates or Mess supply help?</span>
-            <span className="text-amber-500 text-xs">✨</span>
-          </motion.div>
-        )}
-
-        <motion.button
-          id="khet-ai-assistant-toggle-btn"
-          ref={toggleButtonRef}
-          whileHover={{ scale: 1.06 }}
-          whileTap={{ scale: 0.94 }}
-          onClick={() => setIsOpen(!isOpen)}
-          className="relative flex items-center gap-2.5 px-4 py-3 rounded-full bg-gradient-to-r from-[#0F3829] via-[#1B523D] to-[#2D6A4F] text-white shadow-2xl border-2 border-[#52B788]/70 cursor-pointer group"
-          aria-label="Toggle KhetAI Assistant"
+        <motion.div
+          animate={{ y: [0, -5, 0] }}
+          transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }}
+          className="flex flex-col items-end gap-2"
         >
-          {/* Animated Glowing Ring & Ping */}
-          <span className="absolute -inset-1 rounded-full bg-[#52B788]/30 blur-sm group-hover:bg-[#52B788]/50 animate-pulse pointer-events-none" />
-          <span className="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full bg-emerald-400 border-2 border-[#0B2E21] animate-ping pointer-events-none" />
-          
-          <div className="relative w-8 h-8 rounded-full bg-[#52B788] flex items-center justify-center text-[#0B2E21] shadow-md font-bold">
-            <Bot className="w-5 h-5 text-[#072118]" />
-            <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-300 border-2 border-[#0B2E21]" />
-          </div>
+          {/* Animated Friendly Speech Balloon */}
+          {!isOpen && (
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.8, y: 10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ delay: 0.5, type: 'spring' }}
+              onClick={() => setIsOpen(true)}
+              className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/95 text-[#0F3829] text-[11px] font-bold shadow-lg border border-emerald-200 cursor-pointer hover:bg-white transition"
+            >
+              <GripVertical className="w-3.5 h-3.5 text-emerald-600/70" />
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span>Need Mandi rates or Mess supply help?</span>
+              <span className="text-amber-500 text-xs">✨</span>
+            </motion.div>
+          )}
 
-          <div className="relative text-left hidden sm:block">
-            <div className="flex items-center gap-1.5">
-              <span className="text-xs font-extrabold tracking-wide font-['Outfit'] text-white">
-                {t('ai.name', 'KhetAI Sahayak')}
-              </span>
-              <span className="text-[9px] bg-amber-400 text-[#0B2E21] px-1.5 py-0.2 rounded font-black tracking-wider uppercase shadow-xs">
-                {t('ai.badge', 'AI 2.5')}
-              </span>
+          <motion.button
+            id="khet-ai-assistant-toggle-btn"
+            ref={toggleButtonRef}
+            whileHover={{ scale: 1.06 }}
+            whileTap={{ scale: 0.94 }}
+            onClick={() => setIsOpen(!isOpen)}
+            className="relative flex items-center gap-2.5 px-4 py-3 rounded-full bg-gradient-to-r from-[#0F3829] via-[#1B523D] to-[#2D6A4F] text-white shadow-2xl border-2 border-[#52B788]/70 cursor-pointer group"
+            aria-label="Toggle KhetAI Assistant"
+          >
+            {/* Animated Glowing Ring & Ping */}
+            <span className="absolute -inset-1 rounded-full bg-[#52B788]/30 blur-sm group-hover:bg-[#52B788]/50 animate-pulse pointer-events-none" />
+            <span className="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full bg-emerald-400 border-2 border-[#0B2E21] animate-ping pointer-events-none" />
+            
+            {/* Drag Handle Gripper */}
+            <GripVertical className="w-3.5 h-3.5 text-emerald-300/70 -ml-1 group-hover:text-emerald-100 transition" />
+
+            <div className="relative w-8 h-8 rounded-full bg-[#52B788] flex items-center justify-center text-[#0B2E21] shadow-md font-bold">
+              <Bot className="w-5 h-5 text-[#072118]" />
+              <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-300 border-2 border-[#0B2E21]" />
             </div>
-            <p className="text-[10px] text-emerald-200/90 leading-none">
-              {t('ai.subtitle', 'Mandi Rates & Mess Advisor')}
-            </p>
-          </div>
 
-          {/* Sparkle Icon with Rotation / Glow */}
-          <Sparkles className="w-4 h-4 text-amber-300 animate-pulse shrink-0 ml-0.5" />
-        </motion.button>
+            <div className="relative text-left hidden sm:block">
+              <div className="flex items-center gap-1.5">
+                <span className="text-xs font-extrabold tracking-wide font-['Outfit'] text-white">
+                  {t('ai.name', 'KhetAI Sahayak')}
+                </span>
+                <span className="text-[9px] bg-amber-400 text-[#0B2E21] px-1.5 py-0.2 rounded font-black tracking-wider uppercase shadow-xs">
+                  {t('ai.badge', 'AI 2.5')}
+                </span>
+              </div>
+              <p className="text-[10px] text-emerald-200/90 leading-none">
+                {t('ai.subtitle', 'Mandi Rates & Mess Advisor')}
+              </p>
+            </div>
+
+            {/* Sparkle Icon with Rotation / Glow */}
+            <Sparkles className="w-4 h-4 text-amber-300 animate-pulse shrink-0 ml-0.5" />
+          </motion.button>
+        </motion.div>
       </motion.div>
 
-      {/* 2. Expandable AI Chat Modal Window (Right Down Corner) */}
+      {/* 2. Expandable AI Chat Modal Window (Movable Anywhere on Screen via Header Drag) */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
+            key={`khet-chat-modal-${chatResetKey}`}
             ref={chatContainerRef}
+            drag
+            dragListener={false}
+            dragControls={chatDragControls}
+            dragConstraints={dragAreaRef}
+            dragMomentum={false}
+            dragElastic={0.08}
             initial={{ opacity: 0, y: 25, scale: 0.92 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 25, scale: 0.92 }}
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
             className="fixed bottom-22 right-3 sm:right-6 z-50 w-[calc(100vw-24px)] sm:w-[420px] max-h-[620px] h-[560px] bg-white rounded-2xl sm:rounded-3xl shadow-2xl border border-neutral-200 flex flex-col overflow-hidden font-['Plus_Jakarta_Sans']"
           >
-            {/* Header */}
-            <div className="bg-gradient-to-r from-[#0B2E21] via-[#103D2D] to-[#18533B] text-white p-3.5 sm:p-4 flex items-center justify-between border-b border-[#1E523D] shrink-0">
-              <div className="flex items-center gap-2.5">
-                <div className="w-9 h-9 rounded-xl bg-[#52B788] flex items-center justify-center text-[#0B2E21] shadow-md">
+            {/* Header - Drag Handle */}
+            <div 
+              onPointerDown={(e) => chatDragControls.start(e)}
+              className="bg-gradient-to-r from-[#0B2E21] via-[#103D2D] to-[#18533B] text-white p-3 sm:p-3.5 flex items-center justify-between border-b border-[#1E523D] shrink-0 cursor-grab active:cursor-grabbing touch-none select-none"
+              title="Click and drag to move anywhere on screen"
+            >
+              <div className="flex items-center gap-2">
+                {/* Drag Handle Icon */}
+                <div className="p-1 rounded-md bg-white/10 hover:bg-white/20 text-emerald-300 flex items-center justify-center shrink-0">
+                  <Move className="w-3.5 h-3.5" />
+                </div>
+                <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-[#52B788] flex items-center justify-center text-[#0B2E21] shadow-md shrink-0">
                   <Bot className="w-5 h-5 text-[#072118]" />
                 </div>
                 <div>
@@ -787,15 +829,29 @@ export const AIAssistant: React.FC<AIAssistantProps> = ({ onNavigate, onOpenAuth
                       KhetAI Sahayak
                     </h3>
                     <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                    <span className="hidden sm:inline-flex items-center gap-0.5 text-[9px] text-emerald-200/90 bg-white/10 px-1.5 py-0.5 rounded border border-white/10 font-medium">
+                      <span>Moveable</span>
+                    </span>
                   </div>
-                  <p className="text-[10px] text-emerald-200/80">
+                  <p className="text-[10px] text-emerald-200/80 line-clamp-1">
                     Agri Advisor for Farmers, FPOs & Hostel Messes
                   </p>
                 </div>
               </div>
 
-              <div className="flex items-center gap-1">
+              {/* Header Action Buttons (Stop propagation so dragging isn't triggered) */}
+              <div className="flex items-center gap-1" onPointerDown={(e) => e.stopPropagation()}>
                 <button
+                  type="button"
+                  onClick={() => setChatResetKey((prev) => prev + 1)}
+                  className="p-1.5 rounded-lg text-emerald-200/70 hover:text-white hover:bg-white/10 transition cursor-pointer"
+                  title="Reset position to default corner"
+                  aria-label="Reset window position"
+                >
+                  <RotateCcw className="w-3.5 h-3.5" />
+                </button>
+                <button
+                  type="button"
                   onClick={() => setIsOpen(false)}
                   className="p-1.5 rounded-lg text-emerald-200 hover:text-white hover:bg-white/10 transition cursor-pointer"
                   aria-label="Close Assistant"
