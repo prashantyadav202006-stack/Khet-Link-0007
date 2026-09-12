@@ -1,0 +1,105 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: #1b2727;
+    background-color: #f7f9f7;
+    -webkit-font-smoothing: antialiased;
+    transition: font-size 0.2s ease;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Outfit', sans-serif;
+  }
+}
+
+/* User Screen & Font Scale Setting */
+html.ui-scale-compact {
+  font-size: 14px;
+}
+
+html.ui-scale-normal {
+  font-size: 16px;
+}
+
+html.ui-scale-large {
+  font-size: 18px;
+}
+
+html.ui-scale-xlarge {
+  font-size: 20px;
+}
+
+/* Scaling adaptations for buttons and inputs */
+html.ui-scale-large button,
+html.ui-scale-large input,
+html.ui-scale-large select {
+  font-size: 1.05rem;
+}
+
+html.ui-scale-xlarge button,
+html.ui-scale-xlarge input,
+html.ui-scale-xlarge select {
+  font-size: 1.15rem;
+}
+
+/* Editorial display font helper */
+.font-display {
+  font-family: 'Fraunces', serif;
+}
+
+/* Smooth continuous APMC Mandi Marquee */
+@keyframes ticker {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-mandi-ticker {
+  display: flex;
+  width: max-content;
+  animation: ticker 42s linear infinite;
+}
+
+.animate-mandi-ticker:hover {
+  animation-play-state: paused;
+}
+
+/* Subtle glowing pulse */
+@keyframes subtle-glow {
+  0%, 100% {
+    opacity: 0.8;
+    filter: drop-shadow(0 0 8px rgba(82, 183, 136, 0.4));
+  }
+  50% {
+    opacity: 1;
+    filter: drop-shadow(0 0 16px rgba(82, 183, 136, 0.8));
+  }
+}
+
+.animate-subtle-glow {
+  animation: subtle-glow 3s ease-in-out infinite;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f4f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #b2c5b2;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #6b8e4e;
+}
