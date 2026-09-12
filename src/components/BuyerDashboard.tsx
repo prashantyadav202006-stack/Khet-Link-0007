@@ -18,7 +18,6 @@ import {
   Upload
 } from 'lucide-react';
 import { Order, BulkRFQ, FarmerProfile } from '../types';
-import { MOCK_FARMERS } from '../data/mockData';
 import { BuyerLogo } from './BuyerLogo';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -28,6 +27,7 @@ interface BuyerDashboardProps {
   onUpdateBuyerLogo?: (logo: string) => void;
   orders: Order[];
   rfqs: BulkRFQ[];
+  farmers?: FarmerProfile[];
   onPostRFQ: (newRfq: Partial<BulkRFQ>) => void;
   onViewOrderDetails: (order: Order) => void;
   onViewFarmer: (farmerId: string) => void;
@@ -39,6 +39,7 @@ export const BuyerDashboard: React.FC<BuyerDashboardProps> = ({
   onUpdateBuyerLogo,
   orders,
   rfqs,
+  farmers = [],
   onPostRFQ,
   onViewOrderDetails,
   onViewFarmer
@@ -399,52 +400,64 @@ export const BuyerDashboard: React.FC<BuyerDashboardProps> = ({
             <span className="text-xs text-neutral-500">Ministry of Agriculture & NABARD Registered</span>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {MOCK_FARMERS.map((f) => (
-              <div 
-                key={f.id}
-                className="bg-white rounded-2xl border border-neutral-200 p-6 shadow-xs flex flex-col justify-between space-y-4"
-              >
-                <div className="flex gap-4 items-start">
-                  <img 
-                    src={f.avatarUrl} 
-                    alt={f.name}
-                    className="w-16 h-16 rounded-2xl object-cover border border-[#6B8E4E] shrink-0" 
-                  />
-                  <div>
-                    <h4 className="font-bold text-base text-[#1B2727]">{f.fpoName}</h4>
-                    <p className="text-xs text-neutral-500">Representative: {f.name}</p>
-                    <p className="text-xs text-neutral-500 flex items-center gap-1 mt-0.5">
-                      <MapPin className="w-3.5 h-3.5 text-[#6B8E4E]" />
-                      {f.district}, {f.state}
-                    </p>
-                    <div className="flex items-center gap-2 mt-2">
-                      <span className="text-[10px] bg-[#E8EFE8] text-[#3C5148] font-bold px-2 py-0.5 rounded">
-                        {f.memberCount} Member Farmers
-                      </span>
-                      <span className="text-[10px] bg-amber-100 text-amber-900 font-bold px-2 py-0.5 rounded">
-                        {f.rating} ★ ({f.reviewsCount})
-                      </span>
+          {farmers.length === 0 ? (
+            <div className="bg-white rounded-2xl border border-neutral-200 p-10 text-center space-y-3">
+              <div className="w-12 h-12 rounded-full bg-emerald-50 text-[#144231] mx-auto flex items-center justify-center">
+                <Building2 className="w-6 h-6" />
+              </div>
+              <h4 className="font-bold text-base text-[#1B2727]">No Registered FPOs Yet</h4>
+              <p className="text-xs text-neutral-500 max-w-sm mx-auto">
+                When Farmer Producer Organizations complete onboarding, their verified profiles, harvest crops, and member counts will appear here.
+              </p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {farmers.map((f) => (
+                <div 
+                  key={f.id}
+                  className="bg-white rounded-2xl border border-neutral-200 p-6 shadow-xs flex flex-col justify-between space-y-4"
+                >
+                  <div className="flex gap-4 items-start">
+                    <img 
+                      src={f.avatarUrl || 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&auto=format&fit=crop&q=80'} 
+                      alt={f.name}
+                      className="w-16 h-16 rounded-2xl object-cover border border-[#6B8E4E] shrink-0" 
+                    />
+                    <div>
+                      <h4 className="font-bold text-base text-[#1B2727]">{f.fpoName}</h4>
+                      <p className="text-xs text-neutral-500">Representative: {f.name}</p>
+                      <p className="text-xs text-neutral-500 flex items-center gap-1 mt-0.5">
+                        <MapPin className="w-3.5 h-3.5 text-[#6B8E4E]" />
+                        {f.district}, {f.state}
+                      </p>
+                      <div className="flex items-center gap-2 mt-2">
+                        <span className="text-[10px] bg-[#E8EFE8] text-[#3C5148] font-bold px-2 py-0.5 rounded">
+                          {f.memberCount || 1} Member Farmers
+                        </span>
+                        <span className="text-[10px] bg-amber-100 text-amber-900 font-bold px-2 py-0.5 rounded">
+                          {f.rating || 5.0} ★ ({f.reviewsCount || 1})
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <p className="text-xs text-neutral-600 line-clamp-2">
-                  {f.bio}
-                </p>
+                  <p className="text-xs text-neutral-600 line-clamp-2">
+                    {f.bio}
+                  </p>
 
-                <div className="pt-2 border-t border-neutral-100 flex items-center justify-between">
-                  <span className="text-xs text-neutral-500 font-mono">Reg: {f.fpoRegNo}</span>
-                  <button
-                    onClick={() => onViewFarmer(f.id)}
-                    className="px-3 py-1.5 bg-[#3C5148] hover:bg-[#253630] text-white text-xs font-bold rounded-lg transition cursor-pointer"
-                  >
-                    View FPO Profile
-                  </button>
+                  <div className="pt-2 border-t border-neutral-100 flex items-center justify-between">
+                    <span className="text-xs text-neutral-500 font-mono">Reg: {f.fpoRegNo || 'FPO-REG-VERIFIED'}</span>
+                    <button
+                      onClick={() => onViewFarmer(f.id)}
+                      className="px-3 py-1.5 bg-[#3C5148] hover:bg-[#253630] text-white text-xs font-bold rounded-lg transition cursor-pointer"
+                    >
+                      View FPO Profile
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       )}
 

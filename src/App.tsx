@@ -13,7 +13,7 @@ import { NotificationsPopover } from './components/NotificationsPopover';
 import { AuthModal } from './components/AuthModal';
 import { AIAssistant } from './components/AIAssistant';
 import { subscribeToAuthState } from './firebase/authService';
-import { fetchCropsFromDb, fetchOrdersFromDb, saveCropToDb, saveOrderToDb } from './firebase/dbService';
+import { fetchCropsFromDb, fetchFarmersFromDb, fetchOrdersFromDb, saveCropToDb, saveOrderToDb } from './firebase/dbService';
 
 import { 
   AppView, 
@@ -27,11 +27,7 @@ import {
 } from './types';
 
 import { 
-  MOCK_CROPS, 
-  MOCK_FARMERS, 
-  MOCK_ORDERS, 
   MOCK_RFQS, 
-  MOCK_NOTIFICATIONS, 
   MANDI_TICKER 
 } from './data/mockData';
 
@@ -58,25 +54,39 @@ export default function App() {
   const [currentView, setCurrentView] = useState<AppView>('home');
   const [userRole, setUserRole] = useState<UserRole>('guest');
 
-  // Application Data States
-  const [crops, setCrops] = useState<CropProduct[]>(MOCK_CROPS);
-  const [farmers, setFarmers] = useState<FarmerProfile[]>(MOCK_FARMERS);
-  const [orders, setOrders] = useState<Order[]>(MOCK_ORDERS);
-  const [rfqs, setRfqs] = useState<BulkRFQ[]>(MOCK_RFQS);
-  const [notifications, setNotifications] = useState<AppNotification[]>(MOCK_NOTIFICATIONS);
+  // Default fallback farmer profile template for new users
+  const DEFAULT_FARMER: FarmerProfile = {
+    id: 'farmer-registered',
+    name: 'Kisan Producer',
+    phone: '+91 98765 43210',
+    fpoName: 'Direct Farmgate Producer',
+    state: 'Punjab',
+    district: 'Ludhiana',
+    village: 'Raikot Kalan',
+    landAcres: 0,
+    cropsGrown: [],
+    certifications: ['Direct Farmgate Producer'],
+    rating: 5.0,
+    reviewsCount: 0,
+    completedOrders: 0,
+    bankAccountVerified: false,
+    soilHealthCardVerified: false,
+    bio: 'Register your farmer profile to list fresh harvests and sell directly to verified bulk buyers.'
+  };
 
-  // Cart State (Initialized with 1 sample item so user can see it right away)
-  const [cartItems, setCartItems] = useState<CartItem[]>([
-    {
-      crop: MOCK_CROPS[0],
-      quantity: 5,
-      unit: 'quintal'
-    }
-  ]);
+  // Application Data States (Clean, live database connected)
+  const [crops, setCrops] = useState<CropProduct[]>([]);
+  const [farmers, setFarmers] = useState<FarmerProfile[]>([]);
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [rfqs, setRfqs] = useState<BulkRFQ[]>(MOCK_RFQS);
+  const [notifications, setNotifications] = useState<AppNotification[]>([]);
+
+  // Cart State (Empty initially)
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
   // Active Profiles
-  const [activeFarmer, setActiveFarmer] = useState<FarmerProfile>(MOCK_FARMERS[0]);
-  const [activeBuyerName, setActiveBuyerName] = useState<string>('Aditi Organic Foods Pvt Ltd');
+  const [activeFarmer, setActiveFarmer] = useState<FarmerProfile>(DEFAULT_FARMER);
+  const [activeBuyerName, setActiveBuyerName] = useState<string>('Procurement Buyer');
 
   // Modal / Drawer Overlays
   const [selectedCropForDetail, setSelectedCropForDetail] = useState<CropProduct | null>(null);
@@ -91,32 +101,26 @@ export default function App() {
     // 1. Fetch live crops from Firestore
     fetchCropsFromDb().then((dbCrops) => {
       if (dbCrops && dbCrops.length > 0) {
-        setCrops((prev) => {
-          const map = new Map<string, CropProduct>();
-          dbCrops.forEach((c) => map.set(c.id, c));
-          prev.forEach((c) => {
-            if (!map.has(c.id)) map.set(c.id, c);
-          });
-          return Array.from(map.values());
-        });
+        setCrops(dbCrops);
       }
     });
 
-    // 2. Fetch live orders from Firestore
+    // 2. Fetch live farmers from Firestore
+    fetchFarmersFromDb().then((dbFarmers) => {
+      if (dbFarmers && dbFarmers.length > 0) {
+        setFarmers(dbFarmers);
+        setActiveFarmer(dbFarmers[0]);
+      }
+    });
+
+    // 3. Fetch live orders from Firestore
     fetchOrdersFromDb().then((dbOrders) => {
       if (dbOrders && dbOrders.length > 0) {
-        setOrders((prev) => {
-          const map = new Map<string, Order>();
-          dbOrders.forEach((o) => map.set(o.id, o));
-          prev.forEach((o) => {
-            if (!map.has(o.id)) map.set(o.id, o);
-          });
-          return Array.from(map.values());
-        });
+        setOrders(dbOrders);
       }
     });
 
-    // 3. Listen to Firebase auth changes to restore user session
+    // 4. Listen to Firebase auth changes to restore user session
     const unsubscribe = subscribeToAuthState((user, profile) => {
       if (user && profile) {
         setUserRole(profile.role);
@@ -414,6 +418,7 @@ export default function App() {
         {currentView === 'home' && (
           <div>
             <LandingHero
+              crops={crops}
               setCurrentView={setCurrentView}
               onNavigate={setCurrentView}
               openAuthModal={handleOpenAuth}
@@ -452,6 +457,7 @@ export default function App() {
             buyerName={activeBuyerName}
             orders={orders}
             rfqs={rfqs}
+            farmers={farmers}
             onPostRFQ={handlePostRFQ}
             onViewOrderDetails={() => setCurrentView('order-tracking')}
             onViewFarmer={handleOpenFarmerProfile}

@@ -411,7 +411,17 @@ export const Marketplace: React.FC<MarketplaceProps> = ({
 
         {/* Crop Listing Content */}
         <main className="lg:col-span-9 space-y-6">
-          {filteredCrops.length === 0 ? (
+          {crops.length === 0 ? (
+            <div className="bg-white rounded-3xl border border-neutral-200 p-12 text-center space-y-4">
+              <div className="w-16 h-16 rounded-full bg-emerald-50 text-[#2A7252] mx-auto flex items-center justify-center">
+                <Sprout className="w-8 h-8" />
+              </div>
+              <h3 className="text-xl font-bold text-[#1B2727]">{t('marketplace.noCropsInMarket', 'No Crop Batches Currently Listed')}</h3>
+              <p className="text-neutral-500 text-sm max-w-md mx-auto">
+                {t('marketplace.noCropsInMarketSub', 'Verified farmers and FPOs can register and publish their fresh harvest batches directly to appear live here.')}
+              </p>
+            </div>
+          ) : filteredCrops.length === 0 ? (
             <div className="bg-white rounded-3xl border border-neutral-200 p-12 text-center space-y-4">
               <div className="w-16 h-16 rounded-full bg-neutral-100 mx-auto flex items-center justify-center text-neutral-400">
                 <Search className="w-8 h-8" />

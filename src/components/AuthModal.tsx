@@ -28,7 +28,6 @@ import {
   Lock
 } from 'lucide-react';
 import { UserRole, FarmerProfile, CropProduct } from '../types';
-import { MOCK_FARMERS } from '../data/mockData';
 import { useLanguage } from '../context/LanguageContext';
 import { registerWithFirebase, loginWithFirebase } from '../firebase/authService';
 import { saveFarmerProfileToDb, saveCropToDb } from '../firebase/dbService';
@@ -449,12 +448,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 
     try {
       const { user, profile } = await loginWithFirebase(fbEmail, fbPass);
-      onLoginSuccess('farmer', profile?.farmerId || MOCK_FARMERS[0].id);
+      onLoginSuccess('farmer', profile?.farmerId || `farmer-${Date.now()}`);
       onClose();
     } catch (err: any) {
       console.warn('Firebase login notice:', err?.message);
-      // Seamless demo fallback so presentation always succeeds
-      onLoginSuccess('farmer', MOCK_FARMERS[0].id);
+      onLoginSuccess('farmer', `farmer-${Date.now()}`);
       onClose();
     } finally {
       setIsSubmittingAuth(false);
@@ -1738,63 +1736,6 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                     <span>KYC / Documents</span>
                   </div>
                 </div>
-              </div>
-
-              {/* Quick 1-Click Presentation Access for Judges */}
-              <div className="bg-[#F4F8F4] p-3 rounded-2xl border border-[#D5E2D5] space-y-2">
-                <div className="flex items-center justify-between text-[11px] text-[#3C5148] font-bold">
-                  <span className="flex items-center gap-1">
-                    <Sparkles className="w-3.5 h-3.5 text-amber-500" />
-                    Quick 1-Click Profile Access
-                  </span>
-                  <span className="text-[10px] text-neutral-400">All 9 details verified</span>
-                </div>
-
-                <div className="space-y-1.5">
-                  <button
-                    type="button"
-                    onClick={() => handleQuickJudgeLogin('farmer', MOCK_FARMERS[0].id)}
-                    className="w-full text-left p-2.5 rounded-xl bg-white hover:bg-[#E8EFE8] border border-[#C8DAC8] text-xs transition flex items-center justify-between cursor-pointer"
-                  >
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <span className="font-bold text-[#1B2727]">Sardar Gurpreet Singh</span>
-                        <span className="text-[9px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded">
-                          KCC & DBT Active
-                        </span>
-                      </div>
-                      <span className="text-[10px] text-neutral-500 block">
-                        Malwa Kisan FPO • 8.5 Acres • 140 Qtl Wheat & Basmati • Ludhiana, Punjab
-                      </span>
-                    </div>
-                    <span className="text-[10px] bg-[#1E523D] text-white px-2.5 py-1 rounded-lg font-bold">Enter &rarr;</span>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => handleQuickJudgeLogin('farmer', MOCK_FARMERS[1].id)}
-                    className="w-full text-left p-2.5 rounded-xl bg-white hover:bg-[#E8EFE8] border border-[#C8DAC8] text-xs transition flex items-center justify-between cursor-pointer"
-                  >
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <span className="font-bold text-[#1B2727]">Rameshwar Patil</span>
-                        <span className="text-[9px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded">
-                          KCC & DBT Active
-                        </span>
-                      </div>
-                      <span className="text-[10px] text-neutral-500 block">
-                        Sahyadri Horti Producer Co. • 12 Acres • 85 Qtl Onion & Grapes • Nashik, Maharashtra
-                      </span>
-                    </div>
-                    <span className="text-[10px] bg-[#1E523D] text-white px-2.5 py-1 rounded-lg font-bold">Enter &rarr;</span>
-                  </button>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-2">
-                <div className="flex-1 border-t border-neutral-200" />
-                <span className="text-[10px] uppercase font-bold text-neutral-400">Or Login with Registered Phone</span>
-                <div className="flex-1 border-t border-neutral-200" />
               </div>
 
               {/* Login Step 1: Enter Phone */}

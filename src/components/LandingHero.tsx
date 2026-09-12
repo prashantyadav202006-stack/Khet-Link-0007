@@ -27,10 +27,11 @@ import {
   Search
 } from 'lucide-react';
 import { AppView, CropProduct } from '../types';
-import { MANDI_TICKER, MOCK_CROPS, MOCK_PRICE_PREDICTIONS } from '../data/mockData';
+import { MANDI_TICKER, MOCK_PRICE_PREDICTIONS } from '../data/mockData';
 import { useLanguage } from '../context/LanguageContext';
 
 interface LandingHeroProps {
+  crops?: CropProduct[];
   setCurrentView?: (view: AppView) => void;
   onNavigate?: (view: AppView) => void;
   openAuthModal?: (role: 'farmer' | 'buyer') => void;
@@ -43,6 +44,7 @@ interface LandingHeroProps {
 }
 
 export const LandingHero: React.FC<LandingHeroProps> = ({
+  crops = [],
   setCurrentView,
   onNavigate,
   openAuthModal,
@@ -73,9 +75,10 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   
   // Filter crops for direct farmgate harvest section
+  const sourceCrops = crops || [];
   const filteredCrops = selectedCategory === 'All' 
-    ? MOCK_CROPS.slice(0, 4) 
-    : MOCK_CROPS.filter(c => c.category.toLowerCase() === selectedCategory.toLowerCase()).slice(0, 4);
+    ? sourceCrops.slice(0, 4) 
+    : sourceCrops.filter(c => c.category.toLowerCase() === selectedCategory.toLowerCase()).slice(0, 4);
 
   // Main screen cursor-reactive animations
   const heroContainerRef = useRef<HTMLDivElement>(null);
@@ -427,91 +430,114 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
             </div>
           </motion.div>
 
-          {/* 4-Column Full-Width Crop Cards Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {filteredCrops.map((crop) => (
-              <div 
-                key={crop.id}
-                className="bg-white rounded-2xl border border-neutral-200/90 shadow-xs hover:shadow-md transition overflow-hidden flex flex-col justify-between group hover:-translate-y-1 duration-200"
-              >
-                <div 
-                  onClick={() => onSelectCrop && onSelectCrop(crop)}
-                  className="relative h-44 overflow-hidden bg-neutral-100 cursor-pointer"
-                >
-                  <img 
-                    src={crop.imageUrl} 
-                    alt={crop.title}
-                    className="w-full h-full object-cover group-hover:scale-104 transition-transform duration-500"
-                  />
-                  <div className="absolute top-2 left-2 flex flex-col gap-1">
-                    {crop.isOrganic && (
-                      <span className="text-[10px] font-bold bg-emerald-700 text-white px-2.5 py-0.5 rounded-full shadow-xs">
-                        🌿 {t('common.organic', 'Organic')}
-                      </span>
-                    )}
-                    <span className="text-[10px] font-semibold bg-[#0B2E21]/90 text-white px-2 py-0.5 rounded-full backdrop-blur-xs">
-                      {crop.grade}
-                    </span>
-                  </div>
-                  <div className="absolute bottom-2 right-2 bg-black/75 text-white text-[11px] font-mono px-2 py-0.5 rounded">
-                    {t('market.moisture', 'Moisture')}: {crop.moisturePercent}%
-                  </div>
-                </div>
-
-                <div className="p-4 space-y-3 flex-1 flex flex-col justify-between">
-                  <div>
-                    <div className="text-[11px] font-bold uppercase text-emerald-700 tracking-wider">
-                      {crop.category} • {crop.locationState}
-                    </div>
-                    <h4 
-                      onClick={() => onSelectCrop && onSelectCrop(crop)}
-                      className="font-bold text-sm text-neutral-900 hover:text-emerald-800 cursor-pointer truncate mt-0.5"
-                    >
-                      {crop.title}
-                    </h4>
-                    <p className="text-xs text-neutral-500 truncate">
-                      By {crop.farmerName} ({crop.fpoName})
-                    </p>
-                  </div>
-
-                  <div className="pt-2.5 border-t border-neutral-100 flex items-center justify-between">
-                    <div>
-                      <div className="text-[10px] text-neutral-400">{t('common.farmgateRate', 'Farmgate Rate')}</div>
-                      <div className="text-base font-extrabold text-neutral-900 font-mono">
-                        ₹{crop.pricePerKg} <span className="text-xs font-normal text-neutral-500">/{t('market.perKg', 'kg')}</span>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-[10px] text-neutral-400">{t('common.bulkRate', 'Bulk Qtl Rate')}</div>
-                      <div className="text-xs font-bold text-emerald-700 font-mono">
-                        ₹{crop.pricePerQuintal}/{t('market.perQuintal', 'Qtl')}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-2 pt-1">
-                    <button
-                      onClick={() => onSelectCrop && onSelectCrop(crop)}
-                      className="py-2 px-2 text-xs font-semibold rounded-xl bg-neutral-100 hover:bg-neutral-200 text-neutral-700 transition cursor-pointer"
-                    >
-                      {t('common.assaySheet', 'Assay Sheet')}
-                    </button>
-                    <button
-                      onClick={() => onAddToCart && onAddToCart(crop, 1, 'quintal')}
-                      className="py-2 px-2 text-xs font-bold rounded-xl bg-[#144231] hover:bg-[#1C5B44] text-white transition shadow-xs cursor-pointer"
-                    >
-                      {t('common.addBatch', '+ Add Batch')}
-                    </button>
-                  </div>
-                </div>
+          {/* 4-Column Full-Width Crop Cards Grid or Clean Empty State */}
+          {filteredCrops.length === 0 ? (
+            <div className="bg-white rounded-3xl border border-neutral-200/90 p-10 text-center space-y-3.5 shadow-xs">
+              <div className="w-14 h-14 rounded-2xl bg-emerald-50 text-[#144231] mx-auto flex items-center justify-center">
+                <Sprout className="w-7 h-7" />
               </div>
-            ))}
-          </div>
+              <h3 className="text-lg font-bold text-neutral-900 font-['Outfit']">
+                {t('hero.noCropsListed', 'No Crop Lots Listed Yet')}
+              </h3>
+              <p className="text-xs text-neutral-500 max-w-md mx-auto">
+                {t('hero.noCropsSub', 'Farmers and FPOs can register and publish their fresh harvest batches directly to receive verified bulk procurement bids.')}
+              </p>
+              <div className="pt-2 flex justify-center gap-3">
+                <button
+                  onClick={() => handleAuth('farmer')}
+                  className="px-5 py-2.5 bg-[#144231] hover:bg-[#1C5B44] text-white text-xs font-bold rounded-xl shadow-xs transition cursor-pointer flex items-center gap-1.5"
+                >
+                  <Sprout className="w-4 h-4" />
+                  <span>{t('hero.listCropBtn', 'List Harvest Batch (Farmer Onboarding)')}</span>
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+              {filteredCrops.map((crop) => (
+                <div 
+                  key={crop.id}
+                  className="bg-white rounded-2xl border border-neutral-200/90 shadow-xs hover:shadow-md transition overflow-hidden flex flex-col justify-between group hover:-translate-y-1 duration-200"
+                >
+                  <div 
+                    onClick={() => onSelectCrop && onSelectCrop(crop)}
+                    className="relative h-44 overflow-hidden bg-neutral-100 cursor-pointer"
+                  >
+                    <img 
+                      src={crop.imageUrl} 
+                      alt={crop.title}
+                      className="w-full h-full object-cover group-hover:scale-104 transition-transform duration-500"
+                    />
+                    <div className="absolute top-2 left-2 flex flex-col gap-1">
+                      {crop.isOrganic && (
+                        <span className="text-[10px] font-bold bg-emerald-700 text-white px-2.5 py-0.5 rounded-full shadow-xs">
+                          🌿 {t('common.organic', 'Organic')}
+                        </span>
+                      )}
+                      <span className="text-[10px] font-semibold bg-[#0B2E21]/90 text-white px-2 py-0.5 rounded-full backdrop-blur-xs">
+                        {crop.grade}
+                      </span>
+                    </div>
+                    <div className="absolute bottom-2 right-2 bg-black/75 text-white text-[11px] font-mono px-2 py-0.5 rounded">
+                      {t('market.moisture', 'Moisture')}: {crop.moisturePercent}%
+                    </div>
+                  </div>
+
+                  <div className="p-4 space-y-3 flex-1 flex flex-col justify-between">
+                    <div>
+                      <div className="text-[11px] font-bold uppercase text-emerald-700 tracking-wider">
+                        {crop.category} • {crop.locationState}
+                      </div>
+                      <h4 
+                        onClick={() => onSelectCrop && onSelectCrop(crop)}
+                        className="font-bold text-sm text-neutral-900 hover:text-emerald-800 cursor-pointer truncate mt-0.5"
+                      >
+                        {crop.title}
+                      </h4>
+                      <p className="text-xs text-neutral-500 truncate">
+                        By {crop.farmerName} ({crop.fpoName})
+                      </p>
+                    </div>
+
+                    <div className="pt-2.5 border-t border-neutral-100 flex items-center justify-between">
+                      <div>
+                        <div className="text-[10px] text-neutral-400">{t('common.farmgateRate', 'Farmgate Rate')}</div>
+                        <div className="text-base font-extrabold text-neutral-900 font-mono">
+                          ₹{crop.pricePerKg} <span className="text-xs font-normal text-neutral-500">/{t('market.perKg', 'kg')}</span>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-[10px] text-neutral-400">{t('common.bulkRate', 'Bulk Qtl Rate')}</div>
+                        <div className="text-xs font-bold text-emerald-700 font-mono">
+                          ₹{crop.pricePerQuintal}/{t('market.perQuintal', 'Qtl')}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-2 pt-1">
+                      <button
+                        onClick={() => onSelectCrop && onSelectCrop(crop)}
+                        className="py-2 px-2 text-xs font-semibold rounded-xl bg-neutral-100 hover:bg-neutral-200 text-neutral-700 transition cursor-pointer"
+                      >
+                        {t('common.assaySheet', 'Assay Sheet')}
+                      </button>
+                      <button
+                        onClick={() => onAddToCart && onAddToCart(crop, 1, 'quintal')}
+                        className="py-2 px-2 text-xs font-bold rounded-xl bg-[#144231] hover:bg-[#1C5B44] text-white transition shadow-xs cursor-pointer"
+                      >
+                        {t('common.addBatch', '+ Add Batch')}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
 
           {/* Bottom link to view full marketplace */}
           <div className="pt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-t border-neutral-100">
             <span className="text-xs text-neutral-500 font-medium">
-              Showing {filteredCrops.length} of {MOCK_CROPS.length} direct farmgate lots
+              Showing {filteredCrops.length} of {sourceCrops.length} direct farmgate lots
             </span>
             <button
               onClick={() => navigate('marketplace')}
