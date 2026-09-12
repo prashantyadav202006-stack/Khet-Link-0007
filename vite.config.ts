@@ -5,7 +5,7 @@ import {defineConfig} from 'vite';
 
 export default defineConfig(() => {
   return {
-    base: '/Khet-Link-0007/',
+    base: './',
     plugins: [react(), tailwindcss()],
     resolve: {
       alias: {
