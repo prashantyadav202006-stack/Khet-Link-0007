@@ -1,0 +1,20 @@
+{
+  "name": "Khet Link - सीधा खेत से मंडी",
+  "short_name": "KhetLink",
+  "description": "Bharat's Direct Farmgate Mandi, AI Price Forecasts & 100% Escrow Protection",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#061F16",
+  "theme_color": "#0B2E21",
+  "categories": ["business", "shopping", "agriculture"],
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
