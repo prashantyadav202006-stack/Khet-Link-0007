@@ -15,11 +15,14 @@ import {
   Check, 
   X,
   FileCheck,
-  Building2
+  Building2,
+  Mic,
+  Loader2
 } from 'lucide-react';
 import { CropProduct, FarmerProfile, Order } from '../types';
 import { useLanguage } from '../context/LanguageContext';
 import { getCropImageUrl } from '../utils/cropImages';
+import { parseVoiceListing } from '../services/geminiService';
 
 interface FarmerDashboardProps {
   farmer: FarmerProfile;
@@ -53,8 +56,50 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
   const [newCropOrganic, setNewCropOrganic] = useState<boolean>(true);
   const [newCropMoisture, setNewCropMoisture] = useState<number>(10.5);
 
+  const [isListening, setIsListening] = useState(false);
+  const [voiceTranscript, setVoiceTranscript] = useState('');
+
   const totalQuintalsListed = farmerCrops.reduce((acc, c) => acc + c.quantityAvailableQuintals, 0);
   const totalRevenueEscrow = farmerOrders.reduce((acc, o) => acc + o.totalAmount, 0);
+
+  const handleVoiceInput = () => {
+    const SpeechRecognition = window.SpeechRecognition || (window as any).webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      alert("Speech recognition not supported in this browser. Try Chrome.");
+      return;
+    }
+    
+    const recognition = new SpeechRecognition();
+    recognition.lang = 'hi-IN'; // Default to Hindi, but works with Hinglish
+    recognition.interimResults = false;
+    
+    recognition.onstart = () => {
+      setIsListening(true);
+      setVoiceTranscript('');
+    };
+    
+    recognition.onresult = async (event: any) => {
+      const transcript = event.results[0][0].transcript;
+      setVoiceTranscript(transcript);
+      setIsListening(false);
+      
+      try {
+        const data = await parseVoiceListing(transcript);
+        if (data.title) setNewCropTitle(data.title);
+        if (data.variety) setNewCropVariety(data.variety);
+        if (data.quantity) setNewCropQtyQuintals(Number(data.quantity));
+        if (data.price) setNewCropPriceQuintal(Number(data.price));
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    
+    recognition.onerror = () => {
+      setIsListening(false);
+    };
+    
+    recognition.start();
+  };
 
   const handleCreateCrop = (e: React.FormEvent) => {
     e.preventDefault();
@@ -513,11 +558,28 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
               <X className="w-5 h-5" />
             </button>
 
-            <div>
-              <span className="text-xs font-bold uppercase text-[#6B8E4E]">{t('farmer.farmgateOnboarding', 'Farmgate Onboarding')}</span>
-              <h3 className="text-xl font-bold text-[#1B2727] font-['Outfit']">{t('farmer.listNewBatch', 'List New Harvest Batch')}</h3>
-              <p className="text-xs text-neutral-500">{t('farmer.listBatchSub', 'Instant publish to 4,500+ verified buyers with AI price discovery.')}</p>
+            <div className="flex justify-between items-start">
+              <div>
+                <span className="text-xs font-bold uppercase text-[#6B8E4E]">{t('farmer.farmgateOnboarding', 'Farmgate Onboarding')}</span>
+                <h3 className="text-xl font-bold text-[#1B2727] font-['Outfit']">{t('farmer.listNewBatch', 'List New Harvest Batch')}</h3>
+                <p className="text-xs text-neutral-500">{t('farmer.listBatchSub', 'Instant publish to 4,500+ verified buyers with AI price discovery.')}</p>
+              </div>
+              <button
+                type="button"
+                onClick={handleVoiceInput}
+                disabled={isListening}
+                className={`flex flex-col items-center justify-center p-2 rounded-xl transition cursor-pointer border ${isListening ? 'bg-red-50 border-red-200 text-red-600 animate-pulse' : 'bg-[#EBF3EB] border-[#CDE1CD] hover:bg-[#d8eed8] text-[#1B2727]'}`}
+              >
+                {isListening ? <Loader2 className="w-5 h-5 animate-spin" /> : <Mic className="w-5 h-5 text-[#6B8E4E]" />}
+                <span className="text-[9px] font-bold mt-1 tracking-wider">{isListening ? 'Listening...' : 'VOICE FILL'}</span>
+              </button>
             </div>
+
+            {voiceTranscript && !isListening && (
+              <div className="bg-neutral-50 border border-neutral-200 rounded-lg p-2 text-xs text-neutral-600 italic">
+                "{voiceTranscript}" - fields updated via AI
+              </div>
+            )}
 
             <form onSubmit={handleCreateCrop} className="space-y-4">
               <div>
@@ -628,6 +690,23 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
                   Certified Organic (NPOP / Jaivik Bharat)
                 </span>
               </label>
+
+              {newCropQtyQuintals > 0 && newCropQtyQuintals < 100 && (
+                <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 mb-4 mt-2 shadow-sm">
+                  <div className="flex items-start gap-2">
+                    <Truck className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+                    <div>
+                      <p className="text-xs font-bold text-amber-900">Transport Pooling Available!</p>
+                      <p className="text-[11px] text-amber-800 leading-tight mt-0.5">
+                        Farmer Ramesh from your district has a truck going to buyers with {100 - newCropQtyQuintals} Qtl of space left.
+                      </p>
+                    </div>
+                  </div>
+                  <button type="button" className="mt-2.5 w-full py-2 bg-amber-200 hover:bg-amber-300 text-amber-900 text-xs font-bold rounded-lg transition cursor-pointer">
+                    Join Pool & Save ₹4,500
+                  </button>
+                </div>
+              )}
 
               <button
                 type="submit"

@@ -172,3 +172,65 @@ export async function queryGeminiLive(
 
   throw lastError || new Error('Failed to query Gemini API');
 }
+
+/**
+ * Parses a raw voice transcript from a farmer into structured crop listing data
+ */
+export async function parseVoiceListing(transcript: string): Promise<{
+  title: string;
+  variety: string;
+  quantity: number;
+  price: number;
+}> {
+  const apiKey = getGeminiApiKey();
+  if (!apiKey) {
+    throw new Error('NO_API_KEY');
+  }
+
+  const systemInstruction = `You are an expert agricultural AI. Your task is to extract structured crop listing details from a farmer's voice note transcript (which may be in Hindi, Hinglish, or English).
+Return ONLY a valid JSON object with no markdown formatting or backticks. 
+The JSON must have these exact keys:
+- "title": Must be one of ["Rice", "Wheat", "Mustard", "Chana", "Onion"]. Infer the best match.
+- "variety": A short string (e.g. "Basmati", "Sharbati", "Local"). If unknown, use "Standard".
+- "quantity": A NUMBER representing Quintals. If they say words like "pachas" convert to 50. If they say "tons", multiply by 10. If not mentioned, use 50.
+- "price": A NUMBER representing price per Quintal in INR. Convert words like "panteeso" to 3500. If not mentioned, use 3000.
+
+Example input: "mere paas pachas quintal basmati chawal hai panteeso rupaye ke hisaab se"
+Example output: {"title":"Rice","variety":"Basmati","quantity":50,"price":3500}`;
+
+  const payload = {
+    systemInstruction: { parts: [{ text: systemInstruction }] },
+    contents: [{ role: 'user', parts: [{ text: transcript }] }],
+    generationConfig: {
+      temperature: 0.1,
+      maxOutputTokens: 200,
+      responseMimeType: "application/json",
+    }
+  };
+
+  for (const model of GEMINI_MODELS) {
+    try {
+      const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      if (!res.ok) continue;
+
+      const data = await res.json();
+      const textResponse = data.candidates?.[0]?.content?.parts?.[0]?.text;
+      
+      if (textResponse) {
+        // Strip out any markdown code blocks if the model accidentally included them
+        const cleaned = textResponse.replace(/```json/gi, '').replace(/```/g, '').trim();
+        return JSON.parse(cleaned);
+      }
+    } catch (err) {
+      console.warn('Voice parsing attempt failed:', err);
+    }
+  }
+  
+  throw new Error('Failed to parse voice listing');
+}
