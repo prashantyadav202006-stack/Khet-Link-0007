@@ -311,10 +311,10 @@ export const Navbar: React.FC<NavbarProps> = ({
                 type="button"
                 onClick={promptInstall}
                 className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-neutral-950 font-bold text-xs shadow-xs border border-amber-300 transition cursor-pointer"
-                title="Install Khet Link app on phone (ऐप इनस्टॉल करें)"
+                title="Install Khet Link app on your device"
               >
                 <Smartphone className="w-3.5 h-3.5" />
-                <span>ऐप इनस्टॉल</span>
+                <span>Install App</span>
               </button>
             )}
 
@@ -533,7 +533,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   className="w-full py-2.5 px-3 bg-gradient-to-r from-amber-500 to-amber-600 text-neutral-950 font-extrabold text-xs rounded-xl shadow-md flex items-center justify-center gap-2 cursor-pointer active:scale-98 transition-transform"
                 >
                   <Smartphone className="w-4 h-4" />
-                  <span>📲 खेत लिंक ऐप फोन पर इनस्टॉल करें</span>
+                  <span>📲 Install Khet Link App</span>
                 </button>
               </div>
             )}
