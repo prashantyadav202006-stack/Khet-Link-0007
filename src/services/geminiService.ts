@@ -204,17 +204,7 @@ Example output: {"title":"Rice","variety":"Basmati","quantity":50,"price":3500}`
     generationConfig: {
       temperature: 0.1,
       maxOutputTokens: 200,
-      responseMimeType: "application/json",
-      responseSchema: {
-        type: "OBJECT",
-        properties: {
-          title: { type: "STRING" },
-          variety: { type: "STRING" },
-          quantity: { type: "NUMBER" },
-          price: { type: "NUMBER" }
-        },
-        required: ["title", "variety", "quantity", "price"]
-      }
+      responseMimeType: "application/json"
     }
   };
 
