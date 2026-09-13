@@ -31,6 +31,8 @@ import { useLanguage } from '../context/LanguageContext';
 interface AIAssistantProps {
   onNavigate?: (view: AppView) => void;
   onOpenAuth?: (role: 'farmer' | 'buyer') => void;
+  isOpenControlled?: boolean;
+  onToggleControlled?: () => void;
 }
 
 interface Message {
@@ -45,9 +47,36 @@ interface Message {
   pills?: string[];
 }
 
-export const AIAssistant: React.FC<AIAssistantProps> = ({ onNavigate, onOpenAuth }) => {
+export const AIAssistant: React.FC<AIAssistantProps> = ({ 
+  onNavigate, 
+  onOpenAuth,
+  isOpenControlled,
+  onToggleControlled
+}) => {
   const { t, language, currentLangOption } = useLanguage();
-  const [isOpen, setIsOpen] = useState(false);
+  const [internalIsOpen, setInternalIsOpen] = useState(false);
+  const isOpen = isOpenControlled !== undefined ? isOpenControlled : internalIsOpen;
+
+  const setIsOpen = (val: boolean | ((prev: boolean) => boolean)) => {
+    const next = typeof val === 'function' ? val(isOpen) : val;
+    setInternalIsOpen(next);
+    if (onToggleControlled && next !== isOpen) {
+      onToggleControlled();
+    }
+  };
+
+  const handleToggle = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const handleOpen = () => {
+    setIsOpen(true);
+  };
+
+  const handleClose = () => {
+    setIsOpen(false);
+  };
+
   const [chatResetKey, setChatResetKey] = useState(0);
   const [inputMessage, setInputMessage] = useState('');
   const [isTyping, setIsTyping] = useState(false);
@@ -726,7 +755,7 @@ export const AIAssistant: React.FC<AIAssistantProps> = ({ onNavigate, onOpenAuth
         dragMomentum={false}
         dragElastic={0.08}
         whileDrag={{ scale: 1.05 }}
-        className="fixed bottom-6 right-6 z-50 select-none flex flex-col items-end gap-2 touch-none cursor-grab active:cursor-grabbing"
+        className="fixed bottom-20 right-4 sm:bottom-6 sm:right-6 z-50 select-none flex flex-col items-end gap-2 touch-none cursor-grab active:cursor-grabbing"
         title="Click to open or drag to reposition anywhere on screen"
       >
         <motion.div
@@ -740,7 +769,7 @@ export const AIAssistant: React.FC<AIAssistantProps> = ({ onNavigate, onOpenAuth
               initial={{ opacity: 0, scale: 0.8, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               transition={{ delay: 0.5, type: 'spring' }}
-              onClick={() => setIsOpen(true)}
+              onClick={handleOpen}
               className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/95 text-[#0F3829] text-[11px] font-bold shadow-lg border border-emerald-200 cursor-pointer hover:bg-white transition"
             >
               <GripVertical className="w-3.5 h-3.5 text-emerald-600/70" />
@@ -755,7 +784,7 @@ export const AIAssistant: React.FC<AIAssistantProps> = ({ onNavigate, onOpenAuth
             ref={toggleButtonRef}
             whileHover={{ scale: 1.06 }}
             whileTap={{ scale: 0.94 }}
-            onClick={() => setIsOpen(!isOpen)}
+            onClick={handleToggle}
             className="relative flex items-center gap-2.5 px-4 py-3 rounded-full bg-gradient-to-r from-[#0F3829] via-[#1B523D] to-[#2D6A4F] text-white shadow-2xl border-2 border-[#52B788]/70 cursor-pointer group"
             aria-label="Toggle KhetAI Assistant"
           >
@@ -807,7 +836,7 @@ export const AIAssistant: React.FC<AIAssistantProps> = ({ onNavigate, onOpenAuth
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 25, scale: 0.92 }}
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className="fixed bottom-22 right-3 sm:right-6 z-50 w-[calc(100vw-24px)] sm:w-[420px] max-h-[620px] h-[560px] bg-white rounded-2xl sm:rounded-3xl shadow-2xl border border-neutral-200 flex flex-col overflow-hidden font-['Plus_Jakarta_Sans']"
+            className="fixed inset-x-2 bottom-18 top-16 sm:top-auto sm:inset-x-auto sm:bottom-22 sm:right-6 sm:w-[420px] sm:h-[560px] max-h-[calc(100dvh-80px)] bg-white rounded-2xl sm:rounded-3xl shadow-2xl border border-neutral-200 flex flex-col overflow-hidden font-['Plus_Jakarta_Sans']"
           >
             {/* Header - Drag Handle */}
             <div 
@@ -852,7 +881,7 @@ export const AIAssistant: React.FC<AIAssistantProps> = ({ onNavigate, onOpenAuth
                 </button>
                 <button
                   type="button"
-                  onClick={() => setIsOpen(false)}
+                  onClick={handleClose}
                   className="p-1.5 rounded-lg text-emerald-200 hover:text-white hover:bg-white/10 transition cursor-pointer"
                   aria-label="Close Assistant"
                 >

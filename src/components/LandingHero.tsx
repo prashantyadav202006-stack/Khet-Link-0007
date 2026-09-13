@@ -227,7 +227,7 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
               </motion.div>
 
               {/* Main Headline with Staggered Entrance & Editorial Formatting */}
-              <h1 className="text-3xl sm:text-4xl lg:text-[46px] xl:text-[50px] font-extrabold tracking-tight text-white leading-[1.14] font-['Outfit']">
+              <h1 className="text-2xl sm:text-4xl lg:text-[46px] xl:text-[50px] font-extrabold tracking-tight text-white leading-[1.18] sm:leading-[1.14] font-['Outfit']">
                 <motion.span 
                   className="block text-white"
                   initial={{ opacity: 0, y: 14 }}
@@ -248,7 +248,7 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
 
               {/* Subtitle with Animated Reveal and Key Phrase Highlights */}
               <motion.p 
-                className="text-sm sm:text-[15px] lg:text-base text-emerald-100/90 max-w-3xl leading-relaxed"
+                className="text-xs sm:text-[15px] lg:text-base text-emerald-100/90 max-w-3xl leading-relaxed"
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.32 }}
@@ -258,7 +258,7 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
 
               {/* Dual Action CTAs with Micro-interactions */}
               <motion.div 
-                className="flex flex-wrap items-center gap-3 pt-1"
+                className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-2.5 sm:gap-3 pt-1"
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.42 }}
@@ -268,7 +268,7 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
                   whileTap={{ scale: 0.98 }}
                   id="hero-explore-marketplace-btn"
                   onClick={() => navigate('marketplace')}
-                  className="px-6 py-3 rounded-xl bg-gradient-to-r from-[#2D6A4F] via-[#3A8462] to-[#40916C] hover:from-[#245740] hover:to-[#357B5A] text-white font-bold text-sm shadow-lg shadow-emerald-950/50 border border-[#52B788]/60 transition flex items-center gap-2 group cursor-pointer"
+                  className="px-6 py-3 rounded-xl bg-gradient-to-r from-[#2D6A4F] via-[#3A8462] to-[#40916C] hover:from-[#245740] hover:to-[#357B5A] text-white font-bold text-sm shadow-lg shadow-emerald-950/50 border border-[#52B788]/60 transition flex items-center justify-center gap-2 group cursor-pointer"
                 >
                   <Store className="w-4 h-4 text-emerald-200" />
                   <span>{t('hero.exploreMarket', 'Explore Crop Marketplace')}</span>
@@ -280,7 +280,7 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
                   whileTap={{ scale: 0.98 }}
                   id="hero-farmer-portal-btn"
                   onClick={() => handleAuth('farmer')}
-                  className="px-5 py-3 rounded-xl bg-[#0F3526]/90 hover:bg-[#164634] text-emerald-100 font-semibold text-sm border border-[#2B6D51] transition flex items-center gap-2 cursor-pointer shadow-xs backdrop-blur-xs"
+                  className="px-5 py-3 rounded-xl bg-[#0F3526]/90 hover:bg-[#164634] text-emerald-100 font-semibold text-sm border border-[#2B6D51] transition flex items-center justify-center gap-2 cursor-pointer shadow-xs backdrop-blur-xs"
                 >
                   <Sprout className="w-4 h-4 text-[#74C69D]" />
                   <span>{t('hero.joinFarmer', 'Farmer / FPO Registration')}</span>
@@ -291,7 +291,7 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
                   whileTap={{ scale: 0.98 }}
                   id="hero-ai-preview-btn"
                   onClick={() => navigate('ai-predictions')}
-                  className="px-4 py-3 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 text-amber-200 font-bold text-xs border border-amber-400/40 transition flex items-center gap-1.5 cursor-pointer shadow-xs backdrop-blur-xs"
+                  className="px-4 py-3 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 text-amber-200 font-bold text-xs border border-amber-400/40 transition flex items-center justify-center gap-1.5 cursor-pointer shadow-xs backdrop-blur-xs"
                 >
                   <Sparkles className="w-3.5 h-3.5 text-amber-300 animate-pulse" />
                   <span>{t('hero.aiForecasts', 'AI Mandi Forecasts')}</span>

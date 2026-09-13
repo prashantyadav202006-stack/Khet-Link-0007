@@ -501,13 +501,13 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 
   return (
     <div 
-      className="fixed inset-0 z-50 bg-black/70 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 animate-fadeIn overflow-y-auto"
+      className="fixed inset-0 z-50 bg-black/70 backdrop-blur-xs flex items-end sm:items-center justify-center p-0 sm:p-4 animate-fadeIn overflow-y-auto"
       onClick={onClose}
     >
       <div 
         id="auth-modal-box"
         onClick={(e) => e.stopPropagation()}
-        className="bg-white rounded-3xl max-w-2xl w-full shadow-2xl border border-neutral-200 overflow-hidden relative my-auto max-h-[92vh] flex flex-col"
+        className="bg-white rounded-t-3xl sm:rounded-3xl max-w-2xl w-full shadow-2xl border border-neutral-200 overflow-hidden relative my-0 sm:my-auto max-h-[96dvh] sm:max-h-[92vh] flex flex-col"
       >
         {/* Modal Top Close Button */}
         <button
@@ -519,20 +519,20 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         </button>
 
         {/* Modal Top Branding Banner */}
-        <div className="bg-gradient-to-r from-[#061F15] via-[#0B2C1F] to-[#04150E] text-white p-5 pb-4 space-y-3 shrink-0 border-b border-[#1E523D]">
+        <div className="bg-gradient-to-r from-[#061F15] via-[#0B2C1F] to-[#04150E] text-white p-4 sm:p-5 pb-3 sm:pb-4 space-y-2.5 sm:space-y-3 shrink-0 border-b border-[#1E523D]">
           <div className="flex items-center justify-between pr-8">
             <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-xl bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center text-emerald-400 shrink-0">
-                <Sprout className="w-5 h-5" />
+              <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center text-emerald-400 shrink-0">
+                <Sprout className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
               <div>
-                <h2 className="text-lg font-bold font-['Outfit'] text-white flex items-center gap-1.5">
+                <h2 className="text-sm sm:text-lg font-bold font-['Outfit'] text-white flex flex-wrap items-center gap-1.5">
                   <span>खेति लिंक राष्ट्रीय किसान एवं व्यापार पोर्टल</span>
-                  <span className="text-[10px] font-medium bg-[#52B788]/20 text-[#74C69D] px-2 py-0.5 rounded-full border border-[#52B788]/40">
+                  <span className="text-[9px] sm:text-[10px] font-medium bg-[#52B788]/20 text-[#74C69D] px-2 py-0.5 rounded-full border border-[#52B788]/40">
                     ONDC एवं मंडी एस्क्रो सुरक्षित
                   </span>
                 </h2>
-                <p className="text-[11px] text-emerald-200/70">
+                <p className="text-[10px] sm:text-[11px] text-emerald-200/70">
                   सीधा खेत से मंडी खरीद-बिक्री व गुणवत्ता सत्यापन पोर्टल
                 </p>
               </div>
@@ -544,38 +544,38 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             <button
               id="tab-farmer-auth"
               onClick={() => setActiveRole('farmer')}
-              className={`py-2 text-xs font-bold rounded-lg transition flex items-center justify-center gap-2 cursor-pointer ${
+              className={`py-2 px-1 text-[11px] sm:text-xs font-bold rounded-lg transition flex items-center justify-center gap-1.5 sm:gap-2 cursor-pointer ${
                 activeRole === 'farmer'
                   ? 'bg-gradient-to-r from-[#1B523D] to-[#256B50] text-white shadow-xs border border-[#52B788]/40'
                   : 'text-emerald-200/70 hover:text-white hover:bg-[#0E3224]'
               }`}
             >
-              <Sprout className="w-4 h-4 text-emerald-300" />
-              <span>किसान / एफपीओ (फसल बेचें)</span>
+              <Sprout className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-300 shrink-0" />
+              <span className="truncate">किसान / एफपीओ (फसल बेचें)</span>
             </button>
 
             <button
               id="tab-buyer-auth"
               onClick={() => setActiveRole('buyer')}
-              className={`py-2 text-xs font-bold rounded-lg transition flex items-center justify-center gap-2 cursor-pointer ${
+              className={`py-2 px-1 text-[11px] sm:text-xs font-bold rounded-lg transition flex items-center justify-center gap-1.5 sm:gap-2 cursor-pointer ${
                 activeRole === 'buyer'
                   ? 'bg-gradient-to-r from-[#1B523D] to-[#256B50] text-white shadow-xs border border-[#52B788]/40'
                   : 'text-emerald-200/70 hover:text-white hover:bg-[#0E3224]'
               }`}
             >
-              <Building2 className="w-4 h-4 text-emerald-300" />
-              <span>हॉस्टल मेस व थोक खरीदार</span>
+              <Building2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-300 shrink-0" />
+              <span className="truncate">हॉस्टल मेस व थोक खरीदार</span>
             </button>
           </div>
 
           {/* Farmer Sub-Tabs: Register to Sell vs Returning Login */}
           {activeRole === 'farmer' && (
-            <div className="flex items-center justify-between pt-1 border-t border-[#133A2B] text-xs">
-              <div className="flex gap-2">
+            <div className="flex flex-wrap items-center justify-between gap-1.5 pt-1 border-t border-[#133A2B] text-xs">
+              <div className="flex flex-wrap gap-1.5">
                 <button
                   type="button"
                   onClick={() => setFarmerMode('register')}
-                  className={`px-3 py-1 rounded-lg font-bold transition cursor-pointer text-[11px] ${
+                  className={`px-2.5 sm:px-3 py-1 rounded-lg font-bold transition cursor-pointer text-[10px] sm:text-[11px] ${
                     farmerMode === 'register'
                       ? 'bg-amber-400 text-neutral-900 font-extrabold shadow-xs'
                       : 'text-emerald-200/80 hover:text-white hover:bg-[#0E3525]'
@@ -586,7 +586,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                 <button
                   type="button"
                   onClick={() => setFarmerMode('login')}
-                  className={`px-3 py-1 rounded-lg font-medium transition cursor-pointer text-[11px] ${
+                  className={`px-2.5 sm:px-3 py-1 rounded-lg font-medium transition cursor-pointer text-[10px] sm:text-[11px] ${
                     farmerMode === 'login'
                       ? 'bg-white/20 text-white font-bold'
                       : 'text-emerald-200/80 hover:text-white hover:bg-[#0E3525]'

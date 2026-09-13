@@ -12,6 +12,7 @@ import { CartDrawer } from './components/CartDrawer';
 import { NotificationsPopover } from './components/NotificationsPopover';
 import { AuthModal } from './components/AuthModal';
 import { AIAssistant } from './components/AIAssistant';
+import { MobileBottomNav } from './components/MobileBottomNav';
 import { subscribeToAuthState } from './firebase/authService';
 import { fetchCropsFromDb, fetchFarmersFromDb, fetchOrdersFromDb, saveCropToDb, saveOrderToDb } from './firebase/dbService';
 
@@ -95,6 +96,7 @@ export default function App() {
   const [isNotificationsOpen, setIsNotificationsOpen] = useState<boolean>(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState<boolean>(false);
   const [authModalRole, setAuthModalRole] = useState<'farmer' | 'buyer'>('farmer');
+  const [isAIAssistantOpen, setIsAIAssistantOpen] = useState<boolean>(false);
 
   // Sync with Firebase Auth & Cloud Firestore
   useEffect(() => {
@@ -414,7 +416,7 @@ export default function App() {
       />
 
       {/* 2. Main Routed View Area */}
-      <main className="flex-1">
+      <main className="flex-1 pb-20 sm:pb-0">
         {currentView === 'home' && (
           <div>
             <LandingHero
@@ -714,10 +716,23 @@ export default function App() {
         onLoginSuccess={handleLoginSuccess}
       />
 
-      {/* 5. AI Assistant Floating Widget (Bottom-Left Corner) */}
+      {/* 5. Mobile Native Bottom Navigation Bar */}
+      <MobileBottomNav
+        currentView={currentView}
+        onNavigate={setCurrentView}
+        cartCount={cartItems.length}
+        onOpenCart={() => setIsCartOpen(true)}
+        onToggleAIAssistant={() => setIsAIAssistantOpen((prev) => !prev)}
+        userRole={userRole}
+        onOpenAuth={handleOpenAuth}
+      />
+
+      {/* 6. AI Assistant Floating Widget */}
       <AIAssistant 
         onNavigate={setCurrentView}
         onOpenAuth={handleOpenAuth}
+        isOpenControlled={isAIAssistantOpen}
+        onToggleControlled={() => setIsAIAssistantOpen((prev) => !prev)}
       />
 
     </div>
