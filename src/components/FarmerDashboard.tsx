@@ -656,7 +656,10 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
                   <select
                     required
                     value={newCropQtyQuintals}
-                    onChange={(e) => setNewCropQtyQuintals(parseInt(e.target.value) || 50)}
+                    onChange={(e) => {
+                      setNewCropQtyQuintals(parseInt(e.target.value) || 50);
+                      setHasJoinedPool(false);
+                    }}
                     className="w-full text-xs border border-neutral-300 rounded-xl p-2.5 font-mono font-bold cursor-pointer focus:outline-none focus:border-[#6B8E4E]"
                   >
                     <option value="10">10 Quintals</option>
@@ -725,8 +728,8 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
                       </p>
                       <p className={`text-[11px] leading-tight mt-0.5 ${hasJoinedPool ? 'text-emerald-800' : 'text-amber-800'}`}>
                         {hasJoinedPool 
-                          ? 'You have successfully reserved space in the pooled truck. Freight savings: ₹4,500.'
-                          : `Farmer Ramesh from your district has a truck going to buyers with ${100 - newCropQtyQuintals} Qtl of space left.`}
+                          ? `You reserved ${newCropQtyQuintals} Qtl. The truck is now full (0 Qtl space left). Freight savings: ₹4,500.`
+                          : `Farmer Ramesh from your district has a truck going to buyers with exactly ${newCropQtyQuintals} Qtl of space left.`}
                       </p>
                     </div>
                   </div>
