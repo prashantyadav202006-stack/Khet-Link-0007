@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import { CropProduct } from '../types';
 import { useLanguage } from '../context/LanguageContext';
+import { getCropImageUrl } from '../utils/cropImages';
 
 interface CropCardProps {
   crop: CropProduct;
@@ -37,7 +38,7 @@ export const CropCard: React.FC<CropCardProps> = ({
       {/* Top Image Banner */}
       <div className="relative h-48 overflow-hidden bg-slate-100 cursor-pointer" onClick={() => onSelect(crop)}>
         <img 
-          src={crop.imageUrl} 
+          src={getCropImageUrl(crop.title, crop.variety, crop.category)} 
           alt={crop.title}
           className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-300"
           loading="lazy"
@@ -45,20 +46,6 @@ export const CropCard: React.FC<CropCardProps> = ({
         
         {/* Subtle Dark Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-black/20 pointer-events-none" />
-
-        {/* Top Badges & Official Stamp */}
-        <div className="absolute top-2.5 left-2.5 flex flex-col gap-1.5 z-10">
-          <span className="text-[10px] font-mono font-bold bg-slate-900/95 text-amber-300 px-2 py-0.5 rounded-sm border border-slate-700 shadow-xs">
-            {lotIdentifier}
-          </span>
-          {crop.isOrganic && (
-            <span className="text-[9px] font-mono font-bold bg-[#138808] text-white px-2 py-0.5 rounded-sm shadow-xs flex items-center gap-1 w-max">
-              <span>🌿</span> {t('common.organic', 'NPOP Organic')}
-            </span>
-          )}
-        </div>
-
-
 
 
         {/* Bottom Details on Image */}

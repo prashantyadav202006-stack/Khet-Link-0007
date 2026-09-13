@@ -30,6 +30,7 @@ import { AppView, CropProduct, Order } from '../types';
 import { MANDI_TICKER, MOCK_PRICE_PREDICTIONS } from '../data/mockData';
 import { useLanguage } from '../context/LanguageContext';
 import { calculateSettledTradeValue, formatINRValue, countSettledOrders } from '../utils/tradeCalculations';
+import { getCropImageUrl } from '../utils/cropImages';
 
 interface LandingHeroProps {
   crops?: CropProduct[];
@@ -138,11 +139,11 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
   };
 
   return (
-    <div className="space-y-7 pb-14 font-['Plus_Jakarta_Sans']">
+    <div className="space-y-7 pb-14 font-['Plus_Jakarta_Sans'] w-full">
       
-      {/* 1. Live Farmgate Network Activity Stream with Continuous Marquee Animation */}
-      <div className="bg-[#0B192C] border-b border-[#1E3A5F] text-slate-200 overflow-hidden py-2 select-none shadow-xs">
-        <div className="max-w-7xl mx-auto px-4 flex items-center gap-3 text-xs">
+      {/* 1. Live Farmgate Network Activity Stream */}
+      <div className="bg-[#0B192C] border-b border-[#1E3A5F] text-slate-200 overflow-hidden py-2 select-none shadow-xs w-full">
+        <div className="w-full px-4 flex items-center gap-3 text-xs">
           <div className="flex items-center gap-1.5 shrink-0 bg-[#E65A00] text-white px-2.5 py-0.5 rounded-sm font-mono font-bold tracking-wide shadow-xs text-[11px]">
             <span className="w-1.5 h-1.5 rounded-full bg-white animate-ping" />
             <span className="uppercase tracking-wider">{t('hero.mandiFeed', 'MANDI FEED')}</span>
@@ -176,9 +177,9 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
       </div>
 
       {/* 2. Hero Section: Architectural Institutional Theme Inspired by LandSync */}
-      <section className="relative pt-2 sm:pt-4 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      <section className="relative pt-2 sm:pt-4 w-full">
         <div 
-          className="relative rounded-lg bg-gradient-to-b from-[#0B2E21] via-[#09241A] to-[#061811] text-white border border-[#1E523D] shadow-md p-6 sm:p-8 lg:p-10 overflow-hidden"
+          className="relative bg-gradient-to-b from-[#1c5c45] via-[#144231] to-[#0f3124] text-white border-y border-[#1E523D] shadow-md p-8 sm:p-12 lg:p-16 overflow-hidden w-full flex flex-col items-center justify-center text-center"
         >
           {/* Subtle Institutional Grid Background Pattern */}
           <div 
@@ -189,19 +190,19 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
             }}
           />
 
-          <div className="max-w-4xl space-y-5 relative z-10">
+          <div className="max-w-4xl space-y-6 relative z-10 flex flex-col items-center">
             
-            {/* National Mission Eyebrow with Saffron Accent Bar */}
+            {/* National Mission Eyebrow */}
             <div className="flex items-center gap-2.5">
               <span className="w-8 h-[2.5px] bg-[#FF9933] rounded-xs" />
               <span className="text-[11px] sm:text-xs font-mono font-bold tracking-widest text-[#FF9933] uppercase">
-                {t('hero.nationalGrid', 'NATIONAL DIRECT FARMGATE PROCUREMENT & MANDI GRID')}
+                {t('hero.nationalGrid', 'DIRECT FARMGATE PROCUREMENT')}
               </span>
               <span className="hidden sm:inline-block w-2 h-2 rounded-full bg-emerald-400 animate-ping ml-1" />
             </div>
 
             {/* Authoritative National Headline */}
-            <h1 className="text-2xl sm:text-4xl lg:text-[44px] font-extrabold tracking-tight text-white leading-[1.2] font-['Outfit']">
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.2] font-['Outfit']">
               <span>{t('hero.titleLine1', 'Direct From Bharat’s Soil:')}</span>{' '}
               <span className="text-[#52B788] block sm:inline">
                 {t('hero.titleHighlight', 'Zero Middlemen. Fair Mandi Rates.')}
@@ -209,12 +210,12 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
             </h1>
 
             {/* Statutory & Operational Subtitle */}
-            <p className="text-xs sm:text-[15px] lg:text-base text-emerald-100/85 max-w-3xl leading-relaxed font-normal">
-              {t('hero.subtitle', 'Empowering smallholder farmers & FPOs to connect directly with bulk food processors, retailers, and conscious consumers with AI-driven price predictions, digitized quality assaying, and 100% escrow bank protection.')}
+            <p className="text-sm sm:text-lg lg:text-xl text-emerald-100/85 max-w-3xl leading-relaxed font-normal">
+              {t('hero.subtitle', 'Connect directly with bulk food processors for fair market rates with zero dalali.')}
             </p>
 
             {/* Structured Institutional Action Buttons */}
-            <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3 pt-2">
+            <div className="flex flex-col sm:flex-row flex-wrap justify-center items-center gap-4 pt-4">
               <button
                 id="hero-explore-marketplace-btn"
                 onClick={() => navigate('marketplace')}
@@ -259,160 +260,12 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
                 <span className="font-mono text-[11px] sm:text-xs text-slate-200">{t('hero.statEscrowSub', 'Instant T+0 Aadhaar DBT')}</span>
               </div>
             </div>
-
           </div>
-        </div>
-
-        {/* 3. LandSync-Inspired 4-Column "Mandi Terminal" Stats Bar */}
-        <div className="bg-white border border-slate-200 rounded-md shadow-xs overflow-hidden mt-3.5">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
-            
-            {/* Box 1: Prototype Trade Value (Dynamic from settled orders) */}
-            <div className="p-5 sm:p-6 border-b sm:border-b-0 sm:border-r border-slate-200 flex flex-col justify-between hover:bg-slate-50/70 transition-colors">
-              <div className="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-500 flex items-center justify-between">
-                <span>{t('hero.terminalStat1Title', 'PROTOTYPE TRADE VALUE')}</span>
-                <span className={`w-2 h-2 rounded-full ${settledCount > 0 ? 'bg-emerald-500' : 'bg-slate-300'}`} />
-              </div>
-              <div className="my-2.5 text-3xl font-extrabold text-[#0B192C] font-mono flex items-baseline gap-1">
-                <span className="text-[#E65A00]">₹</span>{formattedValue.display}{formattedValue.unit && <>{' '}<span className="text-sm font-semibold text-slate-600">{formattedValue.unit}</span></>}
-              </div>
-              <div className="text-xs text-slate-600 leading-snug">
-                {settledCount > 0
-                  ? t('hero.terminalStat1Sub', `Calculated from ${settledCount} completed demo transaction${settledCount !== 1 ? 's' : ''}.`)
-                  : t('hero.terminalStat1Empty', 'No completed demo transactions yet.')
-                }
-              </div>
-            </div>
-
-            {/* Box 2: Assayed Produce Batches (Dynamic from listed crops) */}
-            <div className="p-5 sm:p-6 border-b sm:border-b-0 lg:border-r border-slate-200 flex flex-col justify-between hover:bg-slate-50/70 transition-colors">
-              <div className="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-500 flex items-center justify-between">
-                <span>{t('hero.terminalStat2Title', 'ASSAYED HARVEST LOTS')}</span>
-                <span className="text-[10px] font-mono text-emerald-700 bg-emerald-100 px-1 rounded font-bold">NABL</span>
-              </div>
-              <div className="my-2.5 text-3xl font-extrabold text-[#0B192C] font-mono flex items-baseline gap-1">
-                {formattedHarvestQtl}<span className="text-[#E65A00]">{totalHarvestQtl > 0 ? '+' : ''}</span> <span className="text-sm font-semibold text-slate-600">Qtl</span>
-              </div>
-              <div className="text-xs text-slate-600 leading-snug">
-                {totalHarvestQtl > 0
-                  ? t('hero.terminalStat2Sub', `From ${crops.length} listed produce lots on the marketplace.`)
-                  : t('hero.terminalStat2Empty', 'No harvest lots listed yet.')
-                }
-              </div>
-            </div>
-
-            {/* Box 3: 0% Dalali */}
-            <div className="p-5 sm:p-6 border-b sm:border-b-0 sm:border-r border-slate-200 flex flex-col justify-between hover:bg-slate-50/70 transition-colors">
-              <div className="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-500 flex items-center justify-between">
-                <span>{t('hero.terminalStat3Title', 'MIDDLEMAN DALALI CUT')}</span>
-                <span className="text-[10px] font-mono text-blue-700 bg-blue-100 px-1 rounded font-bold">SEC 43</span>
-              </div>
-              <div className="my-2.5 text-3xl font-extrabold text-[#0B192C] font-mono flex items-baseline gap-1">
-                0.0<span className="text-[#E65A00]">%</span>
-              </div>
-              <div className="text-xs text-slate-600 leading-snug">
-                {t('hero.terminalStat3Sub', 'Section 43 APMC Direct Procurement exemption compliant.')}
-              </div>
-            </div>
-
-            {/* Box 4: Escrow Release */}
-            <div className="p-5 sm:p-6 flex flex-col justify-between hover:bg-slate-50/70 transition-colors">
-              <div className="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-500 flex items-center justify-between">
-                <span>{t('hero.terminalStat4Title', 'ESCROW SETTLEMENT')}</span>
-                <span className="text-[10px] font-mono text-amber-800 bg-amber-100 px-1 rounded font-bold">T+0</span>
-              </div>
-              <div className="my-2.5 text-3xl font-extrabold text-[#0B192C] font-mono flex items-baseline gap-1">
-                {t('hero.terminalStat4Val', 'T+0 Release')}
-              </div>
-              <div className="text-xs text-slate-600 leading-snug">
-                {t('hero.terminalStat4Sub', 'Funds held in RBI-monitored escrow, paid upon weighbridge receipt.')}
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* 4. Connected 5-Step Process Pipeline (LandSync Sequential Architecture) */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-2">
-        <div className="bg-white border border-slate-200 rounded-md p-6 sm:p-8 shadow-xs">
-          
-          {/* Pipeline Header */}
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between pb-6 border-b border-slate-200 gap-3">
-            <div>
-              <div className="flex items-center gap-2 mb-1">
-                <span className="w-6 h-[2px] bg-[#E65A00]" />
-                <span className="text-xs font-mono font-bold uppercase tracking-widest text-[#E65A00]">
-                  {t('hero.lifecycleEyebrow', 'OPERATIONAL TRADE LIFECYCLE')}
-                </span>
-              </div>
-              <h2 className="text-xl sm:text-2xl font-bold text-[#0B192C] font-['Outfit']">
-                {t('hero.lifecycleTitle', 'End-to-End Assayed Mandi Settlement')}
-              </h2>
-            </div>
-            <p className="text-xs text-slate-500 max-w-md">
-              {t('hero.lifecycleSub', 'From farmgate harvest registration to direct Aadhaar bank credit with zero middleman dalali or hidden market deductions.')}
-            </p>
-          </div>
-
-          {/* 5 Connected Step Nodes */}
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-6 pt-6 relative">
-            {[
-              {
-                step: '01',
-                title: t('hero.step1Title', 'Farmgate Listing'),
-                sub: t('hero.stage1Desc', 'Kisan / FPO uploads harvest batch with moisture photo and GPS village tag.'),
-                badge: `${t('hero.stage', 'Stage')} 1`
-              },
-              {
-                step: '02',
-                title: t('hero.step2Title', 'Digital Assaying'),
-                sub: t('hero.stage2Desc', 'NABL accredited digital assay test verifies grain moisture, size & Agmark grade.'),
-                badge: `${t('hero.stage', 'Stage')} 2`
-              },
-              {
-                step: '03',
-                title: t('hero.step3Title', 'Escrow Lock'),
-                sub: t('hero.stage3Desc', 'Institutional mess or bulk buyer deposits 100% funds into RBI escrow.'),
-                badge: `${t('hero.stage', 'Stage')} 3`
-              },
-              {
-                step: '04',
-                title: t('hero.step4Title', 'Weighbridge Pass'),
-                sub: t('hero.stage4Desc', 'Automated electronic weighbridge slip generates verified e-Way dispatch bill.'),
-                badge: `${t('hero.stage', 'Stage')} 4`
-              },
-              {
-                step: '05',
-                title: t('hero.step5Title', 'T+0 DBT Payout'),
-                sub: t('hero.stage5Desc', 'Instant digital bank release directly to farmer Aadhaar account upon gate delivery.'),
-                badge: `${t('hero.stage', 'Stage')} 5`
-              }
-            ].map((node, i) => (
-              <div key={i} className="flex flex-col relative group">
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="w-8 h-8 rounded-sm bg-[#0B2E21] text-[#52B788] font-mono font-bold text-xs flex items-center justify-center shadow-xs border border-[#1E523D]">
-                    {node.step}
-                  </span>
-                  <span className="text-[10px] font-mono font-bold uppercase text-slate-400">
-                    {node.badge}
-                  </span>
-                </div>
-                <h3 className="text-sm font-bold text-[#0B192C] font-['Outfit'] mb-1">
-                  {node.title}
-                </h3>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  {node.sub}
-                </p>
-              </div>
-            ))}
-          </div>
-
         </div>
       </section>
 
       {/* 4. Fresh Produce & Direct Farmgate Harvest Lots */}
-      <section id="middle-down-section" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-2">
+      <section id="middle-down-section" className="w-full px-4 sm:px-6 lg:px-8 pt-8">
         <div className="space-y-5">
           
           {/* Section Header */}
@@ -494,29 +347,18 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
                     className="relative h-44 overflow-hidden bg-neutral-100 cursor-pointer"
                   >
                     <img 
-                      src={crop.imageUrl} 
+                      src={getCropImageUrl(crop.title, crop.variety, crop.category)} 
                       alt={crop.title}
                       className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-300"
                     />
-                    <div className="absolute top-2 left-2 flex flex-col gap-1">
-                      {crop.isOrganic && (
+                    {crop.isOrganic && (
+                      <div className="absolute top-2 left-2">
                         <span className="text-[10px] font-bold bg-[#138808] text-white px-2 py-0.5 rounded-sm shadow-xs font-mono">
                           🌿 {t('common.organic', 'Organic')}
                         </span>
-                      )}
-                      <span className="text-[10px] font-mono font-bold bg-[#0B2E21]/95 text-emerald-200 px-2 py-0.5 rounded-sm border border-emerald-500/30">
-                        {crop.grade}
-                      </span>
-                    </div>
-                    
-                    {/* Official Lot Monospace Badge */}
-                    <div className="absolute top-2 right-2 bg-slate-900/90 text-amber-300 text-[10px] font-mono font-bold px-2 py-0.5 rounded-sm border border-slate-700 shadow-xs">
-                      #{crop.id.toUpperCase().slice(0, 10)}
-                    </div>
+                      </div>
+                    )}
 
-                    <div className="absolute bottom-2 right-2 bg-black/80 text-white text-[10px] font-mono px-2 py-0.5 rounded-sm">
-                      {t('market.moisture', 'Moisture')}: {crop.moisturePercent}%
-                    </div>
                   </div>
 
                   <div className="p-4 space-y-3 flex-1 flex flex-col justify-between">
@@ -588,7 +430,7 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
       </section>
 
       {/* 5. Stakeholder Dual Section: For Farmers & For Bulk Buyers */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
+      <section className="w-full px-4 sm:px-6 lg:px-8 pt-10">
         
         {/* Section Header with Live Rate Indicator */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-6 gap-2">

@@ -26,16 +26,8 @@ const AIPredictions = lazy(() => import('./components/AIPredictions').then(m => 
 const OrderManagement = lazy(() => import('./components/OrderManagement').then(m => ({ default: m.OrderManagement })));
 const AIAssistant = lazy(() => import('./components/AIAssistant').then(m => ({ default: m.AIAssistant })));
 
-import { 
-  AppView, 
-  UserRole, 
-  CropProduct, 
-  Order, 
-  BulkRFQ, 
-  CartItem, 
-  AppNotification, 
-  FarmerProfile 
-} from './types';
+import { CropProduct, FarmerProfile, CartItem, Order, BulkRFQ, AppNotification, UserRole, AppView } from './types';
+import { getCropImageUrl } from './utils/cropImages';
 
 import { 
   MOCK_RFQS, 
@@ -266,7 +258,7 @@ export default function App() {
       locationDistrict: activeFarmer.district,
       minOrderKg: 50,
       harvestDate: 'Current Season 2026',
-      imageUrl: newCropData.imageUrl || 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=600&auto=format&fit=crop&q=80',
+      imageUrl: newCropData.imageUrl || getCropImageUrl(newCropData.title, newCropData.variety, newCropData.category),
       description: newCropData.description || 'Assayed farmgate produce ready for dispatch.',
       shelfLifeDays: 365,
       packagingType: '50kg Jute Bags',

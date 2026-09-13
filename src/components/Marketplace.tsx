@@ -501,7 +501,7 @@ export const Marketplace: React.FC<MarketplaceProps> = ({
                     <div>
                       <div className="flex items-center gap-2">
                         <span className="text-[10px] font-bold uppercase text-[#6B8E4E]">
-                          {crop.category} • {crop.grade}
+                          {crop.category}
                         </span>
                         {crop.isOrganic && (
                           <span className="text-[10px] font-bold bg-[#3C5148] text-[#B2C5B2] px-2 py-0.2 rounded-full">

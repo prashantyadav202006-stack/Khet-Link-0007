@@ -29,6 +29,7 @@ import {
 } from 'lucide-react';
 import { UserRole, FarmerProfile, CropProduct } from '../types';
 import { useLanguage } from '../context/LanguageContext';
+import { getCropImageUrl } from '../utils/cropImages';
 import { registerWithFirebase, loginWithFirebase } from '../firebase/authService';
 import { saveFarmerProfileToDb, saveCropToDb } from '../firebase/dbService';
 
@@ -382,7 +383,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
       locationDistrict: newFarmer.district,
       minOrderKg: 50,
       harvestDate: 'Current Season 2026',
-      imageUrl: 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=600&auto=format&fit=crop&q=80',
+      imageUrl: getCropImageUrl(sellCropTitle, sellCropVariety, sellCropCategory),
       description: `Freshly harvested ${sellCropVariety} from ${newFarmer.village}, ${newFarmer.district}. Tested at ${sellMoisturePercent || 11}% moisture, packaged in ${sellPackaging}.`,
       shelfLifeDays: 365,
       packagingType: sellPackaging,

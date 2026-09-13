@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import { CropProduct, FarmerProfile, Order } from '../types';
 import { useLanguage } from '../context/LanguageContext';
+import { getCropImageUrl } from '../utils/cropImages';
 
 interface FarmerDashboardProps {
   farmer: FarmerProfile;
@@ -43,7 +44,7 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
   const [poolingActive, setPoolingActive] = useState(true);
 
   // New crop form state
-  const [newCropTitle, setNewCropTitle] = useState('');
+  const [newCropTitle, setNewCropTitle] = useState('Rice');
   const [newCropCategory, setNewCropCategory] = useState<CropProduct['category']>('Grains');
   const [newCropVariety, setNewCropVariety] = useState('');
   const [newCropPriceQuintal, setNewCropPriceQuintal] = useState<number>(3200);
@@ -75,7 +76,7 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
       locationDistrict: farmer.district,
       minOrderKg: 25,
       harvestDate: 'Current Season 2026',
-      imageUrl: 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=600&auto=format&fit=crop&q=80',
+      imageUrl: getCropImageUrl(newCropTitle, newCropVariety, newCropCategory),
       description: `Freshly harvested ${newCropVariety} from ${farmer.village}, certified and moisture tested.`,
       shelfLifeDays: 360,
       packagingType: '50kg Hermetic Bags',
@@ -246,7 +247,7 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
                   />
                   <div>
                     <span className="text-[10px] font-bold uppercase text-[#6B8E4E]">
-                      {crop.category} • {crop.grade}
+                      {crop.category}
                     </span>
                     <h4 className="font-bold text-sm text-[#1B2727] line-clamp-1">{crop.title}</h4>
                     <p className="text-xs text-neutral-500 font-mono mt-0.5">
@@ -521,14 +522,18 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
             <form onSubmit={handleCreateCrop} className="space-y-4">
               <div>
                 <label className="text-xs font-bold text-neutral-700 block mb-1">{t('farmer.cropTitleLabel', 'Crop Name & Batch Title')}</label>
-                <input
-                  type="text"
+                <select
                   required
-                  placeholder="e.g. Sharbati Golden Wheat (Unpolished)"
                   value={newCropTitle}
                   onChange={(e) => setNewCropTitle(e.target.value)}
-                  className="w-full text-xs border border-neutral-300 rounded-xl p-2.5 focus:outline-none focus:border-[#6B8E4E]"
-                />
+                  className="w-full text-xs border border-neutral-300 rounded-xl p-2.5 focus:outline-none focus:border-[#6B8E4E] cursor-pointer"
+                >
+                  <option value="Rice">Rice / Basmati</option>
+                  <option value="Wheat">Wheat / Sharbati</option>
+                  <option value="Mustard">Mustard / Sarson</option>
+                  <option value="Chana">Chana / Chickpea</option>
+                  <option value="Onion">Onion / Pyaz</option>
+                </select>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
