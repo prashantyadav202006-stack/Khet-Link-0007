@@ -630,26 +630,45 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label className="text-xs font-bold text-neutral-700 block mb-1">{t('farmer.priceQuintalLabel', 'Price / Quintal (₹)')}</label>
-                  <input
-                    type="number"
+                  <select
                     required
-                    min="500"
                     value={newCropPriceQuintal}
-                    onChange={(e) => setNewCropPriceQuintal(parseInt(e.target.value) || 0)}
-                    className="w-full text-xs border border-neutral-300 rounded-xl p-2.5 font-mono font-bold"
-                  />
+                    onChange={(e) => setNewCropPriceQuintal(parseInt(e.target.value) || 3000)}
+                    className="w-full text-xs border border-neutral-300 rounded-xl p-2.5 font-mono font-bold cursor-pointer focus:outline-none focus:border-[#6B8E4E]"
+                  >
+                    <option value="1500">₹1,500</option>
+                    <option value="2000">₹2,000</option>
+                    <option value="2500">₹2,500</option>
+                    <option value="3000">₹3,000</option>
+                    <option value="3500">₹3,500</option>
+                    <option value="4000">₹4,000</option>
+                    <option value="4500">₹4,500</option>
+                    <option value="5000">₹5,000</option>
+                    <option value="6000">₹6,000</option>
+                    <option value="8000">₹8,000</option>
+                    <option value="10000">₹10,000</option>
+                  </select>
                 </div>
 
                 <div>
                   <label className="text-xs font-bold text-neutral-700 block mb-1">{t('farmer.availableQuintals', 'Available Quintals')}</label>
-                  <input
-                    type="number"
+                  <select
                     required
-                    min="1"
                     value={newCropQtyQuintals}
-                    onChange={(e) => setNewCropQtyQuintals(parseInt(e.target.value) || 0)}
-                    className="w-full text-xs border border-neutral-300 rounded-xl p-2.5 font-mono font-bold"
-                  />
+                    onChange={(e) => setNewCropQtyQuintals(parseInt(e.target.value) || 50)}
+                    className="w-full text-xs border border-neutral-300 rounded-xl p-2.5 font-mono font-bold cursor-pointer focus:outline-none focus:border-[#6B8E4E]"
+                  >
+                    <option value="10">10 Quintals</option>
+                    <option value="20">20 Quintals</option>
+                    <option value="30">30 Quintals</option>
+                    <option value="40">40 Quintals</option>
+                    <option value="50">50 Quintals</option>
+                    <option value="75">75 Quintals</option>
+                    <option value="100">100 Quintals</option>
+                    <option value="150">150 Quintals</option>
+                    <option value="200">200 Quintals</option>
+                    <option value="500">500 Quintals</option>
+                  </select>
                 </div>
               </div>
 

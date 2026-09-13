@@ -192,8 +192,8 @@ Return ONLY a valid JSON object matching the schema.
 The JSON must have these exact keys:
 - "title": Must be one of ["Rice", "Wheat", "Mustard", "Chana", "Onion"]. Infer the best match.
 - "variety": A short string (e.g. "Basmati", "Sharbati", "Local").
-- "quantity": A NUMBER representing Quintals. CRITICAL: You MUST extract the exact number spoken. Convert Hindi words ("pachas"->50, "sau"->100, "bees"->20) to digits. If they say "tons", multiply by 10.
-- "price": A NUMBER representing price per Quintal in INR. CRITICAL: You MUST extract the exact price spoken. Convert Hindi words ("panteeso"->3500, "dhay hazaar"->2500) to digits.
+- "quantity": A NUMBER representing Quintals. MUST be one of these exact values: [10, 20, 30, 40, 50, 75, 100, 150, 200, 500]. Pick the closest match.
+- "price": A NUMBER representing price per Quintal in INR. MUST be one of these exact values: [1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000, 6000, 8000, 10000]. Pick the closest match.
 
 Example input: "mere paas pachas quintal basmati chawal hai panteeso rupaye ke hisaab se"
 Example output: {"title":"Rice","variety":"Basmati","quantity":50,"price":3500}`;
