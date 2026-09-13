@@ -58,6 +58,7 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
 
   const [isListening, setIsListening] = useState(false);
   const [voiceTranscript, setVoiceTranscript] = useState('');
+  const [hasJoinedPool, setHasJoinedPool] = useState(false);
 
   const totalQuintalsListed = farmerCrops.reduce((acc, c) => acc + c.quantityAvailableQuintals, 0);
   const totalRevenueEscrow = farmerOrders.reduce((acc, o) => acc + o.totalAmount, 0);
@@ -711,19 +712,33 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
               </label>
 
               {newCropQtyQuintals > 0 && newCropQtyQuintals < 100 && (
-                <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 mb-4 mt-2 shadow-sm">
+                <div className={`border rounded-xl p-3 mb-4 mt-2 shadow-sm transition-colors ${hasJoinedPool ? 'bg-emerald-50 border-emerald-200' : 'bg-amber-50 border-amber-200'}`}>
                   <div className="flex items-start gap-2">
-                    <Truck className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+                    {hasJoinedPool ? (
+                      <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
+                    ) : (
+                      <Truck className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+                    )}
                     <div>
-                      <p className="text-xs font-bold text-amber-900">Transport Pooling Available!</p>
-                      <p className="text-[11px] text-amber-800 leading-tight mt-0.5">
-                        Farmer Ramesh from your district has a truck going to buyers with {100 - newCropQtyQuintals} Qtl of space left.
+                      <p className={`text-xs font-bold ${hasJoinedPool ? 'text-emerald-900' : 'text-amber-900'}`}>
+                        {hasJoinedPool ? 'Transport Pool Reserved!' : 'Transport Pooling Available!'}
+                      </p>
+                      <p className={`text-[11px] leading-tight mt-0.5 ${hasJoinedPool ? 'text-emerald-800' : 'text-amber-800'}`}>
+                        {hasJoinedPool 
+                          ? 'You have successfully reserved space in the pooled truck. Freight savings: ₹4,500.'
+                          : `Farmer Ramesh from your district has a truck going to buyers with ${100 - newCropQtyQuintals} Qtl of space left.`}
                       </p>
                     </div>
                   </div>
-                  <button type="button" className="mt-2.5 w-full py-2 bg-amber-200 hover:bg-amber-300 text-amber-900 text-xs font-bold rounded-lg transition cursor-pointer">
-                    Join Pool & Save ₹4,500
-                  </button>
+                  {!hasJoinedPool && (
+                    <button 
+                      type="button" 
+                      onClick={() => setHasJoinedPool(true)}
+                      className="mt-2.5 w-full py-2 bg-amber-200 hover:bg-amber-300 text-amber-900 text-xs font-bold rounded-lg transition cursor-pointer"
+                    >
+                      Join Pool & Save ₹4,500
+                    </button>
+                  )}
                 </div>
               )}
 
