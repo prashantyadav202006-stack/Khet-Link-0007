@@ -45,34 +45,34 @@ interface AuthModalProps {
 }
 
 const COMMON_CROPS = [
-  'Sharbati Wheat',
-  'Pusa Basmati Rice',
-  'Yellow Mustard',
-  'Malwa Soybean',
-  'Desi Chana (Chickpeas)',
-  'Nashik Red Onion',
-  'Shankar Cotton',
-  'Tur Dal (Pigeon Pea)',
-  'Bold Groundnut',
-  'Unjha Cumin (Jeera)',
-  'Guntur Red Chilli',
-  'Kufri Jyoti Potato',
-  'Pusa Ruby Tomato'
+  'शरबती गेहूं (Sharbati Wheat)',
+  'पूसा बासमती धान (Basmati Rice)',
+  'पीली सरसों (Yellow Mustard)',
+  'मालवा सोयाबीन (Soybean)',
+  'देसी चना (Desi Chana)',
+  'नासिक लाल प्याज (Red Onion)',
+  'शंकर कपास (Cotton)',
+  'अरहर / तुअर दाल (Tur Dal)',
+  'बोल्ड मूंगफली (Groundnut)',
+  'ऊंझा जीरा (Cumin/Jeera)',
+  'गुंटूर लाल मिर्च (Red Chilli)',
+  'कुफरी ज्योति आलू (Potato)',
+  'पूसा रूबी टमाटर (Tomato)'
 ];
 
 const STATES = [
-  'Punjab',
-  'Madhya Pradesh',
-  'Maharashtra',
-  'Rajasthan',
-  'Haryana',
-  'Uttar Pradesh',
-  'Gujarat',
-  'Karnataka',
-  'Andhra Pradesh',
-  'Telangana',
-  'Bihar',
-  'West Bengal'
+  'पंजाब (Punjab)',
+  'मध्य प्रदेश (Madhya Pradesh)',
+  'महाराष्ट्र (Maharashtra)',
+  'राजस्थान (Rajasthan)',
+  'हरियाणा (Haryana)',
+  'उत्तर प्रदेश (Uttar Pradesh)',
+  'गुजरात (Gujarat)',
+  'कर्नाटक (Karnataka)',
+  'आंध्र प्रदेश (Andhra Pradesh)',
+  'तेलंगाना (Telangana)',
+  'बिहार (Bihar)',
+  'पश्चिम बंगाल (West Bengal)'
 ];
 
 export const AuthModal: React.FC<AuthModalProps> = ({
@@ -103,30 +103,30 @@ export const AuthModal: React.FC<AuthModalProps> = ({
   const [fatherName, setFatherName] = useState('');
   const [gender, setGender] = useState<'Male' | 'Female' | 'Other'>('Male');
   const [age, setAge] = useState<number | ''>(42);
-  const [farmerCategory, setFarmerCategory] = useState('Small Farmer (2-5 Acres)');
-  const [fpoName, setFpoName] = useState('Malwa Kisan Producer Company');
+  const [farmerCategory, setFarmerCategory] = useState('लघु किसान (2.5 से 5 एकड़)');
+  const [fpoName, setFpoName] = useState('मालवा किसान प्रोड्यूसर कंपनी');
   const [experienceYears, setExperienceYears] = useState<number>(16);
 
   // STEP 3: Farm Location & Farm Size
-  const [stateName, setStateName] = useState('Punjab');
-  const [districtName, setDistrictName] = useState('Ludhiana');
-  const [tehsilName, setTehsilName] = useState('Jagraon');
-  const [villageName, setVillageName] = useState('Raikot Kalan');
+  const [stateName, setStateName] = useState('पंजाब (Punjab)');
+  const [districtName, setDistrictName] = useState('लुधियाना');
+  const [tehsilName, setTehsilName] = useState('जगराओं');
+  const [villageName, setVillageName] = useState('रायकोट कलां');
   const [pincode, setPincode] = useState('142026');
-  const [nearestMandi, setNearestMandi] = useState('Khanna Grain APMC Mandi');
+  const [nearestMandi, setNearestMandi] = useState('खन्ना अनाज मंडी (APMC)');
   const [farmSizeAcres, setFarmSizeAcres] = useState<number | ''>(6.5);
-  const [irrigationType, setIrrigationType] = useState('Canal + Solar Tube Well');
-  const [soilType, setSoilType] = useState('Alluvial Sandy Loam (High Fertility)');
+  const [irrigationType, setIrrigationType] = useState('नहर + सौर ट्यूबवेल (Canal + Solar)');
+  const [soilType, setSoilType] = useState('जलोढ़ बलुई दोमट मिट्टी (उच्च उर्वरता)');
 
   // STEP 4: Crops Grown & Available Quantity to Sell
   const [selectedCropsGrown, setSelectedCropsGrown] = useState<string[]>([
-    'Sharbati Wheat',
-    'Yellow Mustard',
-    'Pusa Basmati Rice'
+    'शरबती गेहूं (Sharbati Wheat)',
+    'पीली सरसों (Yellow Mustard)',
+    'पूसा बासमती धान (Basmati Rice)'
   ]);
-  const [farmingPractice, setFarmingPractice] = useState('NPOP Certified Organic');
+  const [farmingPractice, setFarmingPractice] = useState('जैविक प्रमाणित (NPOP Certified Organic)');
   // Current harvest for immediate sale
-  const [sellCropTitle, setSellCropTitle] = useState('Sharbati Golden Wheat (C-306 Grade A)');
+  const [sellCropTitle, setSellCropTitle] = useState('शरबती गोल्डन गेहूं (C-306 ग्रेड ए)');
   const [sellCropCategory, setSellCropCategory] = useState<CropProduct['category']>('Grains');
   const [sellCropVariety, setSellCropVariety] = useState('Sharbati C-306');
   const [sellQuantityQuintals, setSellQuantityQuintals] = useState<number | ''>(120);
@@ -213,33 +213,33 @@ export const AuthModal: React.FC<AuthModalProps> = ({
     setFatherName('S. Jagjit Singh');
     setGender('Male');
     setAge(45);
-    setFarmerCategory('Medium Farmer (5-10 Acres)');
-    setFpoName('Malwa Kisan Producer Company Ltd');
+    setFarmerCategory('मध्यम किसान (5 से 10 एकड़)');
+    setFpoName('मालवा किसान प्रोड्यूसर कंपनी लिमिटेड');
     setExperienceYears(22);
 
-    setStateName('Punjab');
-    setDistrictName('Ludhiana');
-    setTehsilName('Jagraon');
-    setVillageName('Raikot Kalan');
+    setStateName('पंजाब (Punjab)');
+    setDistrictName('लुधियाना');
+    setTehsilName('जगराओं');
+    setVillageName('रायकोट कलां');
     setPincode('142026');
-    setNearestMandi('Khanna Grain APMC Mandi');
+    setNearestMandi('खन्ना अनाज मंडी (APMC)');
     setFarmSizeAcres(8.5);
-    setIrrigationType('Canal + Solar Tube Well');
-    setSoilType('Alluvial Sandy Loam (High Organic Carbon)');
+    setIrrigationType('नहर + सौर ट्यूबवेल (Canal + Solar)');
+    setSoilType('जलोढ़ बलुई दोमट मिट्टी (उच्च उर्वरता)');
 
-    setSelectedCropsGrown(['Sharbati Wheat', 'Yellow Mustard', 'Pusa Basmati Rice']);
-    setFarmingPractice('NPOP Certified Organic');
+    setSelectedCropsGrown(['शरबती गेहूं (Sharbati Wheat)', 'पीली सरसों (Yellow Mustard)', 'पूसा बासमती धान (Basmati Rice)']);
+    setFarmingPractice('जैविक प्रमाणित (NPOP Certified Organic)');
 
-    setSellCropTitle('Sharbati Golden Wheat (C-306 Grade A)');
+    setSellCropTitle('शरबती गोल्डन गेहूं (C-306 ग्रेड ए)');
     setSellCropCategory('Grains');
-    setSellCropVariety('Sharbati C-306');
+    setSellCropVariety('शरबती C-306');
     setSellQuantityQuintals(140);
     setSellExpectedPrice(3250);
     setSellMoisturePercent(10.5);
     setSellPackaging('50kg Hermetic Moisture-Proof Bags');
 
-    setAccountHolderName('Harpreet Singh');
-    setBankName('State Bank of India');
+    setAccountHolderName('हरप्रीत सिंह');
+    setBankName('भारतीय स्टेट बैंक (SBI)');
     setAccountNumber('38492019482');
     setConfirmAccountNumber('38492019482');
     setIfscCode('SBIN0001245');
@@ -249,7 +249,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
     setAadhaarNumber('7849-2910-4821');
     setLandDocType('Kisan Credit Card (KCC)');
     setLandDocNumber('KCC-PB-2026-98412');
-    setUploadedFileName('7_12_Khasra_Harpreet_Ludhiana.pdf');
+    setUploadedFileName('7_12_खतौनी_हरप्रीत_लुधियाना.pdf');
     setIsKycVerified(true);
     setTermsAgreed(true);
   };
@@ -258,7 +258,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
   const handleSendOtp = (e: React.FormEvent) => {
     e.preventDefault();
     if (!mobileNumber || mobileNumber.length < 10) {
-      alert('Please enter a valid 10-digit mobile number.');
+      alert('कृपया 10 अंकों का मान्य मोबाइल नंबर दर्ज करें।');
       return;
     }
     setOtpSent(true);
@@ -270,7 +270,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
     if (otpCode.length === 6) {
       setIsOtpVerified(true);
     } else {
-      alert('Please enter the 6-digit OTP code (Demo: 123456)');
+      alert('कृपया 6-अंकों का OTP कोड दर्ज करें (डेमो: 123456)');
     }
   };
 
@@ -292,13 +292,13 @@ export const AuthModal: React.FC<AuthModalProps> = ({
     e.preventDefault();
 
     if (!isOtpVerified) {
-      alert('Please verify your mobile number with OTP first.');
+      alert('कृपया आगे बढ़ने के लिए पहले OTP से मोबाइल नंबर सत्यापित करें।');
       setRegStep(1);
       return;
     }
 
     if (!termsAgreed) {
-      alert('Please agree to the Khet Link Mandi Escrow & Assaying terms.');
+      alert('कृपया खेति लिंक मंडी एस्क्रो और गुणवत्ता जांच नियमों से सहमति दें।');
       return;
     }
 
@@ -527,13 +527,13 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               </div>
               <div>
                 <h2 className="text-lg font-bold font-['Outfit'] text-white flex items-center gap-1.5">
-                  <span>{t('auth.nationalGateway', 'Khet Link National Gateway')}</span>
+                  <span>खेति लिंक राष्ट्रीय किसान एवं व्यापार पोर्टल</span>
                   <span className="text-[10px] font-medium bg-[#52B788]/20 text-[#74C69D] px-2 py-0.5 rounded-full border border-[#52B788]/40">
-                    {t('auth.mandiEscrowBadge', 'ONDC & Mandi Escrow')}
+                    ONDC एवं मंडी एस्क्रो सुरक्षित
                   </span>
                 </h2>
                 <p className="text-[11px] text-emerald-200/70">
-                  {t('auth.gatewayDesc', 'Direct Farmgate Marketplace & Assaying Verification Gateway')}
+                  सीधा खेत से मंडी खरीद-बिक्री व गुणवत्ता सत्यापन पोर्टल
                 </p>
               </div>
             </div>
@@ -551,7 +551,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               }`}
             >
               <Sprout className="w-4 h-4 text-emerald-300" />
-              <span>{t('auth.farmerRole', 'Farmer / FPO (Sell Harvest)')}</span>
+              <span>किसान / एफपीओ (फसल बेचें)</span>
             </button>
 
             <button
@@ -564,7 +564,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               }`}
             >
               <Building2 className="w-4 h-4 text-emerald-300" />
-              <span>{t('auth.buyerRole', 'Hostel Mess & Bulk Buyer')}</span>
+              <span>हॉस्टल मेस व थोक खरीदार</span>
             </button>
           </div>
 
@@ -581,7 +581,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                       : 'text-emerald-200/80 hover:text-white hover:bg-[#0E3525]'
                   }`}
                 >
-                  {t('auth.newFarmer', '🌾 New Farmer Registration (Full Info)')}
+                  🌾 नया किसान पंजीकरण (पूरी जानकारी)
                 </button>
                 <button
                   type="button"
@@ -592,7 +592,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                       : 'text-emerald-200/80 hover:text-white hover:bg-[#0E3525]'
                   }`}
                 >
-                  {t('auth.existingFarmer', 'Existing Farmer Login & Verify')}
+                  पंजीकृत किसान लॉगिन
                 </button>
               </div>
 
@@ -601,10 +601,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                   type="button"
                   onClick={handlePreFillDemoData}
                   className="px-2.5 py-1 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-400/40 text-[10px] font-bold flex items-center gap-1 transition cursor-pointer"
-                  title="Auto fill sample Punjab farmer registration data"
+                  title="सैंपल किसान विवरण स्वतः भरें"
                 >
                   <Sparkles className="w-3 h-3 text-amber-300" />
-                  <span>{t('auth.demoFill', '⚡ 1-Click Demo Fill')}</span>
+                  <span>⚡ 1-क्लिक डेमो जानकारी भरें</span>
                 </button>
               )}
             </div>
@@ -623,16 +623,16 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               {/* Wizard Step Progress Tracker */}
               <div className="bg-[#F4F9F5] p-3 rounded-2xl border border-[#D1E7D9] space-y-2">
                 <div className="flex items-center justify-between text-[11px] font-bold text-[#184533]">
-                  <span>Step {regStep} of 6: {
-                    regStep === 1 ? 'Mobile/Email & OTP Verification' :
-                    regStep === 2 ? 'Farmer Profile & Experience' :
-                    regStep === 3 ? 'Farm Location & Land Size' :
-                    regStep === 4 ? 'Crops Grown & Available Quantity' :
-                    regStep === 5 ? 'Bank & Direct DBT Payment' :
-                    'KYC & Land Document Verification'
+                  <span>चरण {regStep} / 6: {
+                    regStep === 1 ? 'मोबाइल/ईमेल एवं OTP सत्यापन' :
+                    regStep === 2 ? 'किसान विवरण एवं अनुभव' :
+                    regStep === 3 ? 'खेत का स्थान एवं भूमि का आकार' :
+                    regStep === 4 ? 'उगाई जाने वाली फसलें एवं मात्रा' :
+                    regStep === 5 ? 'बैंक खाता एवं डायरेक्ट DBT भुगतान' :
+                    'केवाईसी एवं भूमि दस्तावेज सत्यापन'
                   }</span>
                   <span className="text-[10px] text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full font-semibold">
-                    {Math.round((regStep / 6) * 100)}% Complete
+                    {Math.round((regStep / 6) * 100)}% पूर्ण
                   </span>
                 </div>
 
@@ -640,11 +640,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                 <div className="grid grid-cols-6 gap-1.5">
                   {[
                     { s: 1, label: 'OTP' },
-                    { s: 2, label: 'Profile' },
-                    { s: 3, label: 'Location' },
-                    { s: 4, label: 'Crops' },
-                    { s: 5, label: 'Bank' },
-                    { s: 6, label: 'KYC' }
+                    { s: 2, label: 'विवरण' },
+                    { s: 3, label: 'स्थान' },
+                    { s: 4, label: 'फसलें' },
+                    { s: 5, label: 'बैंक' },
+                    { s: 6, label: 'केवाईसी' }
                   ].map(({ s, label }) => (
                     <button
                       key={s}
@@ -657,7 +657,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                           ? 'bg-emerald-400' 
                           : 'bg-neutral-200'
                       }`}
-                      title={`Step ${s}: ${label}`}
+                      title={`चरण ${s}: ${label}`}
                     />
                   ))}
                 </div>
@@ -669,10 +669,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                   <div className="border-b border-neutral-200 pb-2">
                     <h3 className="text-sm font-bold text-neutral-900 flex items-center gap-1.5 font-['Outfit']">
                       <Phone className="w-4 h-4 text-[#2A7252]" />
-                      <span>Mobile & Email Registration with OTP</span>
+                      <span>मोबाइल एवं ईमेल पंजीकरण व OTP सत्यापन</span>
                     </h3>
                     <p className="text-xs text-neutral-500">
-                      We verify your contact to send instant ONDC mandi bids, assaying reports, and escrow release alerts.
+                      हम आपके संपर्क को सत्यापित करते हैं ताकि आपको तुरंत मंडी भाव, ई-ऑक्शन बोलियां, और सीधे खाते में भुगतान अलर्ट मिल सकें।
                     </p>
                   </div>
 
@@ -680,7 +680,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                     {/* Mobile Number */}
                     <div>
                       <label className="text-xs font-bold text-neutral-700 block mb-1">
-                        Farmer Mobile Number <span className="text-rose-500">*</span>
+                        किसान का मोबाइल नंबर <span className="text-rose-500">*</span>
                       </label>
                       <div className="relative">
                         <span className="absolute left-3 top-2.5 text-xs font-bold text-neutral-500">
@@ -698,13 +698,13 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                           className="w-full text-xs font-semibold border border-neutral-300 rounded-xl pl-11 pr-3 py-2.5 focus:outline-none focus:border-[#2A7252]"
                         />
                       </div>
-                      <span className="text-[10px] text-neutral-400">10-digit mobile number</span>
+                      <span className="text-[10px] text-neutral-400">10 अंकों का मोबाइल नंबर</span>
                     </div>
 
                     {/* Email Address */}
                     <div>
                       <label className="text-xs font-bold text-neutral-700 block mb-1">
-                        Email Address <span className="text-neutral-400 text-[10px]">(Optional for Invoices)</span>
+                        ईमेल आईडी <span className="text-neutral-400 text-[10px]">(चालान/बिल के लिए वैकल्पिक)</span>
                       </label>
                       <div className="relative">
                         <Mail className="absolute left-3 top-2.5 w-4 h-4 text-neutral-400" />
@@ -716,13 +716,13 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                           className="w-full text-xs border border-neutral-300 rounded-xl pl-9 pr-3 py-2.5 focus:outline-none focus:border-[#2A7252]"
                         />
                       </div>
-                      <span className="text-[10px] text-neutral-400">For GST mandi invoices</span>
+                      <span className="text-[10px] text-neutral-400">जीएसटी मंडी रसीद और इनवॉइस हेतु</span>
                     </div>
 
                     {/* Account Password */}
                     <div className="sm:col-span-2">
                       <label className="text-xs font-bold text-neutral-700 block mb-1">
-                        Account Password <span className="text-neutral-400 text-[10px]">(For secure login to Khet Link)</span>
+                        खाता पासवर्ड <span className="text-neutral-400 text-[10px]">(सुरक्षित लॉगिन के लिए)</span>
                       </label>
                       <div className="relative">
                         <Lock className="absolute left-3 top-2.5 w-4 h-4 text-neutral-400" />
@@ -734,7 +734,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                           className="w-full text-xs font-mono border border-neutral-300 rounded-xl pl-9 pr-3 py-2.5 focus:outline-none focus:border-[#2A7252]"
                         />
                       </div>
-                      <span className="text-[10px] text-neutral-400">Default: Kisan@123456 (or choose your own)</span>
+                      <span className="text-[10px] text-neutral-400">डिफ़ॉल्ट: Kisan@123456 (या अपनी पसंद का पासवर्ड बनाएं)</span>
                     </div>
                   </div>
 
@@ -746,26 +746,26 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                       className="w-full py-2.5 bg-[#1B523D] hover:bg-[#154231] text-white text-xs font-bold rounded-xl transition flex items-center justify-center gap-2 cursor-pointer"
                     >
                       <Phone className="w-3.5 h-3.5" />
-                      <span>Send 6-Digit OTP Verification Code</span>
+                      <span>6-अंकों का OTP कोड भेजें</span>
                     </button>
                   ) : (
                     <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-3.5 space-y-3">
                       <div className="flex items-center justify-between text-xs">
                         <span className="font-bold text-emerald-900 flex items-center gap-1.5">
                           <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                          <span>OTP Sent to +91 {mobileNumber}</span>
+                          <span>+91 {mobileNumber} पर OTP भेजा गया</span>
                         </span>
                         <span className="text-[11px] font-mono text-emerald-700">
-                          {otpTimer > 0 ? `Resend in ${otpTimer}s` : 'Ready to resend'}
+                          {otpTimer > 0 ? `${otpTimer} सेकंड में पुनः भेजें` : 'पुनः भेजने के लिए तैयार'}
                         </span>
                       </div>
 
                       {/* Demo simulation card */}
                       <div className="bg-white p-2.5 rounded-xl border border-emerald-300/80 flex items-center justify-between text-xs">
                         <div>
-                          <span className="text-[10px] font-bold text-neutral-400 uppercase block">Simulated SMS Message</span>
+                          <span className="text-[10px] font-bold text-neutral-400 uppercase block">डेमो एसएमएस संदेश</span>
                           <span className="font-mono font-bold text-neutral-800">
-                            Khet Link OTP is: <span className="text-emerald-700 text-sm">123456</span>
+                            खेति लिंक OTP है: <span className="text-emerald-700 text-sm">123456</span>
                           </span>
                         </div>
                         <button
@@ -776,7 +776,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                           }}
                           className="px-2.5 py-1 bg-emerald-600 text-white rounded-lg text-xs font-bold hover:bg-emerald-700 transition cursor-pointer"
                         >
-                          Auto-Fill 123456
+                          123456 स्वतः भरें
                         </button>
                       </div>
 
@@ -784,7 +784,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                         <input
                           type="text"
                           maxLength={6}
-                          placeholder="Enter 6-digit OTP"
+                          placeholder="6-अंकों का OTP दर्ज करें"
                           value={otpCode}
                           onChange={(e) => setOtpCode(e.target.value.replace(/\D/g, ''))}
                           className="w-full text-center font-mono font-bold text-sm tracking-widest border border-emerald-300 rounded-xl py-2 focus:outline-none focus:border-emerald-600 bg-white"
@@ -794,14 +794,14 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                           onClick={handleVerifyOtp}
                           className="py-2 px-4 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl text-xs font-bold whitespace-nowrap transition cursor-pointer"
                         >
-                          Verify OTP
+                          OTP सत्यापित करें
                         </button>
                       </div>
 
                       {isOtpVerified && (
                         <div className="flex items-center gap-1.5 text-xs text-emerald-800 font-bold bg-emerald-100/80 p-2 rounded-lg">
                           <Check className="w-4 h-4 text-emerald-600" />
-                          <span>Mobile & Email Verified via UIDAI / Telecom Gateway ✓</span>
+                          <span>मोबाइल नंबर सफलतापूर्वक सत्यापित हुआ ✓</span>
                         </div>
                       )}
                     </div>
@@ -813,14 +813,14 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                       type="button"
                       onClick={() => {
                         if (!isOtpVerified) {
-                          alert('Please send and verify OTP to proceed.');
+                          alert('कृपया आगे बढ़ने के लिए OTP भेजें और सत्यापित करें।');
                           return;
                         }
                         setRegStep(2);
                       }}
                       className="py-2.5 px-5 bg-[#1E523D] hover:bg-[#164231] text-white text-xs font-bold rounded-xl transition flex items-center gap-2 cursor-pointer"
                     >
-                      <span>Next: Farmer Profile</span>
+                      <span>आगे: किसान विवरण दर्ज करें</span>
                       <ArrowRight className="w-4 h-4" />
                     </button>
                   </div>
@@ -833,10 +833,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                   <div className="border-b border-neutral-200 pb-2">
                     <h3 className="text-sm font-bold text-neutral-900 flex items-center gap-1.5 font-['Outfit']">
                       <User className="w-4 h-4 text-[#2A7252]" />
-                      <span>Farmer Personal Profile & Category</span>
+                      <span>किसान व्यक्तिगत विवरण एवं श्रेणी</span>
                     </h3>
                     <p className="text-xs text-neutral-500">
-                      Personal identity details for Mandi trading license, FPO affiliation, and farmer registry.
+                      मंडी व्यापार लाइसेंस, एफपीओ संबद्धता एवं किसान पंजीयन हेतु व्यक्तिगत विवरण।
                     </p>
                   </div>
 
@@ -844,12 +844,12 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                     {/* Full Name */}
                     <div>
                       <label className="text-xs font-bold text-neutral-700 block mb-1">
-                        Farmer Full Name <span className="text-rose-500">*</span>
+                        किसान का पूरा नाम (आधार के अनुसार) <span className="text-rose-500">*</span>
                       </label>
                       <input
                         type="text"
                         required
-                        placeholder="e.g. Sardar Harpreet Singh"
+                        placeholder="उदा. सरदार हरप्रीत सिंह / रामेश्वर यादव"
                         value={fullName}
                         onChange={(e) => setFullName(e.target.value)}
                         className="w-full text-xs font-semibold border border-neutral-300 rounded-xl px-3 py-2.5 focus:outline-none focus:border-[#2A7252]"
@@ -859,11 +859,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                     {/* Father / Guardian / Spouse Name */}
                     <div>
                       <label className="text-xs font-bold text-neutral-700 block mb-1">
-                        Father's / Spouse's Name
+                        पिता या पति का नाम
                       </label>
                       <input
                         type="text"
-                        placeholder="e.g. S. Jagjit Singh"
+                        placeholder="उदा. स. जगजीत सिंह / श्री रामप्रसाद"
                         value={fatherName}
                         onChange={(e) => setFatherName(e.target.value)}
                         className="w-full text-xs border border-neutral-300 rounded-xl px-3 py-2.5 focus:outline-none focus:border-[#2A7252]"
@@ -872,26 +872,26 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 
                     {/* Gender */}
                     <div>
-                      <label className="text-xs font-bold text-neutral-700 block mb-1">Gender</label>
+                      <label className="text-xs font-bold text-neutral-700 block mb-1">लिंग</label>
                       <select
                         value={gender}
                         onChange={(e) => setGender(e.target.value as any)}
                         className="w-full text-xs border border-neutral-300 rounded-xl px-3 py-2.5 focus:outline-none focus:border-[#2A7252] bg-white cursor-pointer"
                       >
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                        <option value="Other">Other</option>
+                        <option value="Male">पुरुष (Male)</option>
+                        <option value="Female">महिला (Female)</option>
+                        <option value="Other">अन्य (Other)</option>
                       </select>
                     </div>
 
                     {/* Age */}
                     <div>
-                      <label className="text-xs font-bold text-neutral-700 block mb-1">Age</label>
+                      <label className="text-xs font-bold text-neutral-700 block mb-1">आयु (वर्ष)</label>
                       <input
                         type="number"
                         min={18}
                         max={100}
-                        placeholder="e.g. 42"
+                        placeholder="उदा. 42"
                         value={age}
                         onChange={(e) => setAge(e.target.value ? Number(e.target.value) : '')}
                         className="w-full text-xs border border-neutral-300 rounded-xl px-3 py-2.5 focus:outline-none focus:border-[#2A7252]"
@@ -901,29 +901,29 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                     {/* Farmer Category */}
                     <div>
                       <label className="text-xs font-bold text-neutral-700 block mb-1">
-                        Farmer Category
+                        किसान की श्रेणी
                       </label>
                       <select
                         value={farmerCategory}
                         onChange={(e) => setFarmerCategory(e.target.value)}
                         className="w-full text-xs border border-neutral-300 rounded-xl px-3 py-2.5 focus:outline-none focus:border-[#2A7252] bg-white cursor-pointer"
                       >
-                        <option value="Marginal Farmer (< 2.5 Acres)">Marginal Farmer (&lt; 2.5 Acres)</option>
-                        <option value="Small Farmer (2.5 - 5 Acres)">Small Farmer (2.5 - 5 Acres)</option>
-                        <option value="Medium Farmer (5 - 10 Acres)">Medium Farmer (5 - 10 Acres)</option>
-                        <option value="Large Commercial (> 10 Acres)">Large Commercial (&gt; 10 Acres)</option>
-                        <option value="FPO Cluster Representative">FPO Cluster Representative</option>
+                        <option value="Marginal Farmer (< 2.5 Acres)">सीमांत किसान (2.5 एकड़ से कम भूमि)</option>
+                        <option value="Small Farmer (2.5 - 5 Acres)">लघु किसान (2.5 से 5 एकड़)</option>
+                        <option value="Medium Farmer (5 - 10 Acres)">मध्यम किसान (5 से 10 एकड़)</option>
+                        <option value="Large Commercial (> 10 Acres)">बड़ा वाणिज्यिक किसान (10 एकड़ से अधिक)</option>
+                        <option value="FPO Cluster Representative">एफपीओ / किसान समूह प्रतिनिधि</option>
                       </select>
                     </div>
 
                     {/* FPO / Cooperative Name */}
                     <div>
                       <label className="text-xs font-bold text-neutral-700 block mb-1">
-                        FPO / Kisan Cooperative Affiliation
+                        एफपीओ (FPO) या किसान सहकारी समिति का नाम
                       </label>
                       <input
                         type="text"
-                        placeholder="e.g. Malwa Kisan Producer Co. or Individual Farm"
+                        placeholder="उदा. मालवा किसान प्रोड्यूसर कंपनी या व्यक्तिगत खेत"
                         value={fpoName}
                         onChange={(e) => setFpoName(e.target.value)}
                         className="w-full text-xs border border-neutral-300 rounded-xl px-3 py-2.5 focus:outline-none focus:border-[#2A7252]"
@@ -934,7 +934,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                   {/* Experience */}
                   <div>
                     <label className="text-xs font-bold text-neutral-700 block mb-1">
-                      Farming Experience: <span className="text-[#2A7252] font-bold">{experienceYears} Years</span>
+                      खेती का अनुभव: <span className="text-[#2A7252] font-bold">{experienceYears} वर्ष</span>
                     </label>
                     <input
                       type="range"
@@ -954,20 +954,20 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                       className="py-2 px-4 border border-neutral-300 text-neutral-700 text-xs font-bold rounded-xl hover:bg-neutral-50 transition flex items-center gap-1.5 cursor-pointer"
                     >
                       <ArrowLeft className="w-3.5 h-3.5" />
-                      <span>Back</span>
+                      <span>पीछे</span>
                     </button>
                     <button
                       type="button"
                       onClick={() => {
                         if (!fullName.trim()) {
-                          alert('Please enter your full name.');
+                          alert('कृपया अपना पूरा नाम दर्ज करें।');
                           return;
                         }
                         setRegStep(3);
                       }}
                       className="py-2.5 px-5 bg-[#1E523D] hover:bg-[#164231] text-white text-xs font-bold rounded-xl transition flex items-center gap-2 cursor-pointer"
                     >
-                      <span>Next: Farm Location & Size</span>
+                      <span>आगे: खेत का स्थान एवं आकार</span>
                       <ArrowRight className="w-4 h-4" />
                     </button>
                   </div>
@@ -980,10 +980,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                   <div className="border-b border-neutral-200 pb-2">
                     <h3 className="text-sm font-bold text-neutral-900 flex items-center gap-1.5 font-['Outfit']">
                       <MapPin className="w-4 h-4 text-[#2A7252]" />
-                      <span>Farm Location & Landholding Size</span>
+                      <span>खेत का स्थान एवं भूमि का आकार</span>
                     </h3>
                     <p className="text-xs text-neutral-500">
-                      Precise farm location determines hyper-local Mandi APMC rates and logistics pickup.
+                      सटीक स्थान से स्थानीय मंडी भाव और खेत से सीधे वाहन द्वारा उठान सुनिश्चित होता है।
                     </p>
                   </div>
 
@@ -991,7 +991,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                     {/* State */}
                     <div>
                       <label className="text-xs font-bold text-neutral-700 block mb-1">
-                        State <span className="text-rose-500">*</span>
+                        राज्य <span className="text-rose-500">*</span>
                       </label>
                       <select
                         value={stateName}
@@ -1007,12 +1007,12 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                     {/* District */}
                     <div>
                       <label className="text-xs font-bold text-neutral-700 block mb-1">
-                        District <span className="text-rose-500">*</span>
+                        ज़िला <span className="text-rose-500">*</span>
                       </label>
                       <input
                         type="text"
                         required
-                        placeholder="e.g. Ludhiana / Nashik / Sehore"
+                        placeholder="उदा. लुधियाना / नासिक / सीहोर"
                         value={districtName}
                         onChange={(e) => setDistrictName(e.target.value)}
                         className="w-full text-xs border border-neutral-300 rounded-xl px-3 py-2.5 focus:outline-none focus:border-[#2A7252]"
@@ -1022,11 +1022,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                     {/* Tehsil / Taluka */}
                     <div>
                       <label className="text-xs font-bold text-neutral-700 block mb-1">
-                        Tehsil / Taluka
+                        तहसील / तालुका
                       </label>
                       <input
                         type="text"
-                        placeholder="e.g. Jagraon / Niphad"
+                        placeholder="उदा. जगराओं / निफाड़"
                         value={tehsilName}
                         onChange={(e) => setTehsilName(e.target.value)}
                         className="w-full text-xs border border-neutral-300 rounded-xl px-3 py-2.5 focus:outline-none focus:border-[#2A7252]"
@@ -1036,12 +1036,12 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                     {/* Village Name */}
                     <div>
                       <label className="text-xs font-bold text-neutral-700 block mb-1">
-                        Village Name <span className="text-rose-500">*</span>
+                        गाँव / ग्राम पंचायत <span className="text-rose-500">*</span>
                       </label>
                       <input
                         type="text"
                         required
-                        placeholder="e.g. Raikot Kalan / Pimplas"
+                        placeholder="उदा. रायकोट कलां / पिंपलास"
                         value={villageName}
                         onChange={(e) => setVillageName(e.target.value)}
                         className="w-full text-xs border border-neutral-300 rounded-xl px-3 py-2.5 focus:outline-none focus:border-[#2A7252]"
@@ -1051,12 +1051,12 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                     {/* PIN Code */}
                     <div>
                       <label className="text-xs font-bold text-neutral-700 block mb-1">
-                        PIN Code <span className="text-rose-500">*</span>
+                        पिन कोड <span className="text-rose-500">*</span>
                       </label>
                       <input
                         type="text"
                         maxLength={6}
-                        placeholder="e.g. 142026"
+                        placeholder="उदा. 142026"
                         value={pincode}
                         onChange={(e) => setPincode(e.target.value.replace(/\D/g, ''))}
                         className="w-full text-xs font-mono border border-neutral-300 rounded-xl px-3 py-2.5 focus:outline-none focus:border-[#2A7252]"
@@ -1066,11 +1066,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                     {/* Nearest APMC Mandi */}
                     <div>
                       <label className="text-xs font-bold text-neutral-700 block mb-1">
-                        Nearest APMC Mandi
+                        निकटतम कृषि उपज मंडी (APMC)
                       </label>
                       <input
                         type="text"
-                        placeholder="e.g. Khanna Grain Mandi / Lasalgaon Mandi"
+                        placeholder="उदा. खन्ना अनाज मंडी / लासलगांव मंडी"
                         value={nearestMandi}
                         onChange={(e) => setNearestMandi(e.target.value)}
                         className="w-full text-xs border border-neutral-300 rounded-xl px-3 py-2.5 focus:outline-none focus:border-[#2A7252]"
@@ -1080,20 +1080,20 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                     {/* Farm Size (Landholding in Acres) */}
                     <div>
                       <label className="text-xs font-bold text-neutral-700 block mb-1">
-                        Total Farm Size (in Acres) <span className="text-rose-500">*</span>
+                        कुल खेत का आकार (एकड़ में) <span className="text-rose-500">*</span>
                       </label>
                       <div className="relative">
                         <input
                           type="number"
                           step="0.1"
                           min="0.1"
-                          placeholder="e.g. 6.5"
+                          placeholder="उदा. 6.5"
                           value={farmSizeAcres}
                           onChange={(e) => setFarmSizeAcres(e.target.value ? Number(e.target.value) : '')}
                           className="w-full text-xs font-bold border border-neutral-300 rounded-xl px-3 py-2.5 focus:outline-none focus:border-[#2A7252]"
                         />
                         <span className="absolute right-3 top-2.5 text-xs text-neutral-500 font-medium">
-                          Acres
+                          एकड़ (Acres)
                         </span>
                       </div>
                     </div>
@@ -1101,17 +1101,17 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                     {/* Irrigation Type */}
                     <div>
                       <label className="text-xs font-bold text-neutral-700 block mb-1">
-                        Irrigation Source
+                        सिंचाई का मुख्य साधन
                       </label>
                       <select
                         value={irrigationType}
                         onChange={(e) => setIrrigationType(e.target.value)}
                         className="w-full text-xs border border-neutral-300 rounded-xl px-3 py-2.5 focus:outline-none focus:border-[#2A7252] bg-white cursor-pointer"
                       >
-                        <option value="Canal + Solar Tube Well">Canal + Solar Tube Well</option>
-                        <option value="Borewell / Deep Tubewell">Borewell / Deep Tubewell</option>
-                        <option value="Drip / Micro-Sprinkler">Drip / Micro-Sprinkler</option>
-                        <option value="Rainfed / Monsoonal">Rainfed / Monsoonal</option>
+                        <option value="Canal + Solar Tube Well">नहर + सौर ट्यूबवेल (Canal + Solar)</option>
+                        <option value="Borewell / Deep Tubewell">बोरवेल / गहरा नलकूप (Borewell)</option>
+                        <option value="Drip / Micro-Sprinkler">ड्रिप / फव्वारा सिंचाई (Drip / Sprinkler)</option>
+                        <option value="Rainfed / Monsoonal">वर्षा आधारित (Rainfed / Monsoon)</option>
                       </select>
                     </div>
                   </div>
@@ -1119,17 +1119,17 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                   {/* Soil Type */}
                   <div>
                     <label className="text-xs font-bold text-neutral-700 block mb-1">
-                      Soil Type & Fertility
+                      मिट्टी का प्रकार व उर्वरता
                     </label>
                     <select
                       value={soilType}
                       onChange={(e) => setSoilType(e.target.value)}
                       className="w-full text-xs border border-neutral-300 rounded-xl px-3 py-2.5 focus:outline-none focus:border-[#2A7252] bg-white cursor-pointer"
                     >
-                      <option value="Alluvial Sandy Loam (High Fertility)">Alluvial Sandy Loam (High Fertility)</option>
-                      <option value="Black Cotton Soil (Deep Moisture Retentive)">Black Cotton Soil (Deep Moisture Retentive)</option>
-                      <option value="Red Sandy / Loamy Soil">Red Sandy / Loamy Soil</option>
-                      <option value="Clayey Loam Soil">Clayey Loam Soil</option>
+                      <option value="Alluvial Sandy Loam (High Fertility)">जलोढ़ बलुई दोमट मिट्टी (उच्च उर्वरता)</option>
+                      <option value="Black Cotton Soil (Deep Moisture Retentive)">काली कपासी मिट्टी (गहरी नमी संचायक)</option>
+                      <option value="Red Sandy / Loamy Soil">लाल बलुई / दोमट मिट्टी</option>
+                      <option value="Clayey Loam Soil">चिकनी दोमट मिट्टी (Clayey Loam)</option>
                     </select>
                   </div>
 
@@ -1141,20 +1141,20 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                       className="py-2 px-4 border border-neutral-300 text-neutral-700 text-xs font-bold rounded-xl hover:bg-neutral-50 transition flex items-center gap-1.5 cursor-pointer"
                     >
                       <ArrowLeft className="w-3.5 h-3.5" />
-                      <span>Back</span>
+                      <span>पीछे</span>
                     </button>
                     <button
                       type="button"
                       onClick={() => {
                         if (!districtName || !villageName) {
-                          alert('Please enter your District and Village.');
+                          alert('कृपया अपना ज़िला और गाँव दर्ज करें।');
                           return;
                         }
                         setRegStep(4);
                       }}
                       className="py-2.5 px-5 bg-[#1E523D] hover:bg-[#164231] text-white text-xs font-bold rounded-xl transition flex items-center gap-2 cursor-pointer"
                     >
-                      <span>Next: Crops & Harvest Quantity</span>
+                      <span>आगे: फसलें एवं उपलब्ध मात्रा</span>
                       <ArrowRight className="w-4 h-4" />
                     </button>
                   </div>
@@ -1167,19 +1167,19 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                   <div className="border-b border-neutral-200 pb-2">
                     <h3 className="text-sm font-bold text-neutral-900 flex items-center gap-1.5 font-['Outfit']">
                       <Wheat className="w-4 h-4 text-[#2A7252]" />
-                      <span>Crops Grown & Available Quantity to Sell</span>
+                      <span>उगाई जाने वाली फसलें एवं बिक्री योग्य मात्रा</span>
                     </h3>
                     <p className="text-xs text-neutral-500">
-                      Select all crops you grow, plus list your current ready-to-sell harvest batch with price expectations.
+                      अपने खेत में उगाई जाने वाली फसलें चुनें और तत्काल बिक्री हेतु तैयार फसल का विवरण व अपेक्षित मूल्य दर्ज करें।
                     </p>
                   </div>
 
                   {/* Crops Grown Multi-Select Badges */}
                   <div className="space-y-2">
                     <div className="flex items-center justify-between text-xs font-bold text-neutral-700">
-                      <span>Crops Cultivated on Your Farm (Click to toggle):</span>
+                      <span>आपके खेत में उगाई जाने वाली फसलें (चुनने के लिए क्लिक करें):</span>
                       <span className="text-[11px] text-[#2A7252] font-semibold">
-                        {selectedCropsGrown.length} selected
+                        {selectedCropsGrown.length} चुनी गई
                       </span>
                     </div>
                     <div className="flex flex-wrap gap-1.5">
@@ -1207,17 +1207,17 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                   {/* Farming Practice */}
                   <div>
                     <label className="text-xs font-bold text-neutral-700 block mb-1">
-                      Farming Practice / Certification
+                      खेती की पद्धति / प्रमाणन
                     </label>
                     <select
                       value={farmingPractice}
                       onChange={(e) => setFarmingPractice(e.target.value)}
                       className="w-full text-xs border border-neutral-300 rounded-xl px-3 py-2.5 focus:outline-none focus:border-[#2A7252] bg-white cursor-pointer"
                     >
-                      <option value="NPOP Certified Organic">NPOP Certified Organic (Jaivik Bharat)</option>
-                      <option value="Zero Budget Natural Farming (ZBNF)">Zero Budget Natural Farming (ZBNF)</option>
-                      <option value="Residue-Free Mandi Grade">Residue-Free Mandi Grade</option>
-                      <option value="Traditional High-Yield Mandi">Traditional High-Yield Mandi</option>
+                      <option value="NPOP Certified Organic">जैविक प्रमाणित (NPOP Certified Organic / जैविक भारत)</option>
+                      <option value="Zero Budget Natural Farming (ZBNF)">शून्य बजट प्राकृतिक खेती (ZBNF Natural Farming)</option>
+                      <option value="Residue-Free Mandi Grade">अवशेष-मुक्त प्रीमियम मंडी ग्रेड (Residue-Free)</option>
+                      <option value="Traditional High-Yield Mandi">पारंपरिक उच्च उपज मंडी ग्रेड (Traditional High-Yield)</option>
                     </select>
                   </div>
 
@@ -1226,10 +1226,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                     <div className="flex items-center justify-between text-xs font-bold text-[#184533]">
                       <span className="flex items-center gap-1.5">
                         <Scale className="w-4 h-4 text-[#2A7252]" />
-                        <span>Harvest Batch for Immediate Sale</span>
+                        <span>तत्काल बिक्री हेतु तैयार फसल लॉट</span>
                       </span>
                       <span className="text-[10px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full font-bold">
-                        Live Marketplace Listing
+                        लाइव मंडी में लिस्ट होगी
                       </span>
                     </div>
 
@@ -1237,12 +1237,12 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                       {/* Variety / Title */}
                       <div>
                         <label className="text-[11px] font-bold text-neutral-700 block mb-1">
-                          Crop Variety / Title <span className="text-rose-500">*</span>
+                          फसल की किस्म / नाम <span className="text-rose-500">*</span>
                         </label>
                         <input
                           type="text"
                           required
-                          placeholder="e.g. Sharbati Golden Wheat (C-306)"
+                          placeholder="उदा. शरबती गोल्डन गेहूं (C-306 ग्रेड ए)"
                           value={sellCropTitle}
                           onChange={(e) => setSellCropTitle(e.target.value)}
                           className="w-full text-xs font-semibold border border-neutral-300 rounded-xl px-3 py-2 focus:outline-none focus:border-[#2A7252] bg-white"
@@ -1251,37 +1251,37 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 
                       {/* Category */}
                       <div>
-                        <label className="text-[11px] font-bold text-neutral-700 block mb-1">Category</label>
+                        <label className="text-[11px] font-bold text-neutral-700 block mb-1">फसल की श्रेणी</label>
                         <select
                           value={sellCropCategory}
                           onChange={(e) => setSellCropCategory(e.target.value as any)}
                           className="w-full text-xs border border-neutral-300 rounded-xl px-3 py-2 focus:outline-none focus:border-[#2A7252] bg-white cursor-pointer"
                         >
-                          <option value="Grains">Grains & Cereals</option>
-                          <option value="Pulses">Pulses & Legumes</option>
-                          <option value="Oilseeds">Oilseeds</option>
-                          <option value="Vegetables">Vegetables</option>
-                          <option value="Spices">Spices</option>
-                          <option value="Cash Crops">Cash Crops</option>
+                          <option value="Grains">अनाज (Grains & Cereals)</option>
+                          <option value="Pulses">दालें एवं दलहन (Pulses & Legumes)</option>
+                          <option value="Oilseeds">तिलहन (Oilseeds)</option>
+                          <option value="Vegetables">सब्जियां (Vegetables)</option>
+                          <option value="Spices">मसाले (Spices)</option>
+                          <option value="Cash Crops">नकदी फसलें (Cash Crops)</option>
                         </select>
                       </div>
 
                       {/* Available Quantity in Quintals */}
                       <div>
                         <label className="text-[11px] font-bold text-neutral-700 block mb-1">
-                          Available Quantity (Quintals) <span className="text-rose-500">*</span>
+                          उपलब्ध मात्रा (क्विंटल में) <span className="text-rose-500">*</span>
                         </label>
                         <div className="relative">
                           <input
                             type="number"
                             min="1"
-                            placeholder="e.g. 120"
+                            placeholder="उदा. 120"
                             value={sellQuantityQuintals}
                             onChange={(e) => setSellQuantityQuintals(e.target.value ? Number(e.target.value) : '')}
                             className="w-full text-xs font-bold border border-neutral-300 rounded-xl px-3 py-2 focus:outline-none focus:border-[#2A7252] bg-white"
                           />
                           <span className="absolute right-3 top-2 text-[11px] text-neutral-500">
-                            Qtl ({Number(sellQuantityQuintals || 0) * 100} kg)
+                            क्विंटल ({Number(sellQuantityQuintals || 0) * 100} किग्रा)
                           </span>
                         </div>
                       </div>
@@ -1289,20 +1289,20 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                       {/* Expected Price per Quintal */}
                       <div>
                         <label className="text-[11px] font-bold text-neutral-700 block mb-1">
-                          Expected Price (₹ / Quintal) <span className="text-rose-500">*</span>
+                          अपेक्षित मूल्य (₹ / क्विंटल) <span className="text-rose-500">*</span>
                         </label>
                         <div className="relative">
                           <span className="absolute left-3 top-2 text-xs font-bold text-neutral-500">₹</span>
                           <input
                             type="number"
                             min="100"
-                            placeholder="e.g. 3250"
+                            placeholder="उदा. 3250"
                             value={sellExpectedPrice}
                             onChange={(e) => setSellExpectedPrice(e.target.value ? Number(e.target.value) : '')}
                             className="w-full text-xs font-bold border border-neutral-300 rounded-xl pl-7 pr-3 py-2 focus:outline-none focus:border-[#2A7252] bg-white"
                           />
                           <span className="absolute right-3 top-2 text-[10px] text-emerald-700 font-bold">
-                            +18% over MSP
+                            एमएसपी से +18% अधिक
                           </span>
                         </div>
                       </div>
@@ -1310,13 +1310,13 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                       {/* Moisture Percentage */}
                       <div>
                         <label className="text-[11px] font-bold text-neutral-700 block mb-1">
-                          Moisture Content (%)
+                          नमी की मात्रा (%)
                         </label>
                         <div className="relative">
                           <input
                             type="number"
                             step="0.1"
-                            placeholder="e.g. 10.8"
+                            placeholder="उदा. 10.8"
                             value={sellMoisturePercent}
                             onChange={(e) => setSellMoisturePercent(e.target.value ? Number(e.target.value) : '')}
                             className="w-full text-xs border border-neutral-300 rounded-xl px-3 py-2 focus:outline-none focus:border-[#2A7252] bg-white"
@@ -1327,16 +1327,16 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 
                       {/* Packaging */}
                       <div>
-                        <label className="text-[11px] font-bold text-neutral-700 block mb-1">Packaging</label>
+                        <label className="text-[11px] font-bold text-neutral-700 block mb-1">पैकिंग का प्रकार</label>
                         <select
                           value={sellPackaging}
                           onChange={(e) => setSellPackaging(e.target.value)}
                           className="w-full text-xs border border-neutral-300 rounded-xl px-3 py-2 focus:outline-none focus:border-[#2A7252] bg-white cursor-pointer"
                         >
-                          <option value="50kg Hermetic Moisture-Proof Bags">50kg Hermetic Bags</option>
-                          <option value="50kg Standard Jute Bags">50kg Standard Jute Bags</option>
-                          <option value="25kg Packaged Retail Sacks">25kg Retail Sacks</option>
-                          <option value="Bulk Loose Trailer Load">Bulk Loose Trailer Load</option>
+                          <option value="50kg Hermetic Moisture-Proof Bags">50 किग्रा वायुरोधी सुरक्षित बैग</option>
+                          <option value="50kg Standard Jute Bags">50 किग्रा मानक जूट बोरी</option>
+                          <option value="25kg Packaged Retail Sacks">25 किग्रा पैकेज्ड रिटेल बैग</option>
+                          <option value="Bulk Loose Trailer Load">थोक खुला ट्रेलर/ट्रॉली लोड</option>
                         </select>
                       </div>
                     </div>
@@ -1350,20 +1350,20 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                       className="py-2 px-4 border border-neutral-300 text-neutral-700 text-xs font-bold rounded-xl hover:bg-neutral-50 transition flex items-center gap-1.5 cursor-pointer"
                     >
                       <ArrowLeft className="w-3.5 h-3.5" />
-                      <span>Back</span>
+                      <span>पीछे</span>
                     </button>
                     <button
                       type="button"
                       onClick={() => {
                         if (!sellCropTitle || !sellQuantityQuintals) {
-                          alert('Please enter crop title and available quantity.');
+                          alert('कृपया फसल का नाम और उपलब्ध मात्रा दर्ज करें।');
                           return;
                         }
                         setRegStep(5);
                       }}
                       className="py-2.5 px-5 bg-[#1E523D] hover:bg-[#164231] text-white text-xs font-bold rounded-xl transition flex items-center gap-2 cursor-pointer"
                     >
-                      <span>Next: Bank & Payment Details</span>
+                      <span>आगे: बैंक एवं भुगतान विवरण</span>
                       <ArrowRight className="w-4 h-4" />
                     </button>
                   </div>
@@ -1376,10 +1376,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                   <div className="border-b border-neutral-200 pb-2">
                     <h3 className="text-sm font-bold text-neutral-900 flex items-center gap-1.5 font-['Outfit']">
                       <Landmark className="w-4 h-4 text-[#2A7252]" />
-                      <span>Bank Account & Instant Escrow Payment (DBT)</span>
+                      <span>बैंक खाता एवं सीधा एस्क्रो भुगतान (DBT)</span>
                     </h3>
                     <p className="text-xs text-neutral-500">
-                      Payment from buyers is locked in ONDC Escrow and released directly (T+0) to your verified bank account upon assaying approval.
+                      खरीदार का भुगतान सरकारी ONDC एस्क्रो में सुरक्षित जमा रहता है और गुणवत्ता जांच के तुरंत बाद (T+0) आपके बैंक खाते में अंतरित होता है।
                     </p>
                   </div>
 
@@ -1387,12 +1387,12 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                     {/* Account Holder Name */}
                     <div>
                       <label className="text-xs font-bold text-neutral-700 block mb-1">
-                        Bank Account Holder Name <span className="text-rose-500">*</span>
+                        खाताधारक का नाम (आधार के अनुसार) <span className="text-rose-500">*</span>
                       </label>
                       <input
                         type="text"
                         required
-                        placeholder="Must match Aadhaar Name"
+                        placeholder="आधार कार्ड में दर्ज नाम अनुसार"
                         value={accountHolderName || fullName}
                         onChange={(e) => setAccountHolderName(e.target.value)}
                         className="w-full text-xs font-semibold border border-neutral-300 rounded-xl px-3 py-2.5 focus:outline-none focus:border-[#2A7252]"
@@ -1402,11 +1402,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                     {/* Bank Name */}
                     <div>
                       <label className="text-xs font-bold text-neutral-700 block mb-1">
-                        Bank Name <span className="text-rose-500">*</span>
+                        बैंक का नाम <span className="text-rose-500">*</span>
                       </label>
                       <input
                         type="text"
-                        placeholder="e.g. State Bank of India / Punjab National Bank"
+                        placeholder="उदा. भारतीय स्टेट बैंक (SBI) / पंजाब नेशनल बैंक"
                         value={bankName}
                         onChange={(e) => setBankName(e.target.value)}
                         className="w-full text-xs border border-neutral-300 rounded-xl px-3 py-2.5 focus:outline-none focus:border-[#2A7252]"
@@ -1416,11 +1416,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                     {/* Bank Account Number */}
                     <div>
                       <label className="text-xs font-bold text-neutral-700 block mb-1">
-                        Bank Account Number <span className="text-rose-500">*</span>
+                        बैंक खाता संख्या <span className="text-rose-500">*</span>
                       </label>
                       <input
                         type="password"
-                        placeholder="e.g. 38492019482"
+                        placeholder="उदा. 38492019482"
                         value={accountNumber}
                         onChange={(e) => setAccountNumber(e.target.value.replace(/\D/g, ''))}
                         className="w-full text-xs font-mono font-bold border border-neutral-300 rounded-xl px-3 py-2.5 focus:outline-none focus:border-[#2A7252]"
@@ -1430,11 +1430,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                     {/* Confirm Account Number */}
                     <div>
                       <label className="text-xs font-bold text-neutral-700 block mb-1">
-                        Confirm Account Number <span className="text-rose-500">*</span>
+                        खाता संख्या की पुनः पुष्टि करें <span className="text-rose-500">*</span>
                       </label>
                       <input
                         type="text"
-                        placeholder="Re-enter account number"
+                        placeholder="खाता संख्या दोबारा दर्ज करें"
                         value={confirmAccountNumber}
                         onChange={(e) => setConfirmAccountNumber(e.target.value.replace(/\D/g, ''))}
                         className="w-full text-xs font-mono font-bold border border-neutral-300 rounded-xl px-3 py-2.5 focus:outline-none focus:border-[#2A7252]"
@@ -1444,11 +1444,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                     {/* Bank IFSC Code */}
                     <div>
                       <label className="text-xs font-bold text-neutral-700 block mb-1">
-                        Bank IFSC Code <span className="text-rose-500">*</span>
+                        बैंक IFSC कोड <span className="text-rose-500">*</span>
                       </label>
                       <input
                         type="text"
-                        placeholder="e.g. SBIN0001245"
+                        placeholder="उदा. SBIN0001245"
                         value={ifscCode}
                         onChange={(e) => setIfscCode(e.target.value.toUpperCase())}
                         className="w-full text-xs font-mono font-bold uppercase border border-neutral-300 rounded-xl px-3 py-2.5 focus:outline-none focus:border-[#2A7252]"
@@ -1458,11 +1458,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                     {/* UPI ID */}
                     <div>
                       <label className="text-xs font-bold text-neutral-700 block mb-1">
-                        UPI VPA for Instant Payout <span className="text-neutral-400 text-[10px]">(Optional)</span>
+                        तुरंत भुगतान हेतु UPI आईडी <span className="text-neutral-400 text-[10px]">(वैकल्पिक)</span>
                       </label>
                       <input
                         type="text"
-                        placeholder="e.g. 9876543210@upi or kisan@sbi"
+                        placeholder="उदा. 9876543210@upi या kisan@sbi"
                         value={upiId}
                         onChange={(e) => setUpiId(e.target.value)}
                         className="w-full text-xs font-mono border border-neutral-300 rounded-xl px-3 py-2.5 focus:outline-none focus:border-[#2A7252]"
@@ -1479,7 +1479,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                       className="accent-[#2A7252] w-4 h-4 rounded"
                     />
                     <span>
-                      This account is linked with <strong>Aadhaar DBT (Direct Benefit Transfer)</strong> for automated PM-KISAN, fertilizer subsidies, and Khet Link Escrow payouts.
+                      यह खाता <strong>आधार DBT (प्रत्यक्ष लाभ अंतरण)</strong> से जुड़ा है, जिससे पीएम-किसान, खाद सब्सिडी और खेति लिंक एस्क्रो का पैसा सीधे इस खाते में आएगा।
                     </span>
                   </label>
 
@@ -1491,20 +1491,20 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                       className="py-2 px-4 border border-neutral-300 text-neutral-700 text-xs font-bold rounded-xl hover:bg-neutral-50 transition flex items-center gap-1.5 cursor-pointer"
                     >
                       <ArrowLeft className="w-3.5 h-3.5" />
-                      <span>Back</span>
+                      <span>पीछे</span>
                     </button>
                     <button
                       type="button"
                       onClick={() => {
                         if (!accountNumber || accountNumber !== confirmAccountNumber) {
-                          alert('Please enter and confirm matching bank account numbers.');
+                          alert('कृपया सही बैंक खाता संख्या दर्ज करें और दोनों का मिलान करें।');
                           return;
                         }
                         setRegStep(6);
                       }}
                       className="py-2.5 px-5 bg-[#1E523D] hover:bg-[#164231] text-white text-xs font-bold rounded-xl transition flex items-center gap-2 cursor-pointer"
                     >
-                      <span>Next: KYC & Document Verification</span>
+                      <span>आगे: केवाईसी एवं दस्तावेज सत्यापन</span>
                       <ArrowRight className="w-4 h-4" />
                     </button>
                   </div>
@@ -1517,10 +1517,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                   <div className="border-b border-neutral-200 pb-2">
                     <h3 className="text-sm font-bold text-neutral-900 flex items-center gap-1.5 font-['Outfit']">
                       <ShieldCheck className="w-4 h-4 text-[#2A7252]" />
-                      <span>KYC & Land Record Document Verification</span>
+                      <span>केवाईसी एवं भूमि रिकॉर्ड दस्तावेज सत्यापन</span>
                     </h3>
                     <p className="text-xs text-neutral-500">
-                      Statutory KYC compliant with Ministry of Agriculture & APMC e-NAM guidelines.
+                      कृषि मंत्रालय एवं ई-नाम (e-NAM) नियमों के अनुरूप सुरक्षित एवं सरकारी मान्य केवाईसी प्रक्रिया।
                     </p>
                   </div>
 
@@ -1528,7 +1528,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                     {/* Aadhaar Number */}
                     <div>
                       <label className="text-xs font-bold text-neutral-700 block mb-1">
-                        12-Digit Aadhaar Number / VID <span className="text-rose-500">*</span>
+                        12-अंकों का आधार नंबर या VID <span className="text-rose-500">*</span>
                       </label>
                       <input
                         type="text"
@@ -1538,23 +1538,23 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                         onChange={(e) => setAadhaarNumber(e.target.value)}
                         className="w-full text-xs font-mono font-bold border border-neutral-300 rounded-xl px-3 py-2.5 focus:outline-none focus:border-[#2A7252]"
                       />
-                      <span className="text-[10px] text-neutral-400">Encrypted with 256-bit UIDAI masking</span>
+                      <span className="text-[10px] text-neutral-400">यूआईडीएआई 256-बिट सुरक्षित मास्किंग</span>
                     </div>
 
                     {/* Land Document Type */}
                     <div>
                       <label className="text-xs font-bold text-neutral-700 block mb-1">
-                        Land Document Type <span className="text-rose-500">*</span>
+                        भूमि दस्तावेज का प्रकार <span className="text-rose-500">*</span>
                       </label>
                       <select
                         value={landDocType}
                         onChange={(e) => setLandDocType(e.target.value)}
                         className="w-full text-xs font-semibold border border-neutral-300 rounded-xl px-3 py-2.5 focus:outline-none focus:border-[#2A7252] bg-white cursor-pointer"
                       >
-                        <option value="Kisan Credit Card (KCC)">Kisan Credit Card (KCC)</option>
-                        <option value="7/12 Land Record Extract (Bhulekh)">7/12 Land Record Extract (Bhulekh)</option>
-                        <option value="Khasra-Khatauni / Patta Certificate">Khasra-Khatauni / Patta Certificate</option>
-                        <option value="PM-KISAN Beneficiary ID">PM-KISAN Beneficiary ID</option>
+                        <option value="Kisan Credit Card (KCC)">किसान क्रेडिट कार्ड (KCC)</option>
+                        <option value="7/12 Land Record Extract (Bhulekh)">7/12 भूलेख नकल / खतौनी</option>
+                        <option value="Khasra-Khatauni / Patta Certificate">खसरा-खतौनी / पट्टा प्रमाणपत्र</option>
+                        <option value="PM-KISAN Beneficiary ID">पीएम-किसान लाभार्थी आईडी (PM-KISAN)</option>
                       </select>
                     </div>
                   </div>
@@ -1562,11 +1562,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                   {/* Document Registration Number */}
                   <div>
                     <label className="text-xs font-bold text-neutral-700 block mb-1">
-                      Document / KCC / Khasra Registration Number <span className="text-rose-500">*</span>
+                      दस्तावेज / KCC / खसरा पंजीकरण संख्या <span className="text-rose-500">*</span>
                     </label>
                     <input
                       type="text"
-                      placeholder="e.g. KCC-PB-2026-98412 or Khasra #142/9"
+                      placeholder="उदा. KCC-PB-2026-98412 या खसरा #142/9"
                       value={landDocNumber}
                       onChange={(e) => setLandDocNumber(e.target.value)}
                       className="w-full text-xs font-mono border border-neutral-300 rounded-xl px-3 py-2.5 focus:outline-none focus:border-[#2A7252]"
@@ -1576,7 +1576,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                   {/* File Upload Simulator with Instant AI Scan */}
                   <div className="space-y-1.5">
                     <label className="text-xs font-bold text-neutral-700 block">
-                      Upload Document Copy (PDF, JPG or PNG)
+                      दस्तावेज की फोटो या पीडीएफ अपलोड करें (PDF, JPG या PNG)
                     </label>
                     <div className="border-2 border-dashed border-emerald-300 hover:border-emerald-500 rounded-2xl p-4 text-center bg-emerald-50/40 transition cursor-pointer relative">
                       <input
@@ -1591,11 +1591,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                           {uploadedFileName ? (
                             <span className="text-emerald-800 font-mono">{uploadedFileName}</span>
                           ) : (
-                            <span>Drag and drop document or click to browse</span>
+                            <span>दस्तावेज यहां खींचें या चुनने के लिए क्लिक करें</span>
                           )}
                         </div>
                         <p className="text-[10px] text-neutral-400">
-                          Supported: KCC Card photo, Bhulekh 7/12 PDF, Khasra receipt (Max 15MB)
+                          मान्य: केसीसी कार्ड फोटो, 7/12 नकल, खसरा रसीद (अधिकतम 15MB)
                         </p>
                       </div>
                     </div>
@@ -1604,7 +1604,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                     {isKycScanning && (
                       <div className="flex items-center gap-2 text-xs text-amber-700 bg-amber-50 p-2.5 rounded-xl border border-amber-200 animate-pulse">
                         <RefreshCw className="w-4 h-4 animate-spin text-amber-600" />
-                        <span>OCR Scanning & verifying land records with State Revenue API...</span>
+                        <span>राज्य राजस्व विभाग के साथ भूमि रिकॉर्ड का सत्यापन किया जा रहा है...</span>
                       </div>
                     )}
 
@@ -1612,10 +1612,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                       <div className="flex items-center justify-between text-xs text-emerald-900 bg-emerald-100 p-2.5 rounded-xl border border-emerald-300">
                         <div className="flex items-center gap-2 font-bold">
                           <BadgeCheck className="w-5 h-5 text-emerald-600" />
-                          <span>Government Land Registry & UIDAI Matched Successfully ✓</span>
+                          <span>सरकारी राजस्व रिकॉर्ड एवं आधार का सफलतापूर्वक मिलान हुआ ✓</span>
                         </div>
                         <span className="text-[10px] font-mono bg-white px-2 py-0.5 rounded border border-emerald-400">
-                          Assay Score: 98%
+                          सत्यापन स्कोर: 98%
                         </span>
                       </div>
                     )}
@@ -1630,7 +1630,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                       className="accent-[#2A7252] w-4 h-4 rounded mt-0.5"
                     />
                     <span>
-                      I certify that the above land, harvest quantity ({sellQuantityQuintals || 0} Qtl), bank, and KYC details are accurate. I agree to Khet Link's Quality Assaying Protocol and ONDC Smart Contract Escrow terms.
+                      मैं प्रमाणित करता/करती हूँ कि दी गई भूमि, फसल मात्रा ({sellQuantityQuintals || 0} क्विंटल), बैंक और केवाईसी विवरण सत्य हैं। मैं खेति लिंक की गुणवत्ता जांच और ONDC स्मार्ट कॉन्ट्रैक्ट एस्क्रो नियमों से सहमत हूँ।
                     </span>
                   </label>
 
@@ -1642,7 +1642,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                       className="py-2 px-4 border border-neutral-300 text-neutral-700 text-xs font-bold rounded-xl hover:bg-neutral-50 transition flex items-center gap-1.5 cursor-pointer"
                     >
                       <ArrowLeft className="w-3.5 h-3.5" />
-                      <span>Back</span>
+                      <span>पीछे</span>
                     </button>
 
                     <button
@@ -1654,12 +1654,12 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                       {isSubmittingAuth ? (
                         <>
                           <RefreshCw className="w-4 h-4 animate-spin text-amber-300" />
-                          <span>Saving to Firebase Database...</span>
+                          <span>डेटाबेस में सुरक्षित किया जा रहा है...</span>
                         </>
                       ) : (
                         <>
                           <Sparkles className="w-4 h-4 text-amber-300" />
-                          <span>Verify & Complete Registration to Sell</span>
+                          <span>सत्यापित करें और बिक्री हेतु पंजीकरण पूर्ण करें</span>
                         </>
                       )}
                     </button>
@@ -1676,13 +1676,13 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             <div className="space-y-4">
               <div className="border-b border-neutral-200 pb-2">
                 <h3 className="text-sm font-bold text-neutral-900 font-['Outfit'] flex items-center justify-between">
-                  <span>Farmer & FPO Login • Verification Required</span>
+                  <span>किसान व एफपीओ (FPO) लॉगिन • विवरण सत्यापन</span>
                   <span className="text-[10px] font-semibold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full">
-                    Kisan ID / Mobile
+                    किसान आईडी / मोबाइल
                   </span>
                 </h3>
                 <p className="text-xs text-neutral-500 mt-0.5">
-                  Verify your farmer registration credentials and information to access active mandi bids, escrow releases, and crop lots.
+                  मंडी बोलियां, एस्क्रो सुरक्षित भुगतान और फसल लॉट तक पहुंचने के लिए अपने पंजीकृत किसान विवरण को सत्यापित करें।
                 </p>
               </div>
 
@@ -1691,49 +1691,49 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-1.5 text-xs font-extrabold text-[#184533]">
                     <ShieldCheck className="w-4 h-4 text-[#2A7252]" />
-                    <span>Mandatory Farmer Information Checked at Login</span>
+                    <span>लॉगिन पर जांची जाने वाली 9 अनिवार्य किसान जानकारियां</span>
                   </div>
                   <span className="text-[10px] font-bold text-[#2A7252] bg-white px-2 py-0.5 rounded-full border border-[#B3D6B8]">
-                    9/9 Verified
+                    9/9 सत्यापित
                   </span>
                 </div>
 
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5 text-[11px]">
                   <div className="flex items-center gap-1.5 p-1.5 rounded-lg bg-white/80 border border-[#D5E6D8] text-neutral-700">
                     <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                    <span>Mobile/Email Reg.</span>
+                    <span>मोबाइल/ईमेल पंजीकरण</span>
                   </div>
                   <div className="flex items-center gap-1.5 p-1.5 rounded-lg bg-white/80 border border-[#D5E6D8] text-neutral-700">
                     <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                    <span>OTP Verification</span>
+                    <span>OTP सत्यापन</span>
                   </div>
                   <div className="flex items-center gap-1.5 p-1.5 rounded-lg bg-white/80 border border-[#D5E6D8] text-neutral-700">
                     <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                    <span>Farmer Profile</span>
+                    <span>किसान प्रोफाइल</span>
                   </div>
                   <div className="flex items-center gap-1.5 p-1.5 rounded-lg bg-white/80 border border-[#D5E6D8] text-neutral-700">
                     <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                    <span>Farm Location</span>
+                    <span>खेत का स्थान</span>
                   </div>
                   <div className="flex items-center gap-1.5 p-1.5 rounded-lg bg-white/80 border border-[#D5E6D8] text-neutral-700">
                     <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                    <span>Farm Size (Acres)</span>
+                    <span>खेत का क्षेत्रफल (एकड़)</span>
                   </div>
                   <div className="flex items-center gap-1.5 p-1.5 rounded-lg bg-white/80 border border-[#D5E6D8] text-neutral-700">
                     <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                    <span>Crops Grown</span>
+                    <span>उगाई जाने वाली फसलें</span>
                   </div>
                   <div className="flex items-center gap-1.5 p-1.5 rounded-lg bg-white/80 border border-[#D5E6D8] text-neutral-700">
                     <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                    <span>Available Quantity</span>
+                    <span>उपलब्ध मात्रा (क्विंटल)</span>
                   </div>
                   <div className="flex items-center gap-1.5 p-1.5 rounded-lg bg-white/80 border border-[#D5E6D8] text-neutral-700">
                     <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                    <span>Bank / Payment (DBT)</span>
+                    <span>बैंक / DBT खाता</span>
                   </div>
                   <div className="flex items-center gap-1.5 p-1.5 rounded-lg bg-white/80 border border-[#D5E6D8] text-neutral-700">
                     <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                    <span>KYC / Documents</span>
+                    <span>KYC / दस्तावेज</span>
                   </div>
                 </div>
               </div>
@@ -1751,21 +1751,21 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                 >
                   <div>
                     <label className="text-xs font-bold text-neutral-700 block mb-1">
-                      Farmer Registered Mobile Number or Kisan ID <span className="text-rose-500">*</span>
+                      किसान का पंजीकृत मोबाइल नंबर या किसान क्रेडिट कार्ड ID <span className="text-rose-500">*</span>
                     </label>
                     <div className="relative">
                       <Phone className="absolute left-3 top-2.5 w-4 h-4 text-neutral-400" />
                       <input
                         type="text"
                         required
-                        placeholder="+91 98721 45680 or KCC-PB-8941"
+                        placeholder="+91 98721 45680 या KCC-PB-8941"
                         value={loginPhone}
                         onChange={(e) => setLoginPhone(e.target.value)}
                         className="w-full text-xs border border-neutral-300 rounded-xl pl-9 pr-3 py-2.5 focus:outline-none focus:border-[#2A7252]"
                       />
                     </div>
                     <span className="text-[10px] text-neutral-400 mt-1 block">
-                      We'll verify OTP and pull your registered farm location, crops, available quantity, and bank DBT details.
+                      हम OTP सत्यापित करेंगे और आपका पंजीकृत खेत स्थान, फसलें, उपलब्ध मात्रा व बैंक DBT विवरण प्राप्त करेंगे।
                     </span>
                   </div>
 
@@ -1773,7 +1773,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                     type="submit"
                     className="w-full py-2.5 bg-[#1E523D] hover:bg-[#164231] text-white font-bold text-xs rounded-xl transition flex items-center justify-center gap-2 cursor-pointer"
                   >
-                    <span>Request Login OTP</span>
+                    <span>लॉगिन OTP भेजें (Request OTP)</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </button>
                 </form>
@@ -1783,13 +1783,13 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               {loginStep === 'otp' && (
                 <div className="space-y-3">
                   <div className="bg-emerald-50 text-emerald-800 p-2.5 rounded-xl text-xs flex items-center justify-between">
-                    <span>Enter OTP sent to <strong>+91 {loginPhone || '9872145680'}</strong> (Demo: <strong>123456</strong>)</span>
+                    <span><strong>+91 {loginPhone || '9872145680'}</strong> पर भेजा गया OTP दर्ज करें (डेमो: <strong>123456</strong>)</span>
                     <button
                       type="button"
                       onClick={() => setLoginOtpCode('123456')}
                       className="text-[11px] font-bold text-emerald-700 underline cursor-pointer"
                     >
-                      Fill 123456
+                      123456 भरें
                     </button>
                   </div>
                   <input
@@ -1806,7 +1806,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                       onClick={() => setLoginStep('phone')}
                       className="py-2.5 px-4 border border-neutral-300 text-neutral-700 font-bold text-xs rounded-xl hover:bg-neutral-50 transition cursor-pointer"
                     >
-                      Change Phone
+                      नंबर बदलें
                     </button>
                     <button
                       type="button"
@@ -1816,7 +1816,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                       }}
                       className="flex-1 py-2.5 bg-[#2A7252] hover:bg-[#1E523D] text-white font-bold text-xs uppercase tracking-wider rounded-xl transition flex items-center justify-center gap-2 cursor-pointer"
                     >
-                      <span>Verify OTP & Review Farmer Information</span>
+                      <span>OTP सत्यापित करें और किसान जानकारी देखें</span>
                       <ArrowRight className="w-3.5 h-3.5" />
                     </button>
                   </div>
@@ -1830,45 +1830,45 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                     <div className="flex items-center justify-between pb-1 border-b border-emerald-200">
                       <span className="text-xs font-bold text-emerald-900 flex items-center gap-1.5">
                         <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                        Farmer Registered Profile Information
+                        किसान पंजीकृत प्रोफाइल जानकारी
                       </span>
                       <span className="text-[10px] font-bold bg-emerald-200 text-emerald-800 px-2 py-0.5 rounded-full">
-                        Govt Aadhaar & KCC Verified
+                        सरकारी आधार व KCC सत्यापित
                       </span>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-neutral-700">
                       <div className="bg-white/80 p-2 rounded-xl border border-emerald-100">
-                        <span className="text-[10px] font-bold text-neutral-400 block uppercase">Farmer Profile</span>
-                        <p className="font-bold text-neutral-900">Sardar Gurpreet Singh (Age: 48)</p>
-                        <p className="text-[11px] text-neutral-600">Malwa Kisan Producer Company (FPO)</p>
+                        <span className="text-[10px] font-bold text-neutral-400 block uppercase">किसान प्रोफाइल</span>
+                        <p className="font-bold text-neutral-900">सरदार गुरप्रीत सिंह (उम्र: 48 वर्ष)</p>
+                        <p className="text-[11px] text-neutral-600">मालवा किसान उत्पादक कंपनी (FPO सदस्य)</p>
                       </div>
 
                       <div className="bg-white/80 p-2 rounded-xl border border-emerald-100">
-                        <span className="text-[10px] font-bold text-neutral-400 block uppercase">Farm Location & Size</span>
-                        <p className="font-bold text-neutral-900">Raikot, Dist. Ludhiana, Punjab</p>
-                        <p className="text-[11px] text-neutral-600">8.5 Acres • Solar Tubewell + Canal</p>
+                        <span className="text-[10px] font-bold text-neutral-400 block uppercase">खेत स्थान व क्षेत्रफल</span>
+                        <p className="font-bold text-neutral-900">रायकोट, जिला लुधियाना, पंजाब</p>
+                        <p className="text-[11px] text-neutral-600">8.5 एकड़ • सोलर ट्यूबवेल + नहर सिंचाई</p>
                       </div>
 
                       <div className="bg-white/80 p-2 rounded-xl border border-emerald-100">
-                        <span className="text-[10px] font-bold text-neutral-400 block uppercase">Crops Grown & Harvest</span>
-                        <p className="font-bold text-neutral-900">Sharbati Wheat, Basmati Rice, Mustard</p>
-                        <p className="text-[11px] text-emerald-700 font-bold">140 Quintals available for dispatch</p>
+                        <span className="text-[10px] font-bold text-neutral-400 block uppercase">फसलें व उपलब्ध स्टॉक</span>
+                        <p className="font-bold text-neutral-900">शरबती गेहूं, बासमती धान, सरसों</p>
+                        <p className="text-[11px] text-emerald-700 font-bold">140 क्विंटल तुरंत प्रेषण हेतु उपलब्ध</p>
                       </div>
 
                       <div className="bg-white/80 p-2 rounded-xl border border-emerald-100">
-                        <span className="text-[10px] font-bold text-neutral-400 block uppercase">Bank & Direct DBT</span>
-                        <p className="font-bold text-neutral-900">State Bank of India • A/C •••• 4821</p>
-                        <p className="text-[11px] text-emerald-700 font-bold">IFSC: SBIN0001245 • Aadhaar DBT Active</p>
+                        <span className="text-[10px] font-bold text-neutral-400 block uppercase">बैंक खाता व सीधा DBT</span>
+                        <p className="font-bold text-neutral-900">भारतीय स्टेट बैंक • खाता •••• 4821</p>
+                        <p className="text-[11px] text-emerald-700 font-bold">IFSC: SBIN0001245 • आधार DBT सक्रिय</p>
                       </div>
                     </div>
 
                     <div className="pt-1 flex items-center justify-between text-[11px] text-emerald-800">
                       <span className="flex items-center gap-1">
                         <FileCheck className="w-3.5 h-3.5 text-emerald-600" />
-                        Land Record Document: <strong>KCC & 7/12 Matched (UIDAI Masked)</strong>
+                        भूमि अभिलेख: <strong>KCC व खतौनी 7/12 सत्यापित (UIDAI सुरक्षित)</strong>
                       </span>
-                      <span>Verified: Today</span>
+                      <span>सत्यापन तिथि: आज</span>
                     </div>
                   </div>
 
@@ -1879,7 +1879,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                       onClick={() => setFarmerMode('register')}
                       className="py-2.5 px-3.5 border border-[#2A7252] text-[#2A7252] hover:bg-emerald-50 text-xs font-bold rounded-xl transition flex items-center justify-center gap-1.5 cursor-pointer"
                     >
-                      <span>✏️ Update Farm / Bank Info</span>
+                      <span>✏️ खेत / बैंक विवरण बदलें</span>
                     </button>
 
                     <button
@@ -1888,7 +1888,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                       className="flex-1 py-3 px-4 bg-gradient-to-r from-[#1B523D] via-[#2A7252] to-[#1B523D] hover:from-[#154231] hover:to-[#154231] text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-md transition flex items-center justify-center gap-2 cursor-pointer"
                     >
                       <Sparkles className="w-4 h-4 text-amber-300" />
-                      <span>Confirm Information & Enter Farmer Portal</span>
+                      <span>विवरण सत्यापित करें और किसान पोर्टल खोलें</span>
                     </button>
                   </div>
                 </div>
@@ -1897,13 +1897,13 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               {/* Toggle to Full Registration */}
               <div className="pt-2 text-center border-t border-neutral-100">
                 <p className="text-xs text-neutral-500">
-                  New farmer without registration?{' '}
+                  क्या आप नए किसान हैं और अभी तक पंजीकरण नहीं कराया?{' '}
                   <button
                     type="button"
                     onClick={() => setFarmerMode('register')}
                     className="font-bold text-[#2A7252] hover:underline cursor-pointer"
                   >
-                    Start Complete Farmer Registration (All 9 Fields)
+                    सम्पूर्ण किसान पंजीकरण शुरू करें (सभी 9 चरण)
                   </button>
                 </p>
               </div>
@@ -1917,13 +1917,13 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             <div className="space-y-4">
               <div className="border-b border-neutral-200 pb-2">
                 <h3 className="text-sm font-bold text-neutral-900 font-['Outfit'] flex items-center justify-between">
-                  <span>Hostel Mess & Bulk Buyer Procurement Portal</span>
+                  <span>हॉस्टल मेस व थोक खरीदार पोर्टल</span>
                   <span className="text-[10px] font-semibold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full">
-                    Mess, Canteen, Hotel & FMCG
+                    मेस, कैंटीन, होटल व खाद्य उद्योग
                   </span>
                 </h3>
                 <p className="text-xs text-neutral-500 mt-0.5">
-                  Direct farmgate grain, pulse, and produce procurement for college messes, hostels, hotel kitchens, and bulk food businesses.
+                  कॉलेज मेस, हॉस्टल, होटल किचन और थोक खाद्य व्यापारियों के लिए सीधे खेत से अनाज, दाल व उपज खरीद सुविधा।
                 </p>
               </div>
 
@@ -1932,9 +1932,9 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                 <div className="flex items-center justify-between text-[11px] text-[#3C5148] font-bold">
                   <span className="flex items-center gap-1">
                     <Sparkles className="w-3.5 h-3.5 text-amber-500" />
-                    Quick 1-Click Procurement Access (Messes & Buyers)
+                    ⚡ 1-क्लिक त्वरित खरीद प्रवेश (डेमो खरीदार)
                   </span>
-                  <span className="text-[10px] text-neutral-400">Pre-authenticated</span>
+                  <span className="text-[10px] text-neutral-400">पूर्व-सत्यापित</span>
                 </div>
 
                 <div className="space-y-1.5">
@@ -1945,16 +1945,16 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                   >
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="font-bold text-[#1B2727]">IIT Delhi Hostel Mess & Canteen Co-op</span>
+                        <span className="font-bold text-[#1B2727]">IIT दिल्ली हॉस्टल मेस व कैंटीन को-ऑप</span>
                         <span className="text-[9px] bg-amber-100 text-amber-800 font-bold px-1.5 py-0.5 rounded">
-                          College Hostel Mess
+                          कॉलेज हॉस्टल मेस
                         </span>
                       </div>
                       <span className="text-[10px] text-neutral-500">
-                        3,200 Students • Bulk Rice, Wheat & Pulses • Hauz Khas Campus
+                        3,200 छात्र • थोक चावल, गेहूं व दालें • हौज खास परिसर
                       </span>
                     </div>
-                    <span className="text-[10px] bg-[#1E523D] text-white px-2.5 py-1 rounded-lg font-bold">Login &rarr;</span>
+                    <span className="text-[10px] bg-[#1E523D] text-white px-2.5 py-1 rounded-lg font-bold">लॉगिन करें &rarr;</span>
                   </button>
 
                   <button
@@ -1964,14 +1964,14 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                   >
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="font-bold text-[#1B2727]">Aditi Organic Foods Pvt Ltd</span>
+                        <span className="font-bold text-[#1B2727]">अदिति ऑर्गेनिक फूड्स प्राइवेट लिमिटेड</span>
                         <span className="text-[9px] bg-blue-100 text-blue-800 font-bold px-1.5 py-0.5 rounded">
-                          Food Processor
+                          खाद्य प्रसंस्करणकर्ता
                         </span>
                       </div>
-                      <span className="text-[10px] text-neutral-500">Wholesale Food Processor • Delhi NCR Mandi Hub</span>
+                      <span className="text-[10px] text-neutral-500">थोक खाद्य प्रसंस्करणकर्ता • दिल्ली एनसीआर मंडी हब</span>
                     </div>
-                    <span className="text-[10px] bg-[#1E523D] text-white px-2.5 py-1 rounded-lg font-bold">Login &rarr;</span>
+                    <span className="text-[10px] bg-[#1E523D] text-white px-2.5 py-1 rounded-lg font-bold">लॉगिन करें &rarr;</span>
                   </button>
 
                   <button
@@ -1981,21 +1981,21 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                   >
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="font-bold text-[#1B2727]">FreshMart Supermarkets Retail</span>
+                        <span className="font-bold text-[#1B2727]">फ्रेशमार्ट सुपरमार्केट्स रिटेल</span>
                         <span className="text-[9px] bg-purple-100 text-purple-800 font-bold px-1.5 py-0.5 rounded">
-                          Retail Chain
+                          रिटेल चेन
                         </span>
                       </div>
-                      <span className="text-[10px] text-neutral-500">National Supermarket Chain • Mumbai Hub</span>
+                      <span className="text-[10px] text-neutral-500">राष्ट्रीय सुपरमार्केट श्रृंखला • मुंबई हब</span>
                     </div>
-                    <span className="text-[10px] bg-[#1E523D] text-white px-2.5 py-1 rounded-lg font-bold">Login &rarr;</span>
+                    <span className="text-[10px] bg-[#1E523D] text-white px-2.5 py-1 rounded-lg font-bold">लॉगिन करें &rarr;</span>
                   </button>
                 </div>
               </div>
 
               <div className="flex items-center gap-2">
                 <div className="flex-1 border-t border-neutral-200" />
-                <span className="text-[10px] uppercase font-bold text-neutral-400">Or Procurement Login</span>
+                <span className="text-[10px] uppercase font-bold text-neutral-400">अथवा खरीदार विवरण भरकर लॉगिन करें</span>
                 <div className="flex-1 border-t border-neutral-200" />
               </div>
 
@@ -2011,28 +2011,28 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
                       <label className="text-xs font-bold text-neutral-700 block mb-1">
-                        Organization Type <span className="text-rose-500">*</span>
+                        संगठन / संस्थान का प्रकार <span className="text-rose-500">*</span>
                       </label>
                       <select
                         value={buyerOrgType}
                         onChange={(e) => setBuyerOrgType(e.target.value)}
                         className="w-full text-xs font-medium border border-neutral-300 rounded-xl px-3 py-2.5 focus:outline-none focus:border-[#2A7252] bg-white cursor-pointer"
                       >
-                        <option value="Hostel Mess & Canteen">College Mess / University Hostel</option>
-                        <option value="Hotel & Restaurant (HoReCa)">Hotel, Restaurant & Canteen</option>
-                        <option value="Food Processing / Flour Mill">Food Processing / Flour Mill</option>
-                        <option value="Supermarket / Retail Chain">Supermarket / Retail Chain</option>
-                        <option value="Export House">Govt / Export Agency</option>
+                        <option value="Hostel Mess & Canteen">कॉलेज मेस / यूनिवर्सिटी हॉस्टल (College Mess / Hostel)</option>
+                        <option value="Hotel & Restaurant (HoReCa)">होटल, रेस्टोरेंट व कैंटीन (Hotel / HoReCa)</option>
+                        <option value="Food Processing / Flour Mill">खाद्य प्रसंस्करण / आटा मिल (Food Mill / Processing)</option>
+                        <option value="Supermarket / Retail Chain">सुपरमार्केट / रिटेल चेन (Retail Chain)</option>
+                        <option value="Export House">सरकारी संस्था / निर्यात एजेंसी (Govt / Export Agency)</option>
                       </select>
                     </div>
 
                     <div>
                       <label className="text-xs font-bold text-neutral-700 block mb-1">
-                        Mess / Organization Name
+                        मेस / संगठन का नाम (Mess / Org Name)
                       </label>
                       <input
                         type="text"
-                        placeholder="e.g. North Campus Hostel Mess"
+                        placeholder="उदा. IIT दिल्ली हॉस्टल मेस / अग्रसेन कैंटीन"
                         value={buyerOrgName}
                         onChange={(e) => setBuyerOrgName(e.target.value)}
                         className="w-full text-xs border border-neutral-300 rounded-xl px-3 py-2.5 focus:outline-none focus:border-[#2A7252]"
@@ -2042,14 +2042,14 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 
                   <div>
                     <label className="text-xs font-bold text-neutral-700 block mb-1">
-                      Corporate GSTIN / Mess Registration ID or Contact <span className="text-rose-500">*</span>
+                      कॉर्पोरेट GSTIN / मेस पंजीकरण आईडी / मोबाइल नंबर <span className="text-rose-500">*</span>
                     </label>
                     <div className="relative">
                       <Building2 className="absolute left-3 top-2.5 w-4 h-4 text-neutral-400" />
                       <input
                         type="text"
                         required
-                        placeholder="e.g. 07AAACH2819K1Z4 or MESS-DL-4091"
+                        placeholder="उदा. 07AAACH2819K1Z4 या MESS-DL-4091 या 9876543210"
                         value={buyerGstin}
                         onChange={(e) => setBuyerGstin(e.target.value)}
                         className="w-full text-xs font-mono border border-neutral-300 rounded-xl pl-9 pr-3 py-2.5 focus:outline-none focus:border-[#2A7252]"
@@ -2061,7 +2061,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                     type="submit"
                     className="w-full py-2.5 bg-[#1E523D] hover:bg-[#164231] text-white font-bold text-xs rounded-xl transition flex items-center justify-center gap-2 cursor-pointer"
                   >
-                    <span>Request Procurement Auth OTP</span>
+                    <span>खरीदार प्रमाणीकरण OTP प्राप्त करें</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </button>
                 </form>
@@ -2071,13 +2071,13 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                   className="space-y-3"
                 >
                   <div className="bg-emerald-50 text-emerald-800 p-2.5 rounded-xl text-xs flex items-center justify-between">
-                    <span>Enter OTP sent to registered phone (Demo: <strong>123456</strong>)</span>
+                    <span>पंजीकृत नंबर पर भेजा गया OTP दर्ज करें (डेमो: <strong>123456</strong>)</span>
                     <button
                       type="button"
                       onClick={() => setBuyerOtpCode('123456')}
                       className="text-[11px] font-bold text-emerald-700 underline cursor-pointer"
                     >
-                      Fill 123456
+                      123456 भरें
                     </button>
                   </div>
                   <input
@@ -2096,10 +2096,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                     {isSubmittingAuth ? (
                       <>
                         <RefreshCw className="w-4 h-4 animate-spin text-amber-300" />
-                        <span>Saving to Firebase Database...</span>
+                        <span>Firebase डेटाबेस में सहेजा जा रहा है...</span>
                       </>
                     ) : (
-                      <span>Verify & Enter Procurement Portal</span>
+                      <span>सत्यापित करें और खरीद पोर्टल में प्रवेश करें</span>
                     )}
                   </button>
                 </form>
@@ -2112,7 +2112,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         {/* Modal Bottom Footer */}
         <div className="bg-neutral-50 px-5 py-3 border-t border-neutral-200 text-center shrink-0">
           <p className="text-[11px] text-neutral-500">
-            Protected by Government Mandi Escrow • UIDAI & Agmarknet Assaying Standard • ONDC Node #KS-9842
+            भारत सरकार मंडी एस्क्रो द्वारा सुरक्षित • UIDAI व एगमार्कनेट गुणवत्ता मानक • ONDC नोड #KS-9842
           </p>
         </div>
       </div>
