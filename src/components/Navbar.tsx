@@ -324,7 +324,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                       key={l.code}
                       onClick={() => {
                         setLanguage(l.code);
-                        if (onSelectLanguage) onSelectLanguage(l.label);
+                        if (onSelectLanguage) onSelectLanguage(l.code);
                         setLangDropdownOpen(false);
                       }}
                       className={`w-full text-left px-3 py-2 text-xs hover:bg-[#18533B] flex items-center justify-between cursor-pointer transition ${
@@ -514,7 +514,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     key={l.code}
                     onClick={() => {
                       setLanguage(l.code);
-                      if (onSelectLanguage) onSelectLanguage(l.label);
+                      if (onSelectLanguage) onSelectLanguage(l.code);
                     }}
                     className={`px-2 py-1.5 text-xs rounded-lg font-medium border text-center transition cursor-pointer ${
                       language === l.code 

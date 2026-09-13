@@ -560,7 +560,7 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
             <div className="flex items-center gap-2 mb-1">
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping" />
               <span className="text-xs font-bold uppercase tracking-widest text-[#1B523D] bg-emerald-100/80 px-2.5 py-0.5 rounded-full border border-emerald-300/60">
-                Direct Farmgate Ecosystem
+                {t('hero.directEcosystem', 'Direct Farmgate Ecosystem')}
               </span>
             </div>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-neutral-900 tracking-tight font-['Outfit']">
@@ -597,7 +597,7 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
               <div className="absolute top-4 left-4 flex items-center gap-2">
                 <span className="px-3 py-1 rounded-full bg-[#144231]/90 backdrop-blur-md border border-[#52B788]/60 text-emerald-200 text-xs font-bold shadow-md flex items-center gap-1.5">
                   <Sprout className="w-3.5 h-3.5 text-emerald-400" />
-                  Kisan & FPO Collective
+                  {t('hero.kisanCollectiveBadge', 'Kisan & FPO Collective')}
                 </span>
                 <span className="px-2.5 py-1 rounded-full bg-amber-400/95 text-[#0B2E21] text-[11px] font-black tracking-wider uppercase shadow-md">
                   {t('hero.statCommission', '0% Dalali Cut')}
@@ -620,25 +620,25 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
             <div className="p-6 sm:p-7 space-y-5 flex-1 flex flex-col justify-between">
               <div className="space-y-4">
                 <p className="text-neutral-600 text-xs sm:text-sm leading-relaxed">
-                  Transform from local price-takers to national market-makers. Aggregate produce with neighboring farmers, receive digital NABL assay certificates, and get <strong>guaranteed T+0 bank payouts</strong> via Aadhaar DBT.
+                  {t('hero.farmerCardDesc', 'Transform from local price-takers to national market-makers. Aggregate produce with neighboring farmers, receive digital NABL assay certificates, and get guaranteed T+0 bank payouts via Aadhaar DBT.')}
                 </p>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs text-neutral-700 font-medium pt-1">
                   <div className="flex items-center gap-2 p-2.5 rounded-xl bg-emerald-50/70 border border-emerald-100">
                     <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                    <span>Instant SMS OTP & Aadhaar DBT</span>
+                    <span>{t('hero.farmerBullet1', 'Instant SMS OTP & Aadhaar DBT')}</span>
                   </div>
                   <div className="flex items-center gap-2 p-2.5 rounded-xl bg-emerald-50/70 border border-emerald-100">
                     <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                    <span>Free digital moisture testing</span>
+                    <span>{t('hero.farmerBullet2', 'Free digital moisture testing')}</span>
                   </div>
                   <div className="flex items-center gap-2 p-2.5 rounded-xl bg-emerald-50/70 border border-emerald-100">
                     <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                    <span>FPO truckload pooling</span>
+                    <span>{t('hero.farmerBullet3', 'FPO truckload pooling')}</span>
                   </div>
                   <div className="flex items-center gap-2 p-2.5 rounded-xl bg-emerald-50/70 border border-emerald-100">
                     <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                    <span>100% Escrow safe payment</span>
+                    <span>{t('hero.farmerBullet4', '100% Escrow safe payment')}</span>
                   </div>
                 </div>
               </div>
@@ -658,12 +658,12 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
                 </motion.button>
 
                 <div className="flex items-center justify-between text-xs text-neutral-500 px-1">
-                  <span>Returning farmer?</span>
+                  <span>{t('common.returningFarmer', 'Returning farmer?')}</span>
                   <button
                     onClick={() => handleAuth('farmer')}
                     className="font-semibold text-emerald-800 hover:text-emerald-950 hover:underline cursor-pointer flex items-center gap-1"
                   >
-                    <span>Quick Login with OTP</span>
+                    <span>{t('common.quickLoginOtp', 'Quick Login with OTP')}</span>
                     <ChevronRight className="w-3.5 h-3.5" />
                   </button>
                 </div>
@@ -694,10 +694,10 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
               <div className="absolute top-4 left-4 flex items-center gap-2">
                 <span className="px-3 py-1 rounded-full bg-[#1B4332]/90 backdrop-blur-md border border-[#74C69D]/60 text-emerald-200 text-xs font-bold shadow-md flex items-center gap-1.5">
                   <Building2 className="w-3.5 h-3.5 text-emerald-300" />
-                  Hostel Mess, Brands & Retail
+                  {t('hero.messBrandsBadge', 'Hostel Mess, Brands & Retail')}
                 </span>
                 <span className="px-2.5 py-1 rounded-full bg-emerald-400/95 text-[#0B2E21] text-[11px] font-black tracking-wider uppercase shadow-md">
-                  Save 14% to 18%
+                  {t('hero.savePercent', 'Save 14% to 18%')}
                 </span>
               </div>
 
@@ -717,25 +717,25 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
             <div className="p-6 sm:p-7 space-y-5 flex-1 flex flex-col justify-between">
               <div className="space-y-4">
                 <p className="text-neutral-600 text-xs sm:text-sm leading-relaxed">
-                  Procure directly from farmgates with <strong>unified GST e-Way bills</strong>, standardized moisture assay certificates, and end-to-end refrigerated transport. Ideal for <strong>college mess, university hostels, hotel chains, and millers</strong>.
+                  {t('hero.buyerCardDesc', 'Procure directly from farmgates with unified GST e-Way bills, standardized moisture assay certificates, and end-to-end refrigerated transport. Ideal for college mess, university hostels, hotel chains, and millers.')}
                 </p>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs text-neutral-700 font-medium pt-1">
                   <div className="flex items-center gap-2 p-2.5 rounded-xl bg-emerald-50/70 border border-emerald-100">
                     <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                    <span>Hostel & Mess monthly grain contracts</span>
+                    <span>{t('hero.buyerBullet1', 'Hostel & Mess monthly grain contracts')}</span>
                   </div>
                   <div className="flex items-center gap-2 p-2.5 rounded-xl bg-emerald-50/70 border border-emerald-100">
                     <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                    <span>Zero APMC cess & direct tax invoices</span>
+                    <span>{t('hero.buyerBullet2', 'Zero APMC cess & direct tax invoices')}</span>
                   </div>
                   <div className="flex items-center gap-2 p-2.5 rounded-xl bg-emerald-50/70 border border-emerald-100">
                     <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                    <span>NABL certified moisture & foreign matter</span>
+                    <span>{t('hero.buyerBullet3', 'NABL certified moisture & foreign matter')}</span>
                   </div>
                   <div className="flex items-center gap-2 p-2.5 rounded-xl bg-emerald-50/70 border border-emerald-100">
                     <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                    <span>RBI Escrow: pay only on verified delivery</span>
+                    <span>{t('hero.buyerBullet4', 'RBI Escrow: pay only on verified delivery')}</span>
                   </div>
                 </div>
               </div>
@@ -755,12 +755,12 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
                 </motion.button>
 
                 <div className="flex items-center justify-between text-xs text-neutral-500 px-1">
-                  <span>Hostel mess or registered buyer?</span>
+                  <span>{t('common.returningBuyer', 'Hostel mess or registered buyer?')}</span>
                   <button
                     onClick={() => handleAuth('buyer')}
                     className="font-semibold text-emerald-800 hover:text-emerald-950 hover:underline cursor-pointer flex items-center gap-1"
                   >
-                    <span>Login with GSTIN / Mobile</span>
+                    <span>{t('common.loginGstin', 'Login with GSTIN / Mobile')}</span>
                     <ChevronRight className="w-3.5 h-3.5" />
                   </button>
                 </div>

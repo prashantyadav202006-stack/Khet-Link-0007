@@ -3,9 +3,25 @@ import { SupportedLanguage, SUPPORTED_LANGUAGES, TRANSLATIONS, LanguageOption } 
 
 export type UiScale = 'compact' | 'normal' | 'large' | 'xlarge';
 
+export function normalizeLanguageCode(input?: string): SupportedLanguage {
+  if (!input) return 'en';
+  const clean = input.trim().toLowerCase();
+  const matched = SUPPORTED_LANGUAGES.find(
+    (l) =>
+      l.code.toLowerCase() === clean ||
+      l.label.toLowerCase() === clean ||
+      l.nativeLabel.toLowerCase() === clean
+  );
+  if (matched) return matched.code;
+  if (['en', 'hi', 'pa', 'mr', 'te'].includes(clean)) {
+    return clean as SupportedLanguage;
+  }
+  return 'en';
+}
+
 interface LanguageContextType {
   language: SupportedLanguage;
-  setLanguage: (lang: SupportedLanguage) => void;
+  setLanguage: (lang: string) => void;
   currentLangOption: LanguageOption;
   t: (key: string, fallback?: string) => string;
   uiScale: UiScale;
@@ -19,13 +35,10 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const [language, setLanguageState] = useState<SupportedLanguage>(() => {
     try {
       const saved = localStorage.getItem('khetlink_language');
-      if (saved && (saved === 'en' || saved === 'hi' || saved === 'pa' || saved === 'mr' || saved === 'te')) {
-        return saved as SupportedLanguage;
-      }
+      return normalizeLanguageCode(saved || 'en');
     } catch {
-      // ignore
+      return 'en';
     }
-    return 'en';
   });
 
   const [uiScale, setUiScaleState] = useState<UiScale>(() => {
@@ -40,10 +53,11 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     return 'normal';
   });
 
-  const setLanguage = (newLang: SupportedLanguage) => {
-    setLanguageState(newLang);
+  const setLanguage = (newLang: string) => {
+    const code = normalizeLanguageCode(newLang);
+    setLanguageState(code);
     try {
-      localStorage.setItem('khetlink_language', newLang);
+      localStorage.setItem('khetlink_language', code);
     } catch {
       // ignore
     }
@@ -65,10 +79,12 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     root.classList.add(`ui-scale-${uiScale}`);
   }, [uiScale]);
 
-  const currentLangOption = SUPPORTED_LANGUAGES.find((l) => l.code === language) || SUPPORTED_LANGUAGES[0];
+  const currentLangOption =
+    SUPPORTED_LANGUAGES.find((l) => l.code === language) || SUPPORTED_LANGUAGES[0];
 
   const t = (key: string, fallback?: string): string => {
-    const langDict = TRANSLATIONS[language] || TRANSLATIONS['en'];
+    const langCode = normalizeLanguageCode(language);
+    const langDict = TRANSLATIONS[langCode] || TRANSLATIONS['en'];
     if (langDict && langDict[key]) {
       return langDict[key];
     }
