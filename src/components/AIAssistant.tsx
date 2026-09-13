@@ -957,7 +957,7 @@ export const AIAssistant: React.FC<AIAssistantProps> = ({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 25, scale: 0.92 }}
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className="fixed inset-x-2 bottom-18 top-16 sm:top-auto sm:inset-x-auto sm:bottom-22 sm:right-6 sm:w-[420px] sm:h-[560px] max-h-[calc(100dvh-80px)] bg-white rounded-2xl sm:rounded-3xl shadow-2xl border border-neutral-200 flex flex-col overflow-hidden font-['Plus_Jakarta_Sans']"
+            className="fixed inset-x-2 bottom-18 top-16 sm:top-auto sm:inset-x-auto sm:bottom-22 sm:right-6 sm:w-[420px] sm:h-[560px] max-h-[calc(100dvh-80px)] bg-white rounded-2xl sm:rounded-3xl shadow-2xl border border-neutral-200 flex flex-col overflow-hidden font-['Plus_Jakarta_Sans'] z-50"
           >
             {/* Header - Drag Handle */}
             <div 
