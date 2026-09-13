@@ -6,7 +6,9 @@ import {
   getDoc, 
   query, 
   orderBy, 
-  serverTimestamp 
+  serverTimestamp,
+  onSnapshot,
+  Unsubscribe
 } from 'firebase/firestore';
 import { db } from './config';
 import { CropProduct, FarmerProfile, Order } from '../types';
@@ -128,6 +130,56 @@ export async function fetchFarmersFromDb(): Promise<FarmerProfile[]> {
   } catch (error) {
     console.warn('Could not fetch farmers from Firestore:', error);
     return [];
+  }
+}
+
+/**
+ * Real-time listener for orders across all participants
+ */
+export function subscribeToOrders(
+  callback: (orders: Order[]) => void
+): Unsubscribe {
+  try {
+    const ordersCol = collection(db, ORDERS_COLLECTION);
+    return onSnapshot(ordersCol, (snapshot) => {
+      if (!snapshot.empty) {
+        const orders = snapshot.docs.map(d => ({
+          id: d.id,
+          ...d.data()
+        })) as Order[];
+        callback(orders);
+      }
+    }, (error) => {
+      console.warn('Real-time order listener notice:', error);
+    });
+  } catch (error) {
+    console.warn('Could not establish real-time order listener:', error);
+    return () => {};
+  }
+}
+
+/**
+ * Real-time listener for live crop marketplace listings
+ */
+export function subscribeToCrops(
+  callback: (crops: CropProduct[]) => void
+): Unsubscribe {
+  try {
+    const cropsCol = collection(db, CROPS_COLLECTION);
+    return onSnapshot(cropsCol, (snapshot) => {
+      if (!snapshot.empty) {
+        const crops = snapshot.docs.map(d => ({
+          id: d.id,
+          ...d.data()
+        })) as CropProduct[];
+        callback(crops);
+      }
+    }, (error) => {
+      console.warn('Real-time crop listener notice:', error);
+    });
+  } catch (error) {
+    console.warn('Could not establish real-time crop listener:', error);
+    return () => {};
   }
 }
 

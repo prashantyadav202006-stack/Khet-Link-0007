@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { Order } from '../types';
 import { generateOrderBiltyWhatsApp, openWhatsAppShare } from '../utils/whatsappShare';
+import { useLanguage } from '../context/LanguageContext';
 
 interface WhatsAppReceiptModalProps {
   order: Order | null;
@@ -28,6 +29,7 @@ export const WhatsAppReceiptModal: React.FC<WhatsAppReceiptModalProps> = ({
   isOpen,
   onClose
 }) => {
+  const { t } = useLanguage();
   const [recipientPhone, setRecipientPhone] = useState('');
   const [copied, setCopied] = useState(false);
 
@@ -53,10 +55,23 @@ export const WhatsAppReceiptModal: React.FC<WhatsAppReceiptModalProps> = ({
     window.print();
   };
 
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    if (isOpen) {
+      window.addEventListener('keydown', handleKeyDown);
+      return () => window.removeEventListener('keydown', handleKeyDown);
+    }
+  }, [isOpen, onClose]);
+
   return (
     <div 
       className="fixed inset-0 z-50 bg-black/75 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 overflow-y-auto animate-fadeIn"
       onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="whatsapp-bilty-title"
     >
       <div 
         id="whatsapp-bilty-modal"
@@ -72,14 +87,14 @@ export const WhatsAppReceiptModal: React.FC<WhatsAppReceiptModalProps> = ({
             <div>
               <div className="flex items-center gap-1.5">
                 <h3 className="text-base font-bold font-['Outfit'] text-white">
-                  राष्ट्रीय मंडी ई-बिल्टी व रसीद
+                  {t('bilty.headerTitle', 'राष्ट्रीय मंडी ई-बिल्टी व रसीद')}
                 </h3>
                 <span className="text-[10px] bg-emerald-500/20 text-emerald-300 font-extrabold px-1.5 py-0.2 rounded border border-emerald-400/30">
                   ONDC Node
                 </span>
               </div>
               <p className="text-[11px] text-emerald-200/80">
-                सीधा खेत से मंडी खरीद तौल पर्ची • WhatsApp शेयरिंग
+                {t('bilty.headerSub', 'सीधा खेत से मंडी खरीद तौल पर्ची • WhatsApp शेयरिंग')}
               </p>
             </div>
           </div>
@@ -106,12 +121,12 @@ export const WhatsAppReceiptModal: React.FC<WhatsAppReceiptModalProps> = ({
                   KHET LINK FARMGATE NETWORK
                 </span>
                 <h4 className="text-sm sm:text-base font-black text-neutral-900 font-['Outfit']">
-                  डिजिटल तौल व डिस्पैच पर्ची (Bilty # {order.orderNumber})
+                  {t('bilty.slipTitle', 'डिजिटल तौल व डिस्पैच पर्ची')} (Bilty #{order.orderNumber})
                 </h4>
               </div>
               <div className="text-right">
                 <span className="text-[9px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full block">
-                  100% एस्क्रो सुरक्षित
+                  {t('bilty.escrowProtected', '100% एस्क्रो सुरक्षित')}
                 </span>
                 <span className="text-[10px] text-neutral-400 font-mono">
                   {new Date(order.createdAt).toLocaleDateString()}
@@ -124,19 +139,19 @@ export const WhatsAppReceiptModal: React.FC<WhatsAppReceiptModalProps> = ({
               <div className="space-y-1">
                 <span className="text-[10px] text-emerald-800 font-bold flex items-center gap-1">
                   <Sprout className="w-3.5 h-3.5 text-[#2D6A4F]" />
-                  <span>विक्रेता किसान (Consignor):</span>
+                  <span>{t('bilty.consignor', 'विक्रेता किसान (Consignor):')}</span>
                 </span>
                 <p className="font-bold text-neutral-900">{order.farmerName}</p>
                 <p className="text-neutral-600 text-[11px]">{order.fpoName}</p>
                 <span className="inline-block text-[9px] bg-white px-1.5 py-0.2 rounded border text-emerald-700 font-bold">
-                  ✓ NABL लैब प्रमाणित
+                  {t('bilty.nablCertified', '✓ NABL लैब प्रमाणित')}
                 </span>
               </div>
 
               <div className="space-y-1 border-t sm:border-t-0 sm:border-l sm:pl-3 border-[#D8EADB]">
                 <span className="text-[10px] text-neutral-600 font-bold flex items-center gap-1">
                   <Building2 className="w-3.5 h-3.5 text-[#2D6A4F]" />
-                  <span>क्रेता संस्था (Consignee):</span>
+                  <span>{t('bilty.consignee', 'क्रेता संस्था (Consignee):')}</span>
                 </span>
                 <p className="font-bold text-neutral-900">{order.buyerName}</p>
                 <p className="text-neutral-600 text-[11px]">{order.buyerType || 'हॉस्टल मेस / थोक खाद्य उद्योग'}</p>
@@ -147,16 +162,16 @@ export const WhatsAppReceiptModal: React.FC<WhatsAppReceiptModalProps> = ({
             {/* Items Table */}
             <div className="space-y-2">
               <span className="text-[11px] font-bold text-neutral-700 uppercase tracking-wider block">
-                फसल लॉट व मात्रा विवरण:
+                {t('bilty.cropDetails', 'फसल लॉट व मात्रा विवरण:')}
               </span>
               <div className="border border-neutral-200 rounded-xl overflow-hidden text-xs">
                 <table className="w-full text-left">
                   <thead className="bg-neutral-100 text-neutral-600 text-[11px] font-bold uppercase">
                     <tr>
-                      <th className="p-2.5">फसल व किस्म</th>
-                      <th className="p-2.5 text-center">मात्रा</th>
-                      <th className="p-2.5 text-right">दर</th>
-                      <th className="p-2.5 text-right">कुल</th>
+                      <th className="p-2.5">{t('bilty.cropVariety', 'फसल व किस्म')}</th>
+                      <th className="p-2.5 text-center">{t('bilty.quantity', 'मात्रा')}</th>
+                      <th className="p-2.5 text-right">{t('bilty.rate', 'दर')}</th>
+                      <th className="p-2.5 text-right">{t('bilty.total', 'कुल')}</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-neutral-200">
@@ -185,19 +200,19 @@ export const WhatsAppReceiptModal: React.FC<WhatsAppReceiptModalProps> = ({
             {/* Financial Summary */}
             <div className="bg-[#FAFBF9] p-3 rounded-xl border border-neutral-200 text-xs space-y-1.5 font-mono">
               <div className="flex justify-between text-neutral-600">
-                <span>उपज मूल्य (Subtotal):</span>
+                <span>{t('bilty.subtotal', 'उपज मूल्य (Subtotal):')}</span>
                 <span>₹{order.subtotal.toLocaleString('en-IN')}</span>
               </div>
               <div className="flex justify-between text-neutral-600">
-                <span>कोल्ड-चेन ढुलाई शुल्क (Logistics):</span>
+                <span>{t('bilty.logistics', 'कोल्ड-चेन ढुलाई शुल्क (Logistics):')}</span>
                 <span>₹{order.logisticsFee.toLocaleString('en-IN')}</span>
               </div>
               <div className="flex justify-between text-neutral-600">
-                <span>मंडी शुल्क (APMC Cess Exempt):</span>
-                <span className="text-emerald-700 font-bold">₹0 (छूट)</span>
+                <span>{t('bilty.cessExempt', 'मंडी शुल्क (APMC Cess Exempt):')}</span>
+                <span className="text-emerald-700 font-bold">₹0 ({t('bilty.exemptBadge', 'छूट')})</span>
               </div>
               <div className="flex justify-between pt-1.5 border-t border-neutral-200 text-sm font-black text-neutral-900">
-                <span>कुल एस्क्रो संरक्षित राशि:</span>
+                <span>{t('bilty.totalEscrow', 'कुल एस्क्रो संरक्षित राशि:')}</span>
                 <span className="text-emerald-700">₹{order.totalAmount.toLocaleString('en-IN')}</span>
               </div>
             </div>
@@ -210,11 +225,11 @@ export const WhatsAppReceiptModal: React.FC<WhatsAppReceiptModalProps> = ({
                 </div>
                 <div className="text-[10px] text-neutral-500">
                   <p className="font-mono font-bold text-neutral-800">AUTH: KS-ESCROW-{order.orderNumber}</p>
-                  <p>RBI Regulated Digital Escrow Vault</p>
+                  <p>{t('bilty.rbiEscrow', 'RBI Regulated Digital Escrow Vault')}</p>
                 </div>
               </div>
               <div className="border border-emerald-600 text-emerald-700 text-[9px] font-black uppercase px-2 py-1 rounded rotate-[-3deg]">
-                ✓ VERIFIED FARMGATE BILTY
+                {t('bilty.verifiedBilty', '✓ VERIFIED FARMGATE BILTY')}
               </div>
             </div>
 
@@ -225,9 +240,9 @@ export const WhatsAppReceiptModal: React.FC<WhatsAppReceiptModalProps> = ({
             <div className="flex items-center justify-between">
               <label className="text-xs font-bold text-emerald-950 flex items-center gap-1.5">
                 <Phone className="w-3.5 h-3.5 text-emerald-700" />
-                <span>सीधे नंबर पर भेजें (वैकल्पिक):</span>
+                <span>{t('bilty.sendDirectPhone', 'सीधे नंबर पर भेजें (वैकल्पिक):')}</span>
               </label>
-              <span className="text-[10px] text-emerald-700">खाली छोड़ने पर चैट सूची खुलेगी</span>
+              <span className="text-[10px] text-emerald-700">{t('bilty.emptyForChatList', 'खाली छोड़ने पर चैट सूची खुलेगी')}</span>
             </div>
             
             <div className="flex items-center gap-2">
@@ -236,7 +251,7 @@ export const WhatsAppReceiptModal: React.FC<WhatsAppReceiptModalProps> = ({
               </span>
               <input
                 type="tel"
-                placeholder="उदा. 98765 43210 (किसान / मेस मैनेजर नंबर)"
+                placeholder={t('bilty.phonePlaceholder', 'उदा. 98765 43210 (किसान / मेस मैनेजर नंबर)')}
                 value={recipientPhone}
                 onChange={(e) => setRecipientPhone(e.target.value)}
                 className="flex-1 py-2 px-3 text-xs bg-white border border-emerald-300 rounded-xl focus:outline-none focus:border-emerald-600 text-neutral-800"
@@ -257,12 +272,12 @@ export const WhatsAppReceiptModal: React.FC<WhatsAppReceiptModalProps> = ({
               {copied ? (
                 <>
                   <Check className="w-3.5 h-3.5 text-emerald-600" />
-                  <span className="text-emerald-700 font-bold">कॉपी हो गई!</span>
+                  <span className="text-emerald-700 font-bold">{t('bilty.copied', 'कॉपी हो गई!')}</span>
                 </>
               ) : (
                 <>
                   <Copy className="w-3.5 h-3.5 text-neutral-500" />
-                  <span>पर्ची टेक्स्ट कॉपी करें</span>
+                  <span>{t('bilty.copySlip', 'पर्ची टेक्स्ट कॉपी करें')}</span>
                 </>
               )}
             </button>
@@ -271,10 +286,10 @@ export const WhatsAppReceiptModal: React.FC<WhatsAppReceiptModalProps> = ({
               type="button"
               onClick={handlePrint}
               className="py-2.5 px-3.5 rounded-xl border border-neutral-300 hover:bg-neutral-50 text-neutral-700 text-xs font-bold transition flex items-center justify-center gap-1.5 cursor-pointer"
-              title="प्रिंट या पीडीएफ सेव करें"
+              title={t('bilty.printTooltip', 'प्रिंट या पीडीएफ सेव करें')}
             >
               <Printer className="w-3.5 h-3.5 text-neutral-500" />
-              <span className="hidden sm:inline">प्रिंट</span>
+              <span className="hidden sm:inline">{t('bilty.print', 'प्रिंट')}</span>
             </button>
           </div>
 
@@ -284,7 +299,7 @@ export const WhatsAppReceiptModal: React.FC<WhatsAppReceiptModalProps> = ({
             className="w-full sm:w-auto py-2.5 px-6 rounded-xl bg-gradient-to-r from-emerald-600 via-[#25D366] to-emerald-600 hover:from-emerald-700 hover:to-emerald-700 text-white font-black text-xs uppercase tracking-wider shadow-lg shadow-emerald-500/20 transition flex items-center justify-center gap-2 cursor-pointer active:scale-98"
           >
             <Send className="w-4 h-4" />
-            <span>WhatsApp पर पर्ची भेजें</span>
+            <span>{t('bilty.sendWhatsApp', 'WhatsApp पर पर्ची भेजें')}</span>
           </button>
         </div>
 

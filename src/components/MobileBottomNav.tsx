@@ -90,13 +90,13 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
           type="button"
           onClick={onToggleAIAssistant}
           className="flex flex-col items-center justify-center py-1 px-1 cursor-pointer group"
-          title="KhetAI Sahayak"
+          title={t('nav.khetAi', 'KhetAI')}
         >
           <div className="w-10 h-10 -mt-4 rounded-full bg-gradient-to-tr from-[#1B523D] via-[#2D6A4F] to-[#52B788] border-2 border-[#0B2E21] shadow-lg flex items-center justify-center text-white group-active:scale-95 transition-transform">
             <Bot className="w-5 h-5 text-amber-200 animate-pulse" />
           </div>
           <span className="text-[10px] tracking-tight mt-0.5 font-bold text-amber-300">
-            खेतAI
+            {t('nav.khetAi', 'खेतAI')}
           </span>
         </button>
 
@@ -132,7 +132,7 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
               </span>
             </div>
             <span className="text-[10px] tracking-tight mt-0.5 font-bold text-amber-300">
-              कार्ट ({cartCount})
+              {t('nav.cart', 'कार्ट')} ({cartCount})
             </span>
           </button>
         ) : (

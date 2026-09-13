@@ -46,6 +46,40 @@ export const Marketplace: React.FC<MarketplaceProps> = ({
   const states = ['All', 'Punjab', 'Maharashtra', 'Madhya Pradesh', 'Andhra Pradesh', 'Rajasthan'];
   const grades = ['All', 'Grade A+ Export', 'Grade A Mandi', 'Grade B Commercial'];
 
+  const getCategoryLabel = (cat: string) => {
+    switch (cat) {
+      case 'All': return t('market.allCategories', 'All Crops');
+      case 'Grains': return t('market.grains', 'Cereals & Grains');
+      case 'Pulses': return t('market.pulses', 'Pulses (Dal)');
+      case 'Vegetables': return t('market.vegetables', 'Vegetables');
+      case 'Spices': return t('market.spices', 'Spices');
+      case 'Oilseeds': return t('market.oilseeds', 'Oilseeds');
+      default: return cat;
+    }
+  };
+
+  const getStateLabel = (st: string) => {
+    switch (st) {
+      case 'All': return t('state.all', 'All States (Pan-India)');
+      case 'Punjab': return t('state.punjab', 'Punjab');
+      case 'Maharashtra': return t('state.maharashtra', 'Maharashtra');
+      case 'Madhya Pradesh': return t('state.madhyaPradesh', 'Madhya Pradesh');
+      case 'Andhra Pradesh': return t('state.andhraPradesh', 'Andhra Pradesh');
+      case 'Rajasthan': return t('state.rajasthan', 'Rajasthan');
+      default: return st;
+    }
+  };
+
+  const getGradeLabel = (g: string) => {
+    switch (g) {
+      case 'All': return t('market.allGrades', 'All Quality Grades');
+      case 'Grade A+ Export': return t('grade.aPlusExport', 'Grade A+ Export');
+      case 'Grade A Mandi': return t('grade.aMandi', 'Grade A Mandi');
+      case 'Grade B Commercial': return t('grade.bCommercial', 'Grade B Commercial');
+      default: return g;
+    }
+  };
+
   // Filter logic
   const filteredCrops = useMemo(() => {
     return crops
@@ -142,21 +176,22 @@ export const Marketplace: React.FC<MarketplaceProps> = ({
         </div>
 
         {/* View Switcher & Result Count */}
+        {/* View Switcher & Result Count */}
         <div className="flex items-center gap-3">
-          <span className="text-xs text-neutral-500 font-medium">
-            {t('marketplace.showing', 'Showing')} <strong className="text-[#1B2727]">{filteredCrops.length}</strong> {t('market.showingBatches', 'batches available')}
+          <span className="text-xs text-slate-500 font-medium">
+            {t('marketplace.showing', 'Showing')} <strong className="text-slate-900 font-mono font-bold">{filteredCrops.length}</strong> {t('market.showingBatches', 'batches available')}
           </span>
-          <div className="flex items-center bg-white border border-neutral-200 rounded-lg p-1 shadow-2xs">
+          <div className="flex items-center bg-white border border-slate-200 rounded-sm p-0.5 shadow-2xs">
             <button
               onClick={() => setViewMode('grid')}
-              className={`p-1.5 rounded cursor-pointer ${viewMode === 'grid' ? 'bg-[#3C5148] text-white' : 'text-neutral-500 hover:text-black'}`}
+              className={`p-1.5 rounded-xs cursor-pointer ${viewMode === 'grid' ? 'bg-[#0B2E21] text-white shadow-xs' : 'text-slate-500 hover:text-black'}`}
               aria-label="Grid view"
             >
               <LayoutGrid className="w-4 h-4" />
             </button>
             <button
               onClick={() => setViewMode('list')}
-              className={`p-1.5 rounded cursor-pointer ${viewMode === 'list' ? 'bg-[#3C5148] text-white' : 'text-neutral-500 hover:text-black'}`}
+              className={`p-1.5 rounded-xs cursor-pointer ${viewMode === 'list' ? 'bg-[#0B2E21] text-white shadow-xs' : 'text-slate-500 hover:text-black'}`}
               aria-label="List view"
             >
               <List className="w-4 h-4" />
@@ -166,24 +201,24 @@ export const Marketplace: React.FC<MarketplaceProps> = ({
       </div>
 
       {/* Top Search Bar & Category Pills */}
-      <div className="space-y-4">
-        <div className="flex flex-col sm:flex-row gap-3">
+      <div className="space-y-3">
+        <div className="flex flex-col sm:flex-row gap-2.5">
           
           {/* Main Search Box */}
           <div className="relative flex-1">
-            <Search className="absolute left-4 top-3.5 w-4 h-4 text-neutral-400" />
+            <Search className="absolute left-3.5 top-3 w-4 h-4 text-slate-400" />
             <input
               id="marketplace-search-input"
               type="text"
               placeholder={t('market.searchPlaceholder', 'Search by crop (Wheat, Onion, Chana), variety, farmer name, or district...')}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-white border border-neutral-300 rounded-2xl pl-11 pr-10 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#6B8E4E] shadow-2xs placeholder:text-neutral-400"
+              className="w-full bg-white border border-slate-300 rounded-sm pl-10 pr-10 py-2.5 text-sm focus:outline-none focus:border-slate-500 focus:ring-1 focus:ring-slate-400 shadow-2xs placeholder:text-slate-400 font-normal"
             />
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery('')}
-                className="absolute right-3.5 top-3.5 text-neutral-400 hover:text-neutral-700 cursor-pointer"
+                className="absolute right-3 top-3 text-slate-400 hover:text-slate-700 cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -191,26 +226,26 @@ export const Marketplace: React.FC<MarketplaceProps> = ({
           </div>
 
           {/* Sort Dropdown */}
-          <div className="relative min-w-[190px]">
+          <div className="relative min-w-[200px]">
             <select
               id="marketplace-sort-select"
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as any)}
-              className="w-full appearance-none bg-white border border-neutral-300 rounded-2xl px-4 py-3 text-xs font-semibold text-neutral-700 focus:outline-none focus:ring-2 focus:ring-[#6B8E4E] shadow-2xs pr-10 cursor-pointer"
+              className="w-full appearance-none bg-white border border-slate-300 rounded-sm px-3.5 py-2.5 text-xs font-semibold text-slate-700 focus:outline-none focus:border-slate-500 shadow-2xs pr-9 cursor-pointer"
             >
               <option value="featured">{t('marketplace.sortFeatured', 'Sort: Featured & Fresh')}</option>
               <option value="price-asc">{t('market.priceAsc', 'Price: Low to High')}</option>
               <option value="price-desc">{t('market.priceDesc', 'Price: High to Low')}</option>
               <option value="rating">{t('market.rating', 'Highest Rated Farmers')}</option>
             </select>
-            <ChevronDown className="absolute right-3.5 top-3.5 w-4 h-4 text-neutral-400 pointer-events-none" />
+            <ChevronDown className="absolute right-3 top-3.5 w-4 h-4 text-slate-400 pointer-events-none" />
           </div>
 
           {/* Mobile Filter Button */}
           <button
             id="mobile-filter-open-btn"
             onClick={() => setMobileFilterOpen(true)}
-            className="lg:hidden px-4 py-3 rounded-2xl bg-[#3C5148] text-white text-xs font-bold flex items-center justify-center gap-2 cursor-pointer"
+            className="lg:hidden px-4 py-2.5 rounded-sm bg-[#0B2E21] text-white text-xs font-bold flex items-center justify-center gap-2 cursor-pointer shadow-xs"
           >
             <SlidersHorizontal className="w-4 h-4" />
             <span>{t('common.filterProduce', 'Filters')}</span>
@@ -221,19 +256,19 @@ export const Marketplace: React.FC<MarketplaceProps> = ({
         </div>
 
         {/* Category Horizontal Pills */}
-        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
+        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1">
           {categories.map((cat) => (
             <button
               key={cat}
               id={`cat-filter-${cat}`}
               onClick={() => setSelectedCategory(cat)}
-              className={`px-4 py-2 rounded-xl text-xs font-bold tracking-wide transition shrink-0 cursor-pointer ${
+              className={`px-3.5 py-1.5 rounded-sm text-xs font-semibold tracking-tight transition shrink-0 cursor-pointer ${
                 selectedCategory === cat
-                  ? 'bg-[#3C5148] text-white shadow-sm'
-                  : 'bg-white text-neutral-600 border border-neutral-200 hover:bg-neutral-50 hover:text-black'
+                  ? 'bg-[#0B2E21] text-white shadow-xs font-bold border border-[#1E523D]'
+                  : 'bg-white text-slate-700 border border-slate-300 hover:bg-slate-100 hover:text-black'
               }`}
             >
-              {cat === 'All' ? `🌾 ${t('market.allCategories', 'All Crops')}` : cat}
+              {cat === 'All' ? `🌾 ${getCategoryLabel('All')}` : getCategoryLabel(cat)}
             </button>
           ))}
         </div>
@@ -245,31 +280,31 @@ export const Marketplace: React.FC<MarketplaceProps> = ({
           <span className="text-neutral-500 font-medium">{t('marketplace.appliedFilters', 'Applied Filters')}:</span>
           {searchQuery && (
             <span className="bg-white px-2.5 py-1 rounded-md text-[#1B2727] font-semibold flex items-center gap-1 border border-neutral-200">
-              Query: "{searchQuery}"
+              {t('marketplace.filterQuery', 'Query')}: "{searchQuery}"
               <X className="w-3 h-3 cursor-pointer" onClick={() => setSearchQuery('')} />
             </span>
           )}
           {selectedCategory !== 'All' && (
             <span className="bg-white px-2.5 py-1 rounded-md text-[#1B2727] font-semibold flex items-center gap-1 border border-neutral-200">
-              Category: {selectedCategory}
+              {t('marketplace.filterCategory', 'Category')}: {getCategoryLabel(selectedCategory)}
               <X className="w-3 h-3 cursor-pointer" onClick={() => setSelectedCategory('All')} />
             </span>
           )}
           {selectedState !== 'All' && (
             <span className="bg-white px-2.5 py-1 rounded-md text-[#1B2727] font-semibold flex items-center gap-1 border border-neutral-200">
-              State: {selectedState}
+              {t('marketplace.filterState', 'State')}: {getStateLabel(selectedState)}
               <X className="w-3 h-3 cursor-pointer" onClick={() => setSelectedState('All')} />
             </span>
           )}
           {onlyOrganic && (
             <span className="bg-white px-2.5 py-1 rounded-md text-emerald-800 font-semibold flex items-center gap-1 border border-emerald-300">
-              🌿 Certified Organic
+              🌿 {t('common.certifiedOrganic', 'Certified Organic')}
               <X className="w-3 h-3 cursor-pointer" onClick={() => setOnlyOrganic(false)} />
             </span>
           )}
           {selectedGrade !== 'All' && (
             <span className="bg-white px-2.5 py-1 rounded-md text-[#1B2727] font-semibold flex items-center gap-1 border border-neutral-200">
-              {selectedGrade}
+              {getGradeLabel(selectedGrade)}
               <X className="w-3 h-3 cursor-pointer" onClick={() => setSelectedGrade('All')} />
             </span>
           )}
@@ -332,7 +367,7 @@ export const Marketplace: React.FC<MarketplaceProps> = ({
                       : 'text-neutral-600 hover:bg-neutral-100'
                   }`}
                 >
-                  <span>{st === 'All' ? t('market.allStates', 'All States (Pan-India)') : st}</span>
+                  <span>{getStateLabel(st)}</span>
                   {selectedState === st && <Check className="w-3.5 h-3.5" />}
                 </button>
               ))}
@@ -379,7 +414,7 @@ export const Marketplace: React.FC<MarketplaceProps> = ({
               className="w-full text-xs border border-neutral-300 rounded-lg p-2.5 focus:outline-none focus:ring-1 focus:ring-[#6B8E4E] cursor-pointer"
             >
               {grades.map((g) => (
-                <option key={g} value={g}>{g}</option>
+                <option key={g} value={g}>{getGradeLabel(g)}</option>
               ))}
             </select>
           </div>
@@ -506,7 +541,7 @@ export const Marketplace: React.FC<MarketplaceProps> = ({
                         onClick={() => onAddToCart(crop, 1, 'quintal')}
                         className="px-3 py-1.5 text-xs font-bold rounded-lg bg-[#6B8E4E] hover:bg-[#5a7942] text-white cursor-pointer"
                       >
-                        + 1 Qtl
+                        {t('common.addOneQtl', '+ 1 Qtl')}
                       </button>
                     </div>
                   </div>

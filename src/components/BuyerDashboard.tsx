@@ -31,6 +31,7 @@ interface BuyerDashboardProps {
   onPostRFQ: (newRfq: Partial<BulkRFQ>) => void;
   onViewOrderDetails: (order: Order) => void;
   onViewFarmer: (farmerId: string) => void;
+  onConfirmDelivery?: (orderId: string) => void;
 }
 
 export const BuyerDashboard: React.FC<BuyerDashboardProps> = ({
@@ -42,7 +43,8 @@ export const BuyerDashboard: React.FC<BuyerDashboardProps> = ({
   farmers = [],
   onPostRFQ,
   onViewOrderDetails,
-  onViewFarmer
+  onViewFarmer,
+  onConfirmDelivery
 }) => {
   const { t } = useLanguage();
   const [activeTab, setActiveTab] = useState<'orders' | 'rfqs' | 'fpos' | 'invoices'>('orders');
@@ -224,8 +226,8 @@ export const BuyerDashboard: React.FC<BuyerDashboardProps> = ({
       {activeTab === 'orders' && (
         <div className="space-y-6">
           <div className="flex items-center justify-between">
-            <h3 className="font-bold text-lg text-[#1B2727]">Procurement Consignments & Tracking</h3>
-            <span className="text-xs text-neutral-500 font-mono">Real-time GPS status</span>
+            <h3 className="font-bold text-lg text-[#1B2727]">{t('buyer.consignmentsTracking', 'Procurement Consignments & Tracking')}</h3>
+            <span className="text-xs text-neutral-500 font-mono">{t('buyer.realtimeGps', 'Real-time GPS status')}</span>
           </div>
 
           <div className="space-y-4">
@@ -248,7 +250,7 @@ export const BuyerDashboard: React.FC<BuyerDashboardProps> = ({
                   </div>
 
                   <div className="text-left sm:text-right">
-                    <span className="text-xs text-neutral-400">Escrow Protected Total</span>
+                    <span className="text-xs text-neutral-400">{t('buyer.escrowTotal', 'Escrow Protected Total')}</span>
                     <div className="text-xl font-bold font-mono text-[#1B2727]">
                       ₹{order.totalAmount.toLocaleString('en-IN')}
                     </div>
@@ -305,7 +307,22 @@ export const BuyerDashboard: React.FC<BuyerDashboardProps> = ({
                 </div>
 
                 {/* Actions */}
-                <div className="flex justify-end gap-2 pt-1">
+                <div className="flex flex-wrap items-center justify-end gap-2 pt-1">
+                  {order.deliveryStatus === 'In Transit' && onConfirmDelivery && (
+                    <button
+                      onClick={() => onConfirmDelivery(order.id)}
+                      className="px-4 py-2 bg-[#6B8E4E] hover:bg-[#5a7942] text-white text-xs font-bold rounded-lg transition shadow-xs flex items-center gap-1.5 cursor-pointer animate-pulse"
+                    >
+                      <CheckCircle2 className="w-3.5 h-3.5" />
+                      <span>Confirm Delivery & Release Escrow</span>
+                    </button>
+                  )}
+                  {order.deliveryStatus === 'Escrow Released' && (
+                    <span className="px-3 py-1.5 bg-emerald-50 text-emerald-700 text-xs font-bold rounded-lg border border-emerald-200 flex items-center gap-1">
+                      <ShieldCheck className="w-3.5 h-3.5" />
+                      <span>Delivered & Escrow Settled</span>
+                    </span>
+                  )}
                   <button
                     onClick={() => onViewOrderDetails(order)}
                     className="px-4 py-2 bg-[#3C5148] hover:bg-[#253630] text-white text-xs font-bold rounded-lg transition cursor-pointer"
@@ -396,8 +413,8 @@ export const BuyerDashboard: React.FC<BuyerDashboardProps> = ({
       {activeTab === 'fpos' && (
         <div className="space-y-6">
           <div className="flex items-center justify-between">
-            <h3 className="font-bold text-lg text-[#1B2727]">Top Verified Farmer Producer Organizations</h3>
-            <span className="text-xs text-neutral-500">Ministry of Agriculture & NABARD Registered</span>
+            <h3 className="font-bold text-lg text-[#1B2727]">{t('buyer.topFpos', 'Top Verified Farmer Producer Organizations')}</h3>
+            <span className="text-xs text-neutral-500">{t('buyer.ministryNabard', 'Ministry of Agriculture & NABARD Registered')}</span>
           </div>
 
           {farmers.length === 0 ? (
@@ -405,7 +422,7 @@ export const BuyerDashboard: React.FC<BuyerDashboardProps> = ({
               <div className="w-12 h-12 rounded-full bg-emerald-50 text-[#144231] mx-auto flex items-center justify-center">
                 <Building2 className="w-6 h-6" />
               </div>
-              <h4 className="font-bold text-base text-[#1B2727]">No Registered FPOs Yet</h4>
+              <h4 className="font-bold text-base text-[#1B2727]">{t('buyer.noFposYet', 'No Registered FPOs Yet')}</h4>
               <p className="text-xs text-neutral-500 max-w-sm mx-auto">
                 When Farmer Producer Organizations complete onboarding, their verified profiles, harvest crops, and member counts will appear here.
               </p>
@@ -466,8 +483,8 @@ export const BuyerDashboard: React.FC<BuyerDashboardProps> = ({
         <div className="space-y-6">
           <div className="bg-white rounded-2xl border border-neutral-200 p-6 shadow-xs space-y-4">
             <div className="flex items-center justify-between">
-              <h3 className="font-bold text-base text-[#1B2727]">GST E-Way Bills & Mandi Cess Waivers</h3>
-              <span className="text-xs text-neutral-500">Government Inter-State Trade Compliant</span>
+              <h3 className="font-bold text-base text-[#1B2727]">{t('buyer.gstEWayBills', 'GST E-Way Bills & Mandi Cess Waivers')}</h3>
+              <span className="text-xs text-neutral-500">{t('buyer.interStateCompliant', 'Government Inter-State Trade Compliant')}</span>
             </div>
 
             <div className="divide-y divide-neutral-100">
@@ -513,14 +530,14 @@ export const BuyerDashboard: React.FC<BuyerDashboardProps> = ({
             </button>
 
             <div>
-              <span className="text-xs font-bold uppercase text-[#6B8E4E]">Bulk Procurement Request</span>
-              <h3 className="text-xl font-bold text-[#1B2727] font-['Outfit']">Post Request For Quote (RFQ)</h3>
-              <p className="text-xs text-neutral-500">Broadcast your requirement directly to 1,200+ FPOs.</p>
+              <span className="text-xs font-bold uppercase text-[#6B8E4E]">{t('buyer.bulkProcurementRequest', 'Bulk Procurement Request')}</span>
+              <h3 className="text-xl font-bold text-[#1B2727] font-['Outfit']">{t('buyer.postRfq', 'Post Request For Quote (RFQ)')}</h3>
+              <p className="text-xs text-neutral-500">{t('buyer.broadcastRfqDesc', 'Broadcast your requirement directly to 1,200+ FPOs.')}</p>
             </div>
 
             <form onSubmit={handleCreateRFQ} className="space-y-4">
               <div>
-                <label className="text-xs font-bold text-neutral-700 block mb-1">Crop Name & Commodity</label>
+                <label className="text-xs font-bold text-neutral-700 block mb-1">{t('buyer.cropNameCommodity', 'Crop Name & Commodity')}</label>
                 <input
                   type="text"
                   required
@@ -533,22 +550,22 @@ export const BuyerDashboard: React.FC<BuyerDashboardProps> = ({
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-xs font-bold text-neutral-700 block mb-1">Category</label>
+                  <label className="text-xs font-bold text-neutral-700 block mb-1">{t('buyer.category', 'Category')}</label>
                   <select
                     value={rfqCategory}
                     onChange={(e) => setRfqCategory(e.target.value)}
                     className="w-full text-xs border border-neutral-300 rounded-xl p-2.5 cursor-pointer"
                   >
-                    <option value="Grains">Grains</option>
-                    <option value="Pulses">Pulses</option>
-                    <option value="Vegetables">Vegetables</option>
-                    <option value="Spices">Spices</option>
-                    <option value="Oilseeds">Oilseeds</option>
+                    <option value="Grains">{t('categories.grains', 'Grains')}</option>
+                    <option value="Pulses">{t('categories.pulses', 'Pulses')}</option>
+                    <option value="Vegetables">{t('categories.vegetables', 'Vegetables')}</option>
+                    <option value="Spices">{t('categories.spices', 'Spices')}</option>
+                    <option value="Oilseeds">{t('categories.oilseeds', 'Oilseeds')}</option>
                   </select>
                 </div>
 
                 <div>
-                  <label className="text-xs font-bold text-neutral-700 block mb-1">Required Qty (Quintals)</label>
+                  <label className="text-xs font-bold text-neutral-700 block mb-1">{t('buyer.requiredQty', 'Required Qty (Quintals)')}</label>
                   <input
                     type="number"
                     required
@@ -562,7 +579,7 @@ export const BuyerDashboard: React.FC<BuyerDashboardProps> = ({
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-xs font-bold text-neutral-700 block mb-1">Target Price / Quintal (₹)</label>
+                  <label className="text-xs font-bold text-neutral-700 block mb-1">{t('buyer.targetPrice', 'Target Price / Quintal (₹)')}</label>
                   <input
                     type="number"
                     required
@@ -573,7 +590,7 @@ export const BuyerDashboard: React.FC<BuyerDashboardProps> = ({
                 </div>
 
                 <div>
-                  <label className="text-xs font-bold text-neutral-700 block mb-1">Delivery Destination</label>
+                  <label className="text-xs font-bold text-neutral-700 block mb-1">{t('buyer.deliveryDestination', 'Delivery Destination')}</label>
                   <input
                     type="text"
                     required
@@ -585,10 +602,10 @@ export const BuyerDashboard: React.FC<BuyerDashboardProps> = ({
               </div>
 
               <div>
-                <label className="text-xs font-bold text-neutral-700 block mb-1">Quality Specifications</label>
+                <label className="text-xs font-bold text-neutral-700 block mb-1">{t('buyer.qualitySpecs', 'Quality Specifications')}</label>
                 <textarea
                   rows={2}
-                  placeholder="e.g. Moisture &lt; 10%, zero weevils, machine cleaned, 50kg bags"
+                  placeholder="e.g. Moisture < 10%, zero weevils, machine cleaned, 50kg bags"
                   value={rfqSpecs}
                   onChange={(e) => setRfqSpecs(e.target.value)}
                   className="w-full text-xs border border-neutral-300 rounded-xl p-2.5 focus:outline-none"
@@ -600,7 +617,7 @@ export const BuyerDashboard: React.FC<BuyerDashboardProps> = ({
                 className="w-full py-3 bg-[#6B8E4E] hover:bg-[#5a7942] text-white font-bold text-xs uppercase tracking-wider rounded-xl shadow-md transition flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Send className="w-4 h-4" />
-                <span>Broadcast RFQ to FPOs</span>
+                <span>{t('buyer.broadcastRfqBtn', 'Broadcast RFQ to FPOs')}</span>
               </button>
             </form>
           </div>

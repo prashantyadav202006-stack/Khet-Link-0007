@@ -196,29 +196,29 @@ export const AIPredictions: React.FC = () => {
               {/* Price comparison numbers */}
               <div className="grid grid-cols-3 gap-3 sm:gap-4">
                 <div className="bg-neutral-50 p-3.5 sm:p-4 rounded-2xl border border-neutral-200">
-                  <span className="text-[11px] text-neutral-500 font-medium block">Current Spot Mandi</span>
+                  <span className="text-[11px] text-neutral-500 font-medium block">{t('predictions.currentSpotMandi', 'Current Spot Mandi')}</span>
                   <div className="text-xl sm:text-2xl font-black text-neutral-900 font-mono mt-1">
                     ₹{activePrediction.currentMandiPrice}
                   </div>
-                  <span className="text-[10px] text-neutral-400">per Quintal</span>
+                  <span className="text-[10px] text-neutral-400">{t('predictions.perQuintal', 'per Quintal')}</span>
                 </div>
 
                 <div className="bg-emerald-50 p-3.5 sm:p-4 rounded-2xl border border-emerald-200">
-                  <span className="text-[11px] text-emerald-800 font-medium block">AI 30-Day Forecast</span>
+                  <span className="text-[11px] text-emerald-800 font-medium block">{t('predictions.ai30DayForecast', 'AI 30-Day Forecast')}</span>
                   <div className="text-xl sm:text-2xl font-black text-emerald-700 font-mono mt-1">
                     ₹{simulatedProjected30d}
                   </div>
                   <span className="text-[10px] text-emerald-600 font-bold">
-                    +{Math.round(((simulatedProjected30d - activePrediction.currentMandiPrice) / activePrediction.currentMandiPrice) * 100)}% Surge
+                    +{Math.round(((simulatedProjected30d - activePrediction.currentMandiPrice) / activePrediction.currentMandiPrice) * 100)}% {t('predictions.surge', 'Surge')}
                   </span>
                 </div>
 
                 <div className="bg-[#124230]/10 p-3.5 sm:p-4 rounded-2xl border border-[#124230]/20">
-                  <span className="text-[11px] text-[#124230] font-medium block">Govt. MSP Baseline</span>
+                  <span className="text-[11px] text-[#124230] font-medium block">{t('predictions.govtMspBaseline', 'Govt. MSP Baseline')}</span>
                   <div className="text-xl sm:text-2xl font-black text-[#124230] font-mono mt-1">
                     ₹{activePrediction.mspPrice || 2275}
                   </div>
-                  <span className="text-[10px] text-neutral-500">CACP Guaranteed Floor</span>
+                  <span className="text-[10px] text-neutral-500">{t('predictions.cacpGuaranteedFloor', 'CACP Guaranteed Floor')}</span>
                 </div>
               </div>
 
@@ -227,17 +227,17 @@ export const AIPredictions: React.FC = () => {
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-neutral-600">
                   <span className="font-semibold text-neutral-800 flex items-center gap-1.5">
                     <span className="w-2 h-2 rounded-full bg-emerald-500" />
-                    Interactive Price Trend: Historical Mandi Actuals vs. AI Predictive Window
+                    {t('predictions.interactivePriceTrend', 'Interactive Price Trend: Historical Mandi Actuals vs. AI Predictive Window')}
                   </span>
                   <div className="flex items-center gap-3 text-[11px] font-medium">
                     <span className="flex items-center gap-1">
-                      <span className="w-3 h-1 bg-slate-500 rounded-full" /> Actual
+                      <span className="w-3 h-1 bg-slate-500 rounded-full" /> {t('predictions.actual', 'Actual')}
                     </span>
                     <span className="flex items-center gap-1">
-                      <span className="w-3 h-1 bg-emerald-500 rounded-full" /> AI Forecast
+                      <span className="w-3 h-1 bg-emerald-500 rounded-full" /> {t('predictions.aiForecast', 'AI Forecast')}
                     </span>
                     <span className="flex items-center gap-1">
-                      <span className="w-3 h-1 bg-rose-400 rounded-full" /> Govt MSP
+                      <span className="w-3 h-1 bg-rose-400 rounded-full" /> {t('predictions.govtMsp', 'Govt MSP')}
                     </span>
                   </div>
                 </div>
@@ -301,12 +301,12 @@ export const AIPredictions: React.FC = () => {
               <div className="p-4 rounded-2xl bg-emerald-50/80 border border-emerald-200 flex gap-3">
                 <Lightbulb className="w-5 h-5 text-emerald-700 shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="font-bold text-sm text-[#0D2E22]">Recommended Farmer Selling Strategy</h4>
+                  <h4 className="font-bold text-sm text-[#0D2E22]">{t('predictions.farmerStrategy', 'Recommended Farmer Selling Strategy')}</h4>
                   <p className="text-xs text-neutral-700 leading-relaxed mt-1">
                     {activePrediction.recommendation}
                   </p>
                   <p className="text-xs font-bold text-emerald-800 mt-2">
-                    Optimal Sell Window: <span className="underline decoration-emerald-500 font-extrabold">{activePrediction.bestSellWindow}</span>
+                    {t('predictions.optimalSellWindow', 'Optimal Sell Window:')} <span className="underline decoration-emerald-500 font-extrabold">{activePrediction.bestSellWindow}</span>
                   </p>
                 </div>
               </div>
@@ -317,7 +317,7 @@ export const AIPredictions: React.FC = () => {
             <div className="bg-white rounded-3xl p-5 sm:p-6 border border-neutral-200 shadow-xs space-y-4">
               <h3 className="font-bold text-base text-[#0D2E22] flex items-center gap-2">
                 <Layers className="w-4 h-4 text-emerald-600" />
-                Key Drivers Influencing This Price Forecast
+                {t('predictions.keyDrivers', 'Key Drivers Influencing This Price Forecast')}
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {activePrediction.drivingFactors.map((f, idx) => (
@@ -336,12 +336,12 @@ export const AIPredictions: React.FC = () => {
           {/* Interactive Simulation Sandbox (4 Cols) */}
           <div className="lg:col-span-4 bg-white rounded-3xl border border-neutral-200 p-5 sm:p-6 shadow-xs space-y-6 sticky top-24">
             <div>
-              <span className="text-xs font-bold uppercase text-emerald-700 tracking-wider">Live Stress-Test Sandbox</span>
+              <span className="text-xs font-bold uppercase text-emerald-700 tracking-wider">{t('predictions.stressSandbox', 'Live Stress-Test Sandbox')}</span>
               <h3 className="text-lg font-bold text-[#0D2E22] font-['Outfit'] mt-0.5">
-                Simulate Market Conditions
+                {t('predictions.simulateMarket', 'Simulate Market Conditions')}
               </h3>
               <p className="text-xs text-neutral-500 mt-1">
-                Slide to dynamically adjust rainfall anomalies and festival demand on the live price projection graph.
+                {t('predictions.sandboxDesc', 'Slide to dynamically adjust rainfall anomalies and festival demand on the live price projection graph.')}
               </p>
             </div>
 
@@ -350,7 +350,7 @@ export const AIPredictions: React.FC = () => {
               <div className="flex justify-between text-xs font-semibold">
                 <span className="text-neutral-700 flex items-center gap-1">
                   <Droplets className="w-3.5 h-3.5 text-sky-500" />
-                  Monsoon Deviation:
+                  {t('predictions.monsoonDev', 'Monsoon Deviation:')}
                 </span>
                 <span className="font-mono text-emerald-800">{monsoonShift > 0 ? `+${monsoonShift}%` : `${monsoonShift}%`}</span>
               </div>
@@ -364,9 +364,9 @@ export const AIPredictions: React.FC = () => {
                 className="w-full accent-emerald-600 cursor-pointer"
               />
               <div className="flex justify-between text-[10px] text-neutral-400 font-mono">
-                <span>Deficit (-20%)</span>
-                <span>Normal</span>
-                <span>Excess (+20%)</span>
+                <span>{t('predictions.deficit', 'Deficit (-20%)')}</span>
+                <span>{t('predictions.normal', 'Normal')}</span>
+                <span>{t('predictions.excess', 'Excess (+20%)')}</span>
               </div>
             </div>
 
@@ -375,7 +375,7 @@ export const AIPredictions: React.FC = () => {
               <div className="flex justify-between text-xs font-semibold">
                 <span className="text-neutral-700 flex items-center gap-1">
                   <Sun className="w-3.5 h-3.5 text-amber-500" />
-                  Festival Procurement:
+                  {t('predictions.festivalProc', 'Festival Procurement:')}
                 </span>
                 <span className="font-mono text-emerald-800">+{festiveSurge}%</span>
               </div>
@@ -389,14 +389,14 @@ export const AIPredictions: React.FC = () => {
                 className="w-full accent-emerald-600 cursor-pointer"
               />
               <div className="flex justify-between text-[10px] text-neutral-400 font-mono">
-                <span>Normal</span>
-                <span>Diwali Peak (+40%)</span>
+                <span>{t('predictions.normal', 'Normal')}</span>
+                <span>{t('predictions.diwaliPeak', 'Diwali Peak (+40%)')}</span>
               </div>
             </div>
 
             {/* Simulation Result Output */}
             <div className="bg-[#0A261C] text-white p-4 rounded-2xl border border-[#1E523D] space-y-2 shadow-sm">
-              <div className="text-xs text-neutral-300 font-medium">Model-Adjusted 30d Rate:</div>
+              <div className="text-xs text-neutral-300 font-medium">{t('predictions.modelAdjustedRate', 'Model-Adjusted 30d Rate:')}</div>
               <div className="text-2xl font-black text-emerald-300 font-mono">
                 ₹{simulatedProjected30d} <span className="text-xs text-neutral-400 font-normal">/ Qtl</span>
               </div>
@@ -415,7 +415,7 @@ export const AIPredictions: React.FC = () => {
                 onClick={() => alert(`Connecting with nearby WDRA accredited cold storage in ${activePrediction.bestSellWindow}`)}
                 className="w-full py-2.5 px-4 bg-[#0E3D2C] hover:bg-[#14533C] text-white text-xs font-bold rounded-xl transition text-center cursor-pointer shadow-xs"
               >
-                Book WDRA Warehouse Space
+                {t('predictions.bookWarehouse', 'Book WDRA Warehouse Space')}
               </button>
             </div>
 
@@ -429,12 +429,12 @@ export const AIPredictions: React.FC = () => {
         <div className="space-y-6">
           <div className="bg-white rounded-3xl p-5 sm:p-7 border border-neutral-200 shadow-xs space-y-6">
             <div>
-              <span className="text-xs font-bold uppercase text-emerald-700 tracking-wider">Farmer Net Income Comparison</span>
+              <span className="text-xs font-bold uppercase text-emerald-700 tracking-wider">{t('predictions.incomeComparison', 'Farmer Net Income Comparison')}</span>
               <h2 className="text-2xl font-bold text-[#0D2E22] font-['Outfit'] mt-0.5">
-                Where Does the Money Go? Traditional Mandi vs. Khet Link Direct
+                {t('predictions.whereMoneyGoes', 'Where Does the Money Go? Traditional Mandi vs. Khet Link Direct')}
               </h2>
               <p className="text-xs sm:text-sm text-neutral-500 mt-1 max-w-3xl leading-relaxed">
-                Demonstrating how direct procurement by college messes, university hostels, and food millers removes the 8-12% commission, unauthorized weighing cuts, and credit payment delays.
+                {t('predictions.middlemanExplain', 'Demonstrating how direct procurement by college messes, university hostels, and food millers removes the 8-12% commission, unauthorized weighing cuts, and credit payment delays.')}
               </p>
             </div>
 
@@ -442,8 +442,8 @@ export const AIPredictions: React.FC = () => {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
               <div className="lg:col-span-7 h-80 bg-neutral-50 p-4 rounded-2xl border border-neutral-200">
                 <div className="text-xs font-bold text-neutral-700 mb-2 flex items-center justify-between">
-                  <span>Net Price Received by Farmer (₹ per Quintal)</span>
-                  <span className="text-emerald-700 font-semibold">Zero Commission via Khet Link</span>
+                  <span>{t('predictions.netPriceReceived', 'Net Price Received by Farmer (₹ per Quintal)')}</span>
+                  <span className="text-emerald-700 font-semibold">{t('predictions.zeroCommissionTag', 'Zero Commission via Khet Link')}</span>
                 </div>
                 <ResponsiveContainer width="100%" height="90%">
                   <BarChart 
@@ -533,12 +533,12 @@ export const AIPredictions: React.FC = () => {
         <div className="space-y-6">
           <div className="bg-white rounded-3xl p-5 sm:p-7 border border-neutral-200 shadow-xs space-y-6">
             <div>
-              <span className="text-xs font-bold uppercase text-emerald-700 tracking-wider">Institutional Buyer Procurement Calendar</span>
+              <span className="text-xs font-bold uppercase text-emerald-700 tracking-wider">{t('predictions.institutionalCalendar', 'Institutional Buyer Procurement Calendar')}</span>
               <h2 className="text-2xl font-bold text-[#0D2E22] font-['Outfit'] mt-0.5">
-                College & University Hostel Mess Intake vs. Harvest Arrivals
+                {t('predictions.hostelIntakeVsHarvest', 'College & University Hostel Mess Intake vs. Harvest Arrivals')}
               </h2>
               <p className="text-xs sm:text-sm text-neutral-500 mt-1 max-w-3xl leading-relaxed">
-                Why forward contracts with university hostels (IITs, NITs, Central Universities) guarantee stable farmgate prices even during peak harvest glut months.
+                {t('predictions.hostelForwardDesc', 'Why forward contracts with university hostels (IITs, NITs, Central Universities) guarantee stable farmgate prices even during peak harvest glut months.')}
               </p>
             </div>
 
@@ -563,24 +563,24 @@ export const AIPredictions: React.FC = () => {
             {/* Key seasonal takeaways for farmers & mess managers */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 space-y-1">
-                <span className="text-[11px] font-bold text-emerald-800 uppercase tracking-wider">July - August Spike</span>
-                <div className="text-base font-bold text-[#0D2E22]">Monsoon Academic Reopening</div>
+                <span className="text-[11px] font-bold text-emerald-800 uppercase tracking-wider">{t('predictions.julyAugustSpike', 'July - August Spike')}</span>
+                <div className="text-base font-bold text-[#0D2E22]">{t('predictions.monsoonReopening', 'Monsoon Academic Reopening')}</div>
                 <p className="text-xs text-neutral-600 leading-relaxed">
                   Hostel messes intake over 500+ quintals monthly as 10,000+ students return to campus. Ideal month to sign 6-month fixed farm contracts.
                 </p>
               </div>
 
               <div className="p-4 rounded-2xl bg-amber-50 border border-amber-200 space-y-1">
-                <span className="text-[11px] font-bold text-amber-800 uppercase tracking-wider">April Harvest Glut</span>
-                <div className="text-base font-bold text-[#0D2E22]">Avoid Selling at Distress Rates</div>
+                <span className="text-[11px] font-bold text-amber-800 uppercase tracking-wider">{t('predictions.aprilHarvestGlut', 'April Harvest Glut')}</span>
+                <div className="text-base font-bold text-[#0D2E22]">{t('predictions.avoidDistressRates', 'Avoid Selling at Distress Rates')}</div>
                 <p className="text-xs text-neutral-600 leading-relaxed">
                   Local mandis drop prices by 15% due to arrival glut. Khet Link connects directly to central university hostels with price guarantees.
                 </p>
               </div>
 
               <div className="p-4 rounded-2xl bg-sky-50 border border-sky-200 space-y-1">
-                <span className="text-[11px] font-bold text-sky-800 uppercase tracking-wider">October Festive Term</span>
-                <div className="text-base font-bold text-[#0D2E22]">Diwali & Special Feast Premium</div>
+                <span className="text-[11px] font-bold text-sky-800 uppercase tracking-wider">{t('predictions.octoberFestiveTerm', 'October Festive Term')}</span>
+                <div className="text-base font-bold text-[#0D2E22]">{t('predictions.diwaliSpecialPremium', 'Diwali & Special Feast Premium')}</div>
                 <p className="text-xs text-neutral-600 leading-relaxed">
                   Hostel committees allocate special budgets for Grade-A Basmati, Sharbati Atta, and Mustard Oil, delivering highest realization to farmers.
                 </p>

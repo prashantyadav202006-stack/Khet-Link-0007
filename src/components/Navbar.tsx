@@ -137,30 +137,45 @@ export const Navbar: React.FC<NavbarProps> = ({
   };
 
   return (
-    <header className="sticky top-0 z-40 bg-gradient-to-r from-[#0B2E21] via-[#103D2D] to-[#09281C] text-white border-b border-[#1E523D] shadow-lg">
-      {/* Top micro banner for SIH 2026, Screen Scale & Helpline */}
-      <div className="bg-[#061C14] text-xs py-1.5 px-3 sm:px-4 border-b border-[#0F3627]">
+    <header className="sticky top-0 z-40 bg-[#0B2E21] text-white border-b border-[#1E523D] shadow-md">
+      {/* Official National Agriculture Portal Top Strip (LandSync Inspired) */}
+      <div className="bg-[#0B192C] text-xs py-1.5 px-3 sm:px-6 border-b-2 border-[#FF9933] select-none">
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
-          <div className="flex items-center gap-2">
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#E9C46A]/20 text-[#F4A261] border border-[#E9C46A]/40 shadow-xs">
-              <Sparkles className="w-3 h-3 text-[#E9C46A]" />
-              {t('banner.sih', 'SIH 2026 AgriTech Innovation')}
+          
+          {/* Left: Indian National & Ministry Insignia */}
+          <div className="flex items-center gap-2.5">
+            <div className="flex items-center gap-1.5">
+              {/* Indian Tricolor Accent Indicator */}
+              <div className="w-1.5 h-4 rounded-xs overflow-hidden flex flex-col shrink-0 shadow-xs">
+                <div className="h-1/3 bg-[#FF9933]" />
+                <div className="h-1/3 bg-white" />
+                <div className="h-1/3 bg-[#138808]" />
+              </div>
+              <span className="font-bold text-slate-100 tracking-wide text-[11px]">
+                भारत सरकार <span className="text-slate-400 font-normal">| Govt. of India</span>
+              </span>
+            </div>
+            <span className="hidden md:inline text-slate-500">•</span>
+            <span className="hidden md:inline text-slate-300 text-[11px]">
+              कृषि एवं किसान कल्याण मंत्रालय (Ministry of Agriculture & Farmers Welfare)
             </span>
-            <span className="hidden sm:inline text-emerald-100/80 text-[11px]">
-              {t('banner.tagline', 'Direct Farmgate Mandi Platform • 0% Middleman Commission')}
+            <span className="hidden lg:inline text-slate-500">•</span>
+            <span className="hidden lg:inline text-amber-300/90 font-mono text-[10px] uppercase tracking-wider bg-amber-950/60 px-2 py-0.2 rounded border border-amber-500/30">
+              e-NAM / ONDC Agri Node
             </span>
           </div>
 
-          <div className="flex items-center gap-3 sm:gap-4 text-emerald-100/90 text-xs">
-            {/* Screen Content & Button Size Adjuster */}
-            <div className="flex items-center gap-1 bg-[#09281C] px-2 py-0.5 rounded-md border border-[#1E523D] shadow-2xs">
-              <span className="text-[10px] text-emerald-300/80 font-semibold">{t('banner.fontSize', 'Size')}:</span>
+          {/* Right: Accessibility Controls & Kisan Helpline */}
+          <div className="flex items-center gap-3 sm:gap-4 text-slate-300 text-xs">
+            {/* Screen Content & Font Scale Adjuster */}
+            <div className="flex items-center gap-1 bg-slate-900/90 px-2 py-0.5 rounded border border-slate-700 shadow-2xs">
+              <span className="text-[10px] text-slate-400 font-semibold">{t('banner.fontSize', 'Size')}:</span>
               <button
                 type="button"
                 onClick={() => setUiScale('compact')}
                 title="Compact View (90%)"
                 className={`px-1.5 py-0.2 rounded text-[10px] font-bold transition cursor-pointer ${
-                  uiScale === 'compact' ? 'bg-[#52B788] text-[#0B2E21]' : 'text-emerald-200 hover:text-white'
+                  uiScale === 'compact' ? 'bg-[#FF9933] text-slate-950' : 'text-slate-300 hover:text-white'
                 }`}
               >
                 A-
@@ -170,7 +185,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 onClick={() => setUiScale('normal')}
                 title="Normal View (100%)"
                 className={`px-1.5 py-0.2 rounded text-[10px] font-bold transition cursor-pointer ${
-                  uiScale === 'normal' ? 'bg-[#52B788] text-[#0B2E21]' : 'text-emerald-200 hover:text-white'
+                  uiScale === 'normal' ? 'bg-[#FF9933] text-slate-950' : 'text-slate-300 hover:text-white'
                 }`}
               >
                 A
@@ -180,7 +195,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 onClick={() => setUiScale('large')}
                 title="Large View (112%)"
                 className={`px-1.5 py-0.2 rounded text-[10px] font-bold transition cursor-pointer ${
-                  uiScale === 'large' ? 'bg-[#52B788] text-[#0B2E21]' : 'text-emerald-200 hover:text-white'
+                  uiScale === 'large' ? 'bg-[#FF9933] text-slate-950' : 'text-slate-300 hover:text-white'
                 }`}
               >
                 A+
@@ -190,21 +205,22 @@ export const Navbar: React.FC<NavbarProps> = ({
                 onClick={() => setUiScale('xlarge')}
                 title="Field / Big View (125%)"
                 className={`px-1.5 py-0.2 rounded text-[10px] font-bold transition cursor-pointer ${
-                  uiScale === 'xlarge' ? 'bg-[#52B788] text-[#0B2E21]' : 'text-emerald-200 hover:text-white'
+                  uiScale === 'xlarge' ? 'bg-[#FF9933] text-slate-950' : 'text-slate-300 hover:text-white'
                 }`}
               >
                 A++
               </button>
             </div>
 
-            <span className="hidden md:inline flex items-center gap-1">
-              <ShieldCheck className="w-3.5 h-3.5 text-[#52B788]" />
-              {t('banner.escrow', '100% Escrow Bank Secured')}
+            <span className="hidden md:flex items-center gap-1 text-[11px] text-emerald-300">
+              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+              {t('banner.escrow', '100% Escrow Secured')}
             </span>
-            <a href="tel:18001801551" className="hover:text-white transition flex items-center gap-1 font-medium">
-              <PhoneCall className="w-3 h-3 text-[#74C69D]" />
-              <span className="hidden xs:inline">{t('banner.helpline', 'Kisan Helpline:')}</span>{' '}
-              <span className="text-[#FFE3A8] font-bold">1800-180-1551</span>
+
+            <a href="tel:18001801551" className="hover:text-amber-300 transition flex items-center gap-1 font-medium text-[11px]">
+              <PhoneCall className="w-3 h-3 text-[#FF9933]" />
+              <span className="hidden xs:inline text-slate-400">{t('banner.helpline', 'Kisan Helpline:')}</span>{' '}
+              <span className="text-[#FF9933] font-mono font-bold tracking-tight">1800-180-1551</span>
             </a>
           </div>
         </div>
@@ -212,7 +228,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
       {/* Main navigation bar */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-17">
+        <div className="flex items-center justify-between h-16 sm:h-17">
           
           {/* Left Container: Brand Logo + Primary Navigation Links Left-Aligned */}
           <div className="flex items-center gap-6 sm:gap-8">
@@ -222,36 +238,36 @@ export const Navbar: React.FC<NavbarProps> = ({
               onClick={() => handleNavClick('home')}
               className="flex items-center gap-3 cursor-pointer group select-none shrink-0"
             >
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#2D6A4F] via-[#40916C] to-[#1B4332] flex items-center justify-center shadow-md border border-[#74C69D]/50 group-hover:scale-105 transition-transform duration-200">
-                <Sprout className="w-5.5 h-5.5 text-[#D8F3DC]" />
+              <div className="w-10 h-10 rounded-md bg-[#0F3829] flex items-center justify-center shadow-md border border-[#2B7354] group-hover:border-[#52B788] transition-colors duration-200">
+                <Sprout className="w-5.5 h-5.5 text-[#52B788]" />
               </div>
               <div>
                 <div className="flex items-center gap-1.5">
-                  <span className="text-2xl font-black tracking-tight text-white font-['Outfit']">
-                    Khet<span className="text-[#52B788] drop-shadow-sm font-black">Link</span>
+                  <span className="text-xl sm:text-2xl font-black tracking-tight text-white font-['Outfit']">
+                    Khet<span className="text-[#52B788]">Link</span>
                   </span>
-                  <span className="text-[10px] uppercase font-extrabold tracking-widest px-1.5 py-0.5 rounded bg-gradient-to-r from-amber-500 to-amber-600 text-white shadow-xs">
-                    Bharat
+                  <span className="text-[10px] uppercase font-mono font-extrabold tracking-widest px-1.5 py-0.2 rounded-sm bg-[#E65A00] text-white shadow-xs">
+                    BHARAT
                   </span>
                 </div>
-                <p className="text-[10px] text-emerald-300/90 leading-none tracking-wide font-medium">
-                  Direct Mandi Platform
+                <p className="text-[10px] text-emerald-300/80 leading-tight tracking-wide font-medium">
+                  {t('nav.tagline', 'National Direct Mandi Grid • 0% Dalali')}
                 </p>
               </div>
             </div>
 
             {/* Visual Divider between Brand and Navigation Links */}
-            <div className="hidden lg:block h-6 w-px bg-emerald-700/40" />
+            <div className="hidden lg:block h-6 w-px bg-emerald-800/60" />
 
-            {/* Left Navigation Links in normal cohesive style */}
-            <nav className="hidden lg:flex items-center gap-1">
+            {/* Left Navigation Links with LandSync-style crisp tab highlights */}
+            <nav className="hidden lg:flex items-center gap-2">
               <button
                 id="nav-marketplace-btn"
                 onClick={() => handleNavClick('marketplace')}
-                className={`flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-sm font-medium transition cursor-pointer ${
+                className={`flex items-center gap-1.5 px-3 py-2 text-sm font-medium transition cursor-pointer border-b-2 ${
                   currentView === 'marketplace' 
-                    ? 'bg-[#1E523D] text-white shadow-sm border border-[#52B788]/60 font-semibold' 
-                    : 'text-emerald-100/80 hover:text-white hover:bg-[#154432]'
+                    ? 'border-[#FF9933] text-white font-semibold bg-[#144231]/60 rounded-t-sm' 
+                    : 'border-transparent text-emerald-100/80 hover:text-white hover:bg-[#154432]/40 rounded-sm'
                 }`}
               >
                 <Store className="w-4 h-4 text-[#74C69D]" />
@@ -261,26 +277,26 @@ export const Navbar: React.FC<NavbarProps> = ({
               <button
                 id="nav-ai-btn"
                 onClick={() => handleNavClick('ai-predictions')}
-                className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition cursor-pointer ${
+                className={`flex items-center gap-1.5 px-3 py-2 text-sm font-medium transition cursor-pointer border-b-2 ${
                   currentView === 'ai-predictions' 
-                    ? 'bg-[#1E523D] text-white shadow-sm border border-[#52B788]/60 font-semibold' 
-                    : 'text-emerald-100/80 hover:text-white hover:bg-[#154432]'
+                    ? 'border-[#FF9933] text-white font-semibold bg-[#144231]/60 rounded-t-sm' 
+                    : 'border-transparent text-emerald-100/80 hover:text-white hover:bg-[#154432]/40 rounded-sm'
                 }`}
               >
                 <TrendingUp className="w-4 h-4 text-[#52B788]" />
                 <span>{t('nav.aiPredictions', 'AI Predictions')}</span>
-                <span className="text-[10px] bg-amber-500/20 text-amber-300 border border-amber-400/30 px-1.5 py-0.2 rounded font-bold shadow-xs">
-                  {t('nav.smartBadge', 'Smart')}
+                <span className="text-[9px] font-mono font-bold bg-[#E65A00]/30 text-amber-200 border border-[#E65A00]/50 px-1.5 py-0.2 rounded-sm shadow-xs">
+                  {t('nav.smartBadge', 'LIVE')}
                 </span>
               </button>
 
               <button
                 id="nav-orders-btn"
                 onClick={() => handleNavClick('order-tracking')}
-                className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition cursor-pointer ${
+                className={`flex items-center gap-1.5 px-3 py-2 text-sm font-medium transition cursor-pointer border-b-2 ${
                   currentView === 'order-tracking' || currentView === 'orders'
-                    ? 'bg-[#1E523D] text-white shadow-sm border border-[#52B788]/60 font-semibold' 
-                    : 'text-emerald-100/80 hover:text-white hover:bg-[#154432]'
+                    ? 'border-[#FF9933] text-white font-semibold bg-[#144231]/60 rounded-t-sm' 
+                    : 'border-transparent text-emerald-100/80 hover:text-white hover:bg-[#154432]/40 rounded-sm'
                 }`}
               >
                 <Truck className="w-4 h-4 text-[#74C69D]" />
@@ -290,10 +306,10 @@ export const Navbar: React.FC<NavbarProps> = ({
               <button
                 id="nav-fpo-btn"
                 onClick={() => handleNavClick('fpo-collective')}
-                className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition cursor-pointer ${
+                className={`flex items-center gap-1.5 px-3 py-2 text-sm font-medium transition cursor-pointer border-b-2 ${
                   currentView === 'fpo-collective' 
-                    ? 'bg-[#1E523D] text-white shadow-sm border border-[#52B788]/60 font-semibold' 
-                    : 'text-emerald-100/80 hover:text-white hover:bg-[#154432]'
+                    ? 'border-[#FF9933] text-white font-semibold bg-[#144231]/60 rounded-t-sm' 
+                    : 'border-transparent text-emerald-100/80 hover:text-white hover:bg-[#154432]/40 rounded-sm'
                 }`}
               >
                 <Sprout className="w-4 h-4 text-[#74C69D]" />
@@ -305,25 +321,12 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Right Action Icons & Auth */}
           <div className="flex items-center gap-2 sm:gap-3">
             
-            {/* PWA Install Button on Desktop & Tablet */}
-            {!isInstalled && (
-              <button
-                type="button"
-                onClick={promptInstall}
-                className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-neutral-950 font-bold text-xs shadow-xs border border-amber-300 transition cursor-pointer"
-                title="Install Khet Link app on your device"
-              >
-                <Smartphone className="w-3.5 h-3.5" />
-                <span>Install App</span>
-              </button>
-            )}
-
             {/* Language Selector Dropdown with Click-Outside Ref */}
             <div ref={langDropdownRef} className="relative hidden md:block">
               <button
                 id="lang-dropdown-btn"
                 onClick={() => setLangDropdownOpen(!langDropdownOpen)}
-                className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium rounded-md bg-[#144231] text-emerald-100 hover:bg-[#1A523D] border border-[#256149] transition cursor-pointer"
+                className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-semibold rounded-sm bg-[#144231] text-emerald-100 hover:bg-[#1A523D] border border-[#256149] transition cursor-pointer"
                 aria-label="Select Language"
               >
                 <Globe className="w-3.5 h-3.5 text-[#52B788]" />
@@ -331,8 +334,8 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <ChevronDown className="w-3 h-3 text-emerald-300/70" />
               </button>
               {langDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-[#0F3829] border border-[#256149] rounded-xl shadow-2xl py-1.5 z-50 animate-fadeIn">
-                  <div className="px-3 py-1 text-[10px] uppercase font-bold text-emerald-300/70 border-b border-[#1E523D]">
+                <div className="absolute right-0 mt-2 w-48 bg-[#0B2E21] border border-[#256149] rounded-md shadow-2xl py-1 z-50 animate-fadeIn">
+                  <div className="px-3 py-1.5 text-[10px] uppercase font-bold text-emerald-300/70 border-b border-[#1E523D] tracking-wider">
                     Language / भाषा
                   </div>
                   {availableLanguages.map((l) => (
@@ -362,12 +365,12 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               id="notifications-bell-btn"
               onClick={handleNotificationsClick}
-              className="relative p-2 rounded-lg text-emerald-100 hover:text-white hover:bg-[#174B36] border border-transparent hover:border-[#256149] transition cursor-pointer"
+              className="relative p-2 rounded-sm text-emerald-100 hover:text-white hover:bg-[#174B36] border border-transparent hover:border-[#256149] transition cursor-pointer"
               aria-label="Notifications"
             >
               <Bell className="w-5 h-5" />
               {unreadNotificationsCount > 0 && (
-                <span className="absolute top-1 right-1 w-4 h-4 bg-amber-400 text-[#0B2E21] text-[10px] font-bold rounded-full flex items-center justify-center shadow-xs">
+                <span className="absolute top-1 right-1 w-4 h-4 bg-[#E65A00] text-white text-[10px] font-mono font-bold rounded-full flex items-center justify-center shadow-xs">
                   {unreadNotificationsCount}
                 </span>
               )}
@@ -377,12 +380,12 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               id="cart-drawer-toggle-btn"
               onClick={handleCartClick}
-              className="relative p-2 rounded-lg text-emerald-100 hover:text-white hover:bg-[#174B36] border border-transparent hover:border-[#256149] transition flex items-center gap-1 cursor-pointer"
+              className="relative p-2 rounded-sm text-emerald-100 hover:text-white hover:bg-[#174B36] border border-transparent hover:border-[#256149] transition flex items-center gap-1 cursor-pointer"
               aria-label="Shopping Cart"
             >
               <ShoppingCart className="w-5 h-5 text-[#95D5B2]" />
               {cartCount > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 min-w-5 h-5 px-1 bg-amber-500 text-[#0B2E21] text-[11px] font-extrabold rounded-full flex items-center justify-center border-2 border-[#0B2E21] shadow-xs">
+                <span className="absolute -top-0.5 -right-0.5 min-w-5 h-5 px-1 bg-[#E65A00] text-white text-[11px] font-mono font-extrabold rounded-full flex items-center justify-center border-2 border-[#0B2E21] shadow-xs">
                   {cartCount}
                 </span>
               )}
@@ -391,11 +394,11 @@ export const Navbar: React.FC<NavbarProps> = ({
             {/* User Profile / Portal Switcher with Click-Outside Ref */}
             <div ref={userDropdownRef} className="relative">
               {userRole === 'guest' ? (
-                <div className="flex items-center gap-1.5">
+                <div className="flex items-center gap-2">
                   <button
                     id="login-farmer-btn"
                     onClick={() => handleAuthModal('farmer')}
-                    className="hidden sm:inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#174B36] hover:bg-[#206146] text-emerald-100 border border-[#2B7354] transition shadow-xs cursor-pointer"
+                    className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-sm text-xs font-semibold bg-[#174B36] hover:bg-[#206146] text-emerald-100 border border-[#2B7354] transition shadow-xs cursor-pointer"
                   >
                     <Sprout className="w-3.5 h-3.5 text-[#74C69D]" />
                     {t('nav.farmerSignIn', 'Farmer Sign In')}
@@ -403,9 +406,9 @@ export const Navbar: React.FC<NavbarProps> = ({
                   <button
                     id="login-buyer-btn"
                     onClick={() => handleAuthModal('buyer')}
-                    className="inline-flex items-center gap-1 px-3.5 py-1.5 rounded-lg text-xs font-bold bg-gradient-to-r from-[#2D6A4F] to-[#40916C] hover:from-[#245740] hover:to-[#357B5A] text-white shadow-sm border border-[#52B788]/40 transition cursor-pointer"
+                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-sm text-xs font-bold bg-[#1B3F75] hover:bg-[#14315C] text-white shadow-sm border border-blue-400/40 transition cursor-pointer"
                   >
-                    <User className="w-3.5 h-3.5" />
+                    <User className="w-3.5 h-3.5 text-blue-200" />
                     {t('nav.buyerLogin', 'Buyer Login')}
                   </button>
                 </div>
@@ -414,7 +417,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   <button
                     id="user-profile-menu-btn"
                     onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-                    className="flex items-center gap-2 p-1.5 sm:px-3 sm:py-1.5 rounded-lg bg-[#144231] hover:bg-[#1A523D] border border-[#256149] transition text-left shadow-xs cursor-pointer"
+                    className="flex items-center gap-2 p-1.5 sm:px-3 sm:py-1.5 rounded-sm bg-[#144231] hover:bg-[#1A523D] border border-[#256149] transition text-left shadow-xs cursor-pointer"
                   >
                     <div className="w-7 h-7 rounded-full bg-gradient-to-br from-[#2D6A4F] to-[#40916C] flex items-center justify-center font-bold text-xs text-white shadow-inner">
                       {userRole === 'farmer' ? '🌾' : '🏢'}
@@ -450,9 +453,9 @@ export const Navbar: React.FC<NavbarProps> = ({
                         }}
                         className="w-full text-left px-3 py-2 text-xs rounded-lg hover:bg-[#18533B] text-emerald-100 flex items-center justify-between transition cursor-pointer"
                       >
-                        <span>{t('nav.switchPortal', 'Switch to')} {userRole === 'farmer' ? 'Buyer View' : 'Farmer View'}</span>
+                        <span>{t('nav.switchPortal', 'Switch to')} {userRole === 'farmer' ? t('nav.buyerView', 'Buyer View') : t('nav.farmerView', 'Farmer View')}</span>
                         <span className="text-[10px] px-1.5 py-0.5 bg-[#1E523D] text-[#95D5B2] rounded font-bold">
-                          {userRole === 'farmer' ? 'Buyer' : 'Farmer'}
+                          {userRole === 'farmer' ? t('nav.buyer', 'Buyer') : t('nav.farmer', 'Farmer')}
                         </span>
                       </button>
 
@@ -463,7 +466,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                         }}
                         className="w-full text-left px-3 py-2 text-xs rounded-lg hover:bg-[#18533B] text-emerald-100 transition cursor-pointer"
                       >
-                        Open Full Dashboard
+                        {t('nav.openDashboard', 'Open Full Dashboard')}
                       </button>
 
                       <div className="my-1 border-t border-[#1E523D]" />
@@ -512,7 +515,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             className="bg-[#0A291E] border-t border-[#1E523D] px-4 pt-3 pb-6 space-y-2 max-h-[85vh] overflow-y-auto rounded-t-3xl shadow-2xl"
           >
             <div className="flex items-center justify-between pb-2 border-b border-[#1E523D]">
-              <span className="text-xs font-bold text-emerald-300 uppercase tracking-wider">KhetLink Bharat Menu</span>
+              <span className="text-xs font-bold text-emerald-300 uppercase tracking-wider">{t('nav.mobileMenuTitle', 'KhetLink Bharat Menu')}</span>
               <button 
                 onClick={() => setMobileMenuOpen(false)}
                 className="p-1 rounded-lg text-neutral-400 hover:text-white cursor-pointer"
@@ -533,14 +536,14 @@ export const Navbar: React.FC<NavbarProps> = ({
                   className="w-full py-2.5 px-3 bg-gradient-to-r from-amber-500 to-amber-600 text-neutral-950 font-extrabold text-xs rounded-xl shadow-md flex items-center justify-center gap-2 cursor-pointer active:scale-98 transition-transform"
                 >
                   <Smartphone className="w-4 h-4" />
-                  <span>📲 Install Khet Link App</span>
+                  <span>📲 Install App</span>
                 </button>
               </div>
             )}
 
             {/* Mobile Language Selector */}
             <div className="py-2 border-b border-[#1E523D]">
-              <span className="text-[11px] font-semibold text-emerald-200/80 mb-1.5 block">Language / भाषा:</span>
+              <span className="text-[11px] font-semibold text-emerald-200/80 mb-1.5 block">{t('nav.languageLabel', 'Language / भाषा:')}</span>
               <div className="grid grid-cols-3 gap-1.5">
                 {availableLanguages.map((l) => (
                   <button
@@ -563,7 +566,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
             {/* Mobile Screen Scale Selector */}
             <div className="py-2 border-b border-[#1E523D] flex items-center justify-between">
-              <span className="text-[11px] font-semibold text-emerald-200/80">Content & Button Size:</span>
+              <span className="text-[11px] font-semibold text-emerald-200/80">{t('nav.contentSize', 'Content & Button Size:')}</span>
               <div className="flex gap-1 bg-[#144231] p-1 rounded-lg">
                 <button
                   onClick={() => setUiScale('compact')}
@@ -598,7 +601,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 currentView === 'home' || currentView === 'landing' ? 'bg-[#1E523D] text-white font-semibold' : 'text-emerald-100 hover:bg-[#144231]'
               }`}
             >
-              Home Overview
+              {t('nav.home', 'Home Overview')}
             </button>
             <button
               onClick={() => handleNavClick('marketplace')}
@@ -634,7 +637,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             </button>
 
             <div className="pt-3 border-t border-[#1E523D] flex items-center justify-between">
-              <span className="text-xs text-emerald-200">Current Mode:</span>
+              <span className="text-xs text-emerald-200">{t('nav.currentMode', 'Current Mode:')}</span>
               <div className="flex gap-2">
                 <button
                   onClick={() => {
@@ -646,7 +649,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     userRole === 'farmer' ? 'bg-[#52B788] text-[#0B2E21] font-bold' : 'bg-[#144231] text-emerald-100'
                   }`}
                 >
-                  Farmer
+                  {t('nav.farmer', 'Farmer')}
                 </button>
                 <button
                   onClick={() => {
@@ -658,7 +661,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     userRole === 'buyer' ? 'bg-[#52B788] text-[#0B2E21] font-bold' : 'bg-[#144231] text-emerald-100'
                   }`}
                 >
-                  Buyer
+                  {t('nav.buyer', 'Buyer')}
                 </button>
               </div>
             </div>

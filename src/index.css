@@ -1,17 +1,55 @@
 @import "tailwindcss";
 
 @layer base {
+  :root {
+    --color-gov-navy: #0B192C;
+    --color-primary-navy: #1B3F75;
+    --color-primary-navy-hover: #14315C;
+    --color-primary-navy-surface: #EEF3FB;
+    --color-pine-deep: #0B2E21;
+    --color-pine-mid: #103D2D;
+    --color-pine-border: #1E523D;
+    --color-accent-saffron: #FF9933;
+    --color-accent-kesari: #E65A00;
+    --color-accent-kesari-hover: #C44D00;
+    --color-accent-green: #138808;
+    --color-surface-offwhite: #F8F9FA;
+    --color-surface-card: #FFFFFF;
+    --color-border-slate: #D1D5DB;
+    --color-border-subtle: #E2E8F0;
+    
+    --font-latin: "Noto Sans", "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-devanagari: "Noto Sans Devanagari", sans-serif;
+    --font-mono: "JetBrains Mono", SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    --font-heading: "Outfit", "Noto Sans Devanagari", sans-serif;
+  }
+
   body {
-    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    color: #1b2727;
-    background-color: #f7f9f7;
+    font-family: var(--font-latin);
+    color: #111827;
+    background-color: #F8F9FB;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     transition: font-size 0.2s ease;
   }
   
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-heading);
+    letter-spacing: -0.015em;
   }
+
+  /* Monospace typography defaults for data, IDs, and financial figures */
+  code, kbd, samp, .font-mono {
+    font-family: var(--font-mono) !important;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* Indian Devanagari Script Support */
+:lang(hi), .script-devanagari {
+  font-family: var(--font-devanagari), var(--font-latin);
+  letter-spacing: 0;
+  line-height: 1.6;
 }
 
 /* User Screen & Font Scale Setting */
@@ -49,6 +87,100 @@ html.ui-scale-xlarge select {
   font-family: 'Fraunces', serif;
 }
 
+/* Institutional LandSync-Inspired Components */
+
+/* Official National Gov Strip */
+.gov-top-strip {
+  background-color: #0B192C;
+  color: #FFFFFF;
+  border-bottom: 2px solid #FF9933;
+}
+
+/* Monospaced Khasra / Lot Badge */
+.khasra-badge, .lot-badge {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+  background-color: #F1F5F9;
+  border: 1px solid #CBD5E1;
+  border-radius: 4px;
+  color: #0F172A;
+  padding: 2px 7px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 600;
+}
+
+/* Official Rubber Stamp Seal Overlay */
+.official-stamp-badge {
+  position: absolute;
+  transform: rotate(-5deg);
+  border: 2px solid #166534;
+  outline: 1px dashed #15803D;
+  outline-offset: -3px;
+  background-color: rgba(240, 253, 244, 0.96);
+  padding: 4px 10px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  user-select: none;
+  z-index: 10;
+}
+
+.official-stamp-badge .stamp-sub {
+  font-size: 8.5px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: #14532D;
+  text-transform: uppercase;
+}
+
+.official-stamp-badge .stamp-main {
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  color: #15803D;
+  text-transform: uppercase;
+  margin-top: 1px;
+  font-family: var(--font-mono);
+}
+
+/* 4-Column Terminal Stat Box */
+.stat-terminal-box {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 28px 24px;
+  background: #FFFFFF;
+  border-right: 1px solid #E2E8F0;
+}
+
+.stat-terminal-box:last-child {
+  border-right: none;
+}
+
+.stat-big-mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 2.25rem;
+  font-weight: 800;
+  line-height: 1;
+  color: #0B192C;
+  letter-spacing: -0.02em;
+}
+
+/* 5-Step Process Connected Line Track */
+.process-track-line {
+  position: absolute;
+  top: 36px;
+  left: 48px;
+  right: 48px;
+  height: 2px;
+  background-color: #CBD5E1;
+  z-index: 1;
+}
+
 /* Smooth continuous APMC Mandi Marquee */
 @keyframes ticker {
   0% {
@@ -62,7 +194,7 @@ html.ui-scale-xlarge select {
 .animate-mandi-ticker {
   display: flex;
   width: max-content;
-  animation: ticker 42s linear infinite;
+  animation: ticker 45s linear infinite;
 }
 
 .animate-mandi-ticker:hover {
@@ -96,10 +228,35 @@ html.ui-scale-xlarge select {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #b2c5b2;
+  background: #cbd5e1;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #6b8e4e;
+  background: #94a3b8;
 }
+
+/* Accessibility & Keyboard Navigation */
+:focus-visible {
+  outline: 2px solid #6B8E4E;
+  outline-offset: 2px;
+}
+
+button:focus-visible, 
+a:focus-visible, 
+input:focus-visible, 
+select:focus-visible, 
+textarea:focus-visible {
+  outline: 2px solid #6B8E4E;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+

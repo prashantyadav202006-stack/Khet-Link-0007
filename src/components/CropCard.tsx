@@ -27,53 +27,48 @@ export const CropCard: React.FC<CropCardProps> = ({
 }) => {
   const { t } = useLanguage();
   const percentAboveMsp = Math.round(((crop.pricePerQuintal - crop.mandiMspPrice) / crop.mandiMspPrice) * 100);
+  const lotIdentifier = `#LOT-${(crop.locationState || 'IN').slice(0, 2).toUpperCase()}-${crop.id.toUpperCase().slice(0, 6)}`;
 
   return (
     <div 
       id={`crop-card-${crop.id}`}
-      className="bg-white rounded-2xl border border-[#E2E8E2] shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between overflow-hidden group hover:border-[#6B8E4E]/50"
+      className="bg-white rounded-md border border-slate-200 shadow-xs hover:shadow-md transition-all duration-200 flex flex-col justify-between overflow-hidden group hover:border-[#1E523D]"
     >
       {/* Top Image Banner */}
-      <div className="relative h-52 overflow-hidden bg-neutral-100 cursor-pointer" onClick={() => onSelect(crop)}>
+      <div className="relative h-48 overflow-hidden bg-slate-100 cursor-pointer" onClick={() => onSelect(crop)}>
         <img 
           src={crop.imageUrl} 
           alt={crop.title}
-          className="w-full h-full object-cover group-hover:scale-106 transition-transform duration-500"
+          className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-300"
           loading="lazy"
         />
         
-        {/* Gradient overlay for readability */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/20" />
+        {/* Subtle Dark Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-black/20 pointer-events-none" />
 
-        {/* Top Badges */}
-        <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-1">
-          <div className="flex flex-wrap gap-1.5">
-            {crop.isOrganic && (
-              <span className="text-[10px] font-bold bg-[#3C5148] text-[#B2C5B2] px-2.5 py-1 rounded-full border border-[#6B8E4E]/40 shadow-xs flex items-center gap-1">
-                <span>🌿</span> {t('common.organic', 'NPOP Organic')}
-              </span>
-            )}
-            <span className="text-[10px] font-semibold bg-black/60 text-white px-2.5 py-1 rounded-full backdrop-blur-xs">
-              {crop.grade}
-            </span>
-          </div>
-
-          {crop.readyForDispatch && (
-            <span className="text-[10px] font-bold bg-emerald-600 text-white px-2 py-0.5 rounded-full flex items-center gap-1 shadow-xs">
-              <PackageCheck className="w-3 h-3" />
-              {t('common.ready', 'Ready')}
+        {/* Top Badges & Official Stamp */}
+        <div className="absolute top-2.5 left-2.5 flex flex-col gap-1.5 z-10">
+          <span className="text-[10px] font-mono font-bold bg-slate-900/95 text-amber-300 px-2 py-0.5 rounded-sm border border-slate-700 shadow-xs">
+            {lotIdentifier}
+          </span>
+          {crop.isOrganic && (
+            <span className="text-[9px] font-mono font-bold bg-[#138808] text-white px-2 py-0.5 rounded-sm shadow-xs flex items-center gap-1 w-max">
+              <span>🌿</span> {t('common.organic', 'NPOP Organic')}
             </span>
           )}
         </div>
 
+
+
+
         {/* Bottom Details on Image */}
-        <div className="absolute bottom-3 left-3 right-3 flex items-end justify-between text-white">
+        <div className="absolute bottom-2.5 left-3 right-3 flex items-end justify-between text-white z-10">
           <div className="flex items-center gap-1 text-xs">
-            <MapPin className="w-3.5 h-3.5 text-[#B2C5B2]" />
-            <span className="font-medium text-neutral-200">{crop.locationDistrict}, {crop.locationState}</span>
+            <MapPin className="w-3 h-3 text-emerald-300" />
+            <span className="font-medium text-slate-200 text-[11px] truncate max-w-[140px]">{crop.locationDistrict}, {crop.locationState}</span>
           </div>
-          <div className="text-[11px] font-mono bg-[#1B2727]/80 px-2 py-0.5 rounded border border-white/20">
-            {crop.quantityAvailableQuintals} {t('market.qtlAvail', 'Qtl Avail.')}
+          <div className="text-[10px] font-mono bg-black/80 px-2 py-0.5 rounded-sm text-slate-200 border border-white/20">
+            {crop.quantityAvailableQuintals} {t('market.qtlAvail', 'Qtl')}
           </div>
         </div>
       </div>
@@ -81,14 +76,14 @@ export const CropCard: React.FC<CropCardProps> = ({
       {/* Card Body */}
       <div className="p-4 flex-1 flex flex-col justify-between space-y-3">
         
-        <div className="space-y-1.5">
+        <div className="space-y-1">
           {/* Category & Variety */}
           <div className="flex items-center justify-between text-[11px]">
-            <span className="font-bold text-[#6B8E4E] uppercase tracking-wider">
+            <span className="font-mono font-bold text-[#E65A00] uppercase tracking-wider">
               {crop.category} • {crop.variety}
             </span>
-            <span className="text-neutral-500 font-medium flex items-center gap-1">
-              <Droplets className="w-3 h-3 text-sky-500" />
+            <span className="text-slate-600 font-mono text-[11px] font-semibold flex items-center gap-1 bg-slate-100 px-1.5 py-0.2 rounded border border-slate-200">
+              <Droplets className="w-3 h-3 text-sky-600" />
               {crop.moisturePercent}% {t('market.moist', 'Moist.')}
             </span>
           </div>
@@ -96,75 +91,75 @@ export const CropCard: React.FC<CropCardProps> = ({
           {/* Title */}
           <h3 
             onClick={() => onSelect(crop)}
-            className="font-bold text-[#1B2727] text-base leading-snug hover:text-[#6B8E4E] cursor-pointer line-clamp-1 transition-colors"
+            className="font-bold text-[#0B192C] text-base leading-snug hover:text-emerald-800 cursor-pointer line-clamp-1 transition-colors font-['Outfit'] mt-0.5"
           >
             {crop.title}
           </h3>
 
           {/* Farmer & FPO attribution with Profile link */}
-          <div className="flex items-center justify-between text-xs text-neutral-600 pt-0.5">
+          <div className="flex items-center justify-between text-xs text-slate-600 pt-0.5">
             <button
               onClick={(e) => {
                 e.stopPropagation();
                 onViewFarmer(crop.farmerId);
               }}
-              className="hover:text-[#3C5148] hover:underline flex items-center gap-1 text-left font-medium truncate max-w-[190px] cursor-pointer"
+              className="hover:text-emerald-800 hover:underline flex items-center gap-1 text-left font-medium truncate max-w-[190px] cursor-pointer"
             >
-              <ShieldCheck className="w-3.5 h-3.5 text-[#6B8E4E] shrink-0" />
-              <span className="truncate">{crop.farmerName}</span>
+              <ShieldCheck className="w-3.5 h-3.5 text-emerald-700 shrink-0" />
+              <span className="truncate text-slate-700">{crop.farmerName}</span>
             </button>
-            <span className="text-[10px] bg-[#E8EFE8] text-[#3C5148] font-bold px-1.5 py-0.5 rounded">
-              {t('common.fpoVerified', 'FPO Verified')}
+            <span className="text-[10px] font-mono bg-emerald-50 text-emerald-800 font-bold px-1.5 py-0.2 rounded border border-emerald-200">
+              {t('common.fpoVerified', 'FPO Assayed')}
             </span>
           </div>
         </div>
 
-        {/* Pricing Box */}
-        <div className="bg-[#F8FAF8] rounded-xl p-3 border border-[#E3EBE3] space-y-1.5">
+        {/* Pricing Box in Tabular Monospace Format */}
+        <div className="bg-slate-50 rounded-sm p-3 border border-slate-200 space-y-1.5">
           <div className="flex items-baseline justify-between">
             <div>
-              <span className="text-[10px] text-neutral-400 uppercase font-semibold">{t('common.retailSample', 'Retail/Sample')}</span>
-              <div className="text-xl font-extrabold text-[#1B2727] font-mono leading-none">
-                ₹{crop.pricePerKg} <span className="text-xs font-normal text-neutral-500">/ kg</span>
+              <span className="text-[10px] text-slate-500 uppercase font-medium">{t('common.retailSample', 'Farmgate Rate')}</span>
+              <div className="text-xl font-extrabold text-[#0B192C] font-mono leading-none">
+                ₹{crop.pricePerKg} <span className="text-xs font-normal text-slate-500">/ {t('cropDetail.kg', 'kg')}</span>
               </div>
             </div>
 
             <div className="text-right">
-              <span className="text-[10px] text-neutral-400 uppercase font-semibold">{t('common.bulkRate', 'Bulk Rate')}</span>
-              <div className="text-sm font-bold text-[#6B8E4E] font-mono leading-none">
-                ₹{crop.pricePerQuintal} <span className="text-[10px] font-normal text-neutral-500">/ Qtl</span>
+              <span className="text-[10px] text-slate-500 uppercase font-medium">{t('common.bulkRate', 'Bulk Qtl Rate')}</span>
+              <div className="text-sm font-bold text-emerald-800 font-mono leading-none">
+                ₹{crop.pricePerQuintal} <span className="text-[10px] font-normal text-slate-500">/ {t('cropDetail.qtl', 'Qtl')}</span>
               </div>
             </div>
           </div>
 
           {/* Mandi MSP Benchmark Indicator */}
-          <div className="flex items-center justify-between text-[11px] pt-1 border-t border-neutral-200/60">
-            <span className="text-neutral-500">{t('common.mandiMsp', 'Mandi MSP')}: ₹{crop.mandiMspPrice}/Qtl</span>
-            <span className="font-bold text-emerald-700 flex items-center gap-0.5">
+          <div className="flex items-center justify-between text-[11px] pt-1.5 border-t border-slate-200/80 font-mono">
+            <span className="text-slate-500 text-[10px]">{t('common.mandiMsp', 'MSP Benchmark')}: ₹{crop.mandiMspPrice}/{t('cropDetail.qtl', 'Qtl')}</span>
+            <span className="font-bold text-emerald-700 flex items-center gap-0.5 text-[11px]">
               <TrendingUp className="w-3 h-3" />
               {percentAboveMsp >= 0 ? `+${percentAboveMsp}%` : `${percentAboveMsp}%`}
             </span>
           </div>
         </div>
 
-        {/* Action Buttons */}
-        <div className="grid grid-cols-2 gap-2 pt-1">
+        {/* Action Buttons with Crisp Rounded-sm Corners */}
+        <div className="grid grid-cols-2 gap-2 pt-0.5">
           <button
             id={`btn-view-${crop.id}`}
             onClick={() => onSelect(crop)}
-            className="w-full py-2 px-3 text-xs font-semibold rounded-xl bg-neutral-100 hover:bg-neutral-200 text-[#1B2727] transition flex items-center justify-center gap-1 cursor-pointer"
+            className="w-full py-2 px-3 text-xs font-semibold rounded-sm bg-white hover:bg-slate-100 text-slate-800 transition flex items-center justify-center gap-1.5 cursor-pointer border border-slate-300 shadow-2xs"
           >
-            <Eye className="w-3.5 h-3.5 text-neutral-600" />
+            <Eye className="w-3.5 h-3.5 text-slate-600" />
             <span>{t('common.assaySheet', 'Lab Assay')}</span>
           </button>
 
           <button
             id={`btn-add-cart-${crop.id}`}
             onClick={() => onAddToCart(crop, 1, 'quintal')}
-            className="w-full py-2 px-3 text-xs font-bold rounded-xl bg-[#6B8E4E] hover:bg-[#5a7942] text-white shadow-xs transition flex items-center justify-center gap-1.5 cursor-pointer"
+            className="w-full py-2 px-3 text-xs font-bold rounded-sm bg-[#144231] hover:bg-[#1C5B44] text-white shadow-2xs transition flex items-center justify-center gap-1.5 cursor-pointer border border-[#2B7354]"
           >
             <ShoppingCart className="w-3.5 h-3.5" />
-            <span>+ 1 Qtl</span>
+            <span>{t('common.addOneQtl', '+ 1 Qtl')}</span>
           </button>
         </div>
 

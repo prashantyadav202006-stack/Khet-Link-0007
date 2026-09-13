@@ -89,11 +89,14 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
       deliveryAddress,
       estimatedDelivery: 'Within 48-72 Hours',
       trackingSteps: [
-        { step: '1', label: 'Order Placed & Escrow Funded', date: 'Just now', completed: true, current: true, description: `₹${grandTotal.toLocaleString('en-IN')} locked securely in Escrow Guarantee` },
-        { step: '2', label: 'Farmgate Quality Assayed', date: 'Pending', completed: false, current: false, description: 'Moisture and digital barcode tagging' },
-        { step: '3', label: 'Dispatched from Farmgate', date: 'Pending', completed: false, current: false, description: 'Direct Reefer / Truck pickup' },
-        { step: '4', label: 'In Transit', date: 'Pending', completed: false, current: false, description: 'Real-time GPS telemetry' },
-        { step: '5', label: 'Delivered & Escrow Released', date: 'Pending', completed: false, current: false, description: 'Direct T+0 settlement to farmer account' },
+        { step: '1', label: 'Order Placed & Escrow Funded', date: 'Just now', completed: true, current: true, description: `Rs.${grandTotal.toLocaleString('en-IN')} securely locked in KhetLink Escrow.` },
+        { step: '2', label: 'FPO Order Accepted', date: 'Pending', completed: false, current: false, description: `Awaiting confirmation from ${firstItem ? firstItem.crop.fpoName : 'FPO'}.` },
+        { step: '3', label: 'Quality Sample Collected', date: 'Pending', completed: false, current: false, description: 'Representative sample to be collected at FPO collection point for quality testing.' },
+        { step: '4', label: 'Quality Verified', date: 'Pending', completed: false, current: false, description: 'Sample undergoing quality verification.' },
+        { step: '5', label: 'Dispatched from FPO/Farmgate', date: 'Pending', completed: false, current: false, description: 'Awaiting quality approval before dispatch.' },
+        { step: '6', label: 'In Transit', date: 'Pending', completed: false, current: false, description: 'Logistics tracking will activate after dispatch.' },
+        { step: '7', label: 'Delivered & Delivery Verified', date: 'Pending', completed: false, current: false, description: 'Digital delivery verification pending.' },
+        { step: '8', label: 'Escrow Released / Farmer Paid', date: 'Pending', completed: false, current: false, description: 'T+0 settlement after verified delivery.' },
       ]
     };
 
@@ -118,7 +121,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
           <div className="flex items-center gap-2">
             <span className="text-xl font-bold font-['Outfit']">{t('cart.title', 'Procurement Cart')}</span>
             <span className="text-xs bg-[#6B8E4E] text-white px-2 py-0.5 rounded-full font-mono font-bold">
-              {items.length} Batch{items.length === 1 ? '' : 'es'}
+              {items.length} {t('common.batches', 'Batches')}
             </span>
           </div>
           <button
@@ -150,7 +153,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                 className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-600 via-[#25D366] to-emerald-600 hover:from-emerald-700 hover:to-emerald-700 text-white font-extrabold text-xs shadow-lg shadow-emerald-500/25 flex items-center justify-center gap-2 cursor-pointer active:scale-98 transition-transform"
               >
                 <Send className="w-4 h-4" />
-                <span>📱 WhatsApp पर मंडी रसीद भेजें</span>
+                <span>📱 {t('cart.shareBiltyWhatsApp', 'Share Mandi Receipt on WhatsApp')}</span>
               </button>
               <button
                 type="button"
@@ -161,7 +164,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                 }}
                 className="w-full py-2.5 px-4 rounded-xl border border-neutral-300 text-neutral-700 font-bold text-xs hover:bg-neutral-50 transition cursor-pointer"
               >
-                {t('common.done', 'Done (बंद करें)')}
+                {t('common.done', 'Done')}
               </button>
             </div>
           </div>

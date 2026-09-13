@@ -69,8 +69,8 @@ export interface Order {
   logisticsFee: number;
   platformEscrowFee: number;
   totalAmount: number;
-  escrowStatus: 'Held in Escrow' | 'Released to Farmer' | 'Disputed' | string;
-  deliveryStatus: 'Order Placed' | 'Assaying Quality' | 'Dispatched' | 'In Transit' | 'Delivered' | string;
+  escrowStatus: 'Held in Escrow' | 'Escrow Released / Farmer Paid' | 'Disputed' | string;
+  deliveryStatus: 'Order Placed' | 'FPO Accepted' | 'Sample Collected' | 'Quality Verified' | 'Dispatched' | 'In Transit' | 'Delivered & Verified' | 'Escrow Released' | string;
   deliveryAddress: string;
   estimatedDelivery: string;
   trackingSteps: TrackingStep[];

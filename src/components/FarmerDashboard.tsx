@@ -221,14 +221,14 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
       {activeTab === 'inventory' && (
         <div className="space-y-6">
           <div className="flex items-center justify-between">
-            <h3 className="font-bold text-lg text-[#1B2727]">Your Listed Harvest Batches</h3>
+            <h3 className="font-bold text-lg text-[#1B2727]">{t('farmer.listedBatches', 'Your Listed Harvest Batches')}</h3>
             <button
               id="btn-list-harvest"
               onClick={() => setIsAddCropModalOpen(true)}
               className="px-4 py-2 bg-[#6B8E4E] hover:bg-[#5a7942] text-white text-xs font-bold rounded-xl shadow-xs flex items-center gap-1.5 cursor-pointer"
             >
               <PlusCircle className="w-4 h-4" />
-              Add Produce Listing
+              {t('farmer.addProduceListing', 'Add Produce Listing')}
             </button>
           </div>
 
@@ -260,11 +260,11 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
 
                 <div className="bg-neutral-50 p-3 rounded-xl border border-neutral-200 text-xs flex justify-between items-center">
                   <div>
-                    <span className="text-neutral-500 text-[10px]">Your Listing Price</span>
+                    <span className="text-neutral-500 text-[10px]">{t('farmer.yourListingPrice', 'Your Listing Price')}</span>
                     <p className="font-bold font-mono text-base text-[#1B2727]">₹{crop.pricePerQuintal}/Qtl</p>
                   </div>
                   <div className="text-right">
-                    <span className="text-neutral-500 text-[10px]">APMC Mandi MSP</span>
+                    <span className="text-neutral-500 text-[10px]">{t('farmer.apmcMsp', 'APMC Mandi MSP')}</span>
                     <p className="font-bold font-mono text-xs text-neutral-600">₹{crop.mandiMspPrice}/Qtl</p>
                   </div>
                 </div>
@@ -272,7 +272,7 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
                 <div className="flex items-center justify-between text-xs pt-1">
                   <span className="text-emerald-700 font-bold flex items-center gap-1">
                     <CheckCircle2 className="w-3.5 h-3.5" />
-                    Active on Marketplace
+                    {t('farmer.activeMarketplace', 'Active on Marketplace')}
                   </span>
                   <button 
                     onClick={() => alert(`Status updated for ${crop.title}. Live buyers are viewing your batch!`)}
@@ -291,7 +291,7 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
       {activeTab === 'orders' && (
         <div className="space-y-6">
           <div className="flex items-center justify-between">
-            <h3 className="font-bold text-lg text-[#1B2727]">Procurement Orders & Buyer Contracts</h3>
+            <h3 className="font-bold text-lg text-[#1B2727]">{t('farmer.ordersContracts', 'Procurement Orders & Buyer Contracts')}</h3>
             <span className="text-xs text-neutral-500">100% Escrow Funded by Buyer</span>
           </div>
 
@@ -315,7 +315,7 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
                   </div>
 
                   <div className="text-left sm:text-right">
-                    <span className="text-xs text-neutral-400">Total Escrow Value</span>
+                    <span className="text-xs text-neutral-400">{t('farmer.totalEscrowVal', 'Total Escrow Value')}</span>
                     <div className="text-xl font-bold font-mono text-[#6B8E4E]">
                       ₹{order.totalAmount.toLocaleString('en-IN')}
                     </div>
@@ -349,22 +349,38 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
                     </span>
                   </div>
 
-                  {/* Actions to transition */}
+                  {/* Actions to transition — FPO role steps */}
                   <div className="flex items-center gap-2">
                     {order.deliveryStatus === 'Order Placed' && (
                       <button
-                        onClick={() => onUpdateOrderStatus(order.id, 'Assaying Quality', 'Held in Escrow')}
+                        onClick={() => onUpdateOrderStatus(order.id, 'FPO Accepted', 'Held in Escrow')}
                         className="px-3 py-1.5 bg-[#3C5148] text-white font-bold rounded-lg hover:bg-[#253630] transition text-xs cursor-pointer"
                       >
-                        Confirm Quality Assay
+                        Accept Order
                       </button>
                     )}
-                    {order.deliveryStatus === 'Assaying Quality' && (
+                    {order.deliveryStatus === 'FPO Accepted' && (
+                      <button
+                        onClick={() => onUpdateOrderStatus(order.id, 'Sample Collected', 'Held in Escrow')}
+                        className="px-3 py-1.5 bg-[#3C5148] text-white font-bold rounded-lg hover:bg-[#253630] transition text-xs cursor-pointer"
+                      >
+                        Collect Quality Sample
+                      </button>
+                    )}
+                    {order.deliveryStatus === 'Sample Collected' && (
+                      <button
+                        onClick={() => onUpdateOrderStatus(order.id, 'Quality Verified', 'Held in Escrow')}
+                        className="px-3 py-1.5 bg-[#6B8E4E] text-white font-bold rounded-lg hover:bg-[#5a7942] transition text-xs cursor-pointer"
+                      >
+                        Confirm Quality Verified
+                      </button>
+                    )}
+                    {order.deliveryStatus === 'Quality Verified' && (
                       <button
                         onClick={() => onUpdateOrderStatus(order.id, 'Dispatched', 'Held in Escrow')}
                         className="px-3 py-1.5 bg-[#6B8E4E] text-white font-bold rounded-lg hover:bg-[#5a7942] transition text-xs cursor-pointer"
                       >
-                        Hand Over to Transporter
+                        Hand Over to Logistics
                       </button>
                     )}
                     {order.deliveryStatus === 'Dispatched' && (
@@ -372,18 +388,16 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
                         onClick={() => onUpdateOrderStatus(order.id, 'In Transit', 'Held in Escrow')}
                         className="px-3 py-1.5 bg-neutral-700 text-white font-bold rounded-lg transition text-xs cursor-pointer"
                       >
-                        Vehicle In Transit
+                        Mark In Transit
                       </button>
                     )}
-                    {order.deliveryStatus === 'In Transit' && (
-                      <button
-                        onClick={() => onUpdateOrderStatus(order.id, 'Delivered', 'Released to Farmer')}
-                        className="px-3 py-1.5 bg-emerald-600 text-white font-bold rounded-lg hover:bg-emerald-700 transition text-xs cursor-pointer"
-                      >
-                        Simulate Delivery & Release Payout
-                      </button>
+                    {(order.deliveryStatus === 'In Transit' || order.deliveryStatus === 'Delivered & Verified') && (
+                      <span className="text-amber-700 font-bold flex items-center gap-1 text-xs">
+                        <Clock className="w-3.5 h-3.5" />
+                        Awaiting Buyer Confirmation
+                      </span>
                     )}
-                    {order.deliveryStatus === 'Delivered' && (
+                    {(order.deliveryStatus === 'Escrow Released' || order.escrowStatus === 'Escrow Released / Farmer Paid') && (
                       <span className="text-emerald-700 font-bold flex items-center gap-1">
                         <Check className="w-4 h-4" />
                         Payout Settled to Bank
@@ -408,12 +422,12 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
               <p className="text-[11px] text-neutral-400">Transferred to HDFC Bank A/C ****4821</p>
             </div>
             <div className="bg-white rounded-2xl p-6 border border-neutral-200 shadow-xs space-y-2">
-              <span className="text-xs text-neutral-500 uppercase font-bold">Locked in Buyer Escrow</span>
+              <span className="text-xs text-neutral-500 uppercase font-bold">{t('farmer.lockedEscrow', 'Locked in Buyer Escrow')}</span>
               <div className="text-3xl font-black text-amber-600 font-mono">₹194,650</div>
-              <p className="text-[11px] text-neutral-400">Release immediately upon warehouse receipt verification</p>
+              <p className="text-[11px] text-neutral-400">{t('farmer.escrowReleaseInfo', 'Release immediately upon warehouse receipt verification')}</p>
             </div>
             <div className="bg-white rounded-2xl p-6 border border-neutral-200 shadow-xs space-y-2">
-              <span className="text-xs text-neutral-500 uppercase font-bold">Mandi Cess Exemption Saved</span>
+              <span className="text-xs text-neutral-500 uppercase font-bold">{t('farmer.cessExemptionSaved', 'Mandi Cess Exemption Saved')}</span>
               <div className="text-3xl font-black text-[#1B2727] font-mono">₹4,860</div>
               <p className="text-[11px] text-neutral-400">Direct farmgate trading 0% local market fee</p>
             </div>
@@ -499,14 +513,14 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
             </button>
 
             <div>
-              <span className="text-xs font-bold uppercase text-[#6B8E4E]">Farmgate Onboarding</span>
-              <h3 className="text-xl font-bold text-[#1B2727] font-['Outfit']">List New Harvest Batch</h3>
-              <p className="text-xs text-neutral-500">Instant publish to 4,500+ verified buyers with AI price discovery.</p>
+              <span className="text-xs font-bold uppercase text-[#6B8E4E]">{t('farmer.farmgateOnboarding', 'Farmgate Onboarding')}</span>
+              <h3 className="text-xl font-bold text-[#1B2727] font-['Outfit']">{t('farmer.listNewBatch', 'List New Harvest Batch')}</h3>
+              <p className="text-xs text-neutral-500">{t('farmer.listBatchSub', 'Instant publish to 4,500+ verified buyers with AI price discovery.')}</p>
             </div>
 
             <form onSubmit={handleCreateCrop} className="space-y-4">
               <div>
-                <label className="text-xs font-bold text-neutral-700 block mb-1">Crop Name & Batch Title</label>
+                <label className="text-xs font-bold text-neutral-700 block mb-1">{t('farmer.cropTitleLabel', 'Crop Name & Batch Title')}</label>
                 <input
                   type="text"
                   required
@@ -519,22 +533,22 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-xs font-bold text-neutral-700 block mb-1">Category</label>
+                  <label className="text-xs font-bold text-neutral-700 block mb-1">{t('farmer.categoryLabel', 'Category')}</label>
                   <select
                     value={newCropCategory}
                     onChange={(e) => setNewCropCategory(e.target.value as any)}
                     className="w-full text-xs border border-neutral-300 rounded-xl p-2.5 focus:outline-none cursor-pointer"
                   >
-                    <option value="Grains">Grains & Cereals</option>
-                    <option value="Pulses">Pulses & Dal</option>
-                    <option value="Vegetables">Vegetables</option>
-                    <option value="Spices">Spices</option>
-                    <option value="Oilseeds">Oilseeds</option>
+                    <option value="Grains">{t('categories.grains', 'Grains & Cereals')}</option>
+                    <option value="Pulses">{t('categories.pulses', 'Pulses & Dal')}</option>
+                    <option value="Vegetables">{t('categories.vegetables', 'Vegetables')}</option>
+                    <option value="Spices">{t('categories.spices', 'Spices')}</option>
+                    <option value="Oilseeds">{t('categories.oilseeds', 'Oilseeds')}</option>
                   </select>
                 </div>
 
                 <div>
-                  <label className="text-xs font-bold text-neutral-700 block mb-1">Variety Name</label>
+                  <label className="text-xs font-bold text-neutral-700 block mb-1">{t('farmer.varietyLabel', 'Variety Name')}</label>
                   <input
                     type="text"
                     required
@@ -548,7 +562,7 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-xs font-bold text-neutral-700 block mb-1">Price / Quintal (₹)</label>
+                  <label className="text-xs font-bold text-neutral-700 block mb-1">{t('farmer.priceQuintalLabel', 'Price / Quintal (₹)')}</label>
                   <input
                     type="number"
                     required
@@ -560,7 +574,7 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
                 </div>
 
                 <div>
-                  <label className="text-xs font-bold text-neutral-700 block mb-1">Available Quintals</label>
+                  <label className="text-xs font-bold text-neutral-700 block mb-1">{t('farmer.availableQuintals', 'Available Quintals')}</label>
                   <input
                     type="number"
                     required
@@ -574,20 +588,20 @@ export const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-xs font-bold text-neutral-700 block mb-1">Quality Grade</label>
+                  <label className="text-xs font-bold text-neutral-700 block mb-1">{t('farmer.qualityGradeLabel', 'Quality Grade')}</label>
                   <select
                     value={newCropGrade}
                     onChange={(e) => setNewCropGrade(e.target.value as any)}
                     className="w-full text-xs border border-neutral-300 rounded-xl p-2.5 cursor-pointer"
                   >
-                    <option value="Grade A+ Export">Grade A+ Export</option>
-                    <option value="Grade A Mandi">Grade A Mandi</option>
-                    <option value="Grade B Commercial">Grade B Commercial</option>
+                    <option value="Grade A+ Export">{t('grades.gradeAPlus', 'Grade A+ Export')}</option>
+                    <option value="Grade A Mandi">{t('grades.gradeA', 'Grade A Mandi')}</option>
+                    <option value="Grade B Commercial">{t('grades.gradeB', 'Grade B Commercial')}</option>
                   </select>
                 </div>
 
                 <div>
-                  <label className="text-xs font-bold text-neutral-700 block mb-1">Moisture % (Assay)</label>
+                  <label className="text-xs font-bold text-neutral-700 block mb-1">{t('farmer.moistureLabel', 'Moisture % (Assay)')}</label>
                   <input
                     type="number"
                     step="0.1"

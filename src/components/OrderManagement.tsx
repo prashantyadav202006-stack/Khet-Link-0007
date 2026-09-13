@@ -14,18 +14,23 @@ import {
   Check,
   Send
 } from 'lucide-react';
-import { Order } from '../types';
+import { Order, UserRole } from '../types';
 import { useLanguage } from '../context/LanguageContext';
 import { WhatsAppReceiptModal } from './WhatsAppReceiptModal';
+import { EscrowFlowDiagram } from './EscrowFlowDiagram';
 
 interface OrderManagementProps {
   orders: Order[];
   onAdvanceOrderStep: (orderId: string) => void;
+  onConfirmDelivery?: (orderId: string) => void;
+  userRole: UserRole;
 }
 
 export const OrderManagement: React.FC<OrderManagementProps> = ({
   orders,
-  onAdvanceOrderStep
+  onAdvanceOrderStep,
+  onConfirmDelivery,
+  userRole
 }) => {
   const [selectedOrderId, setSelectedOrderId] = useState<string>(orders[0]?.id || '');
   const [invoiceModalOrder, setInvoiceModalOrder] = useState<Order | null>(null);
@@ -42,7 +47,7 @@ export const OrderManagement: React.FC<OrderManagementProps> = ({
         <div>
           <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#6B8E4E] mb-1">
             <Truck className="w-4 h-4" />
-            {t('orders.badge', 'Live Cold-Chain Telemetry')}
+            {t('orders.badge', 'Live Order Tracking')}
           </div>
           <h1 className="text-3xl font-bold text-[#1B2727] font-['Outfit']">
             {t('common.orderLifecycle', 'Order Lifecycle & Escrow Settlement')}
@@ -75,7 +80,7 @@ export const OrderManagement: React.FC<OrderManagementProps> = ({
           {/* Left Column: Orders List (4 Cols) */}
           <div className="lg:col-span-4 space-y-3">
             <h3 className="text-xs font-bold uppercase text-neutral-500 tracking-wider">
-              Procurement Orders ({orders.length})
+              {t('orders.procurementOrders', 'Procurement Orders')} ({orders.length})
             </h3>
             
             <div className="space-y-3">
@@ -136,7 +141,7 @@ export const OrderManagement: React.FC<OrderManagementProps> = ({
                     </span>
                   </div>
                   <p className="text-xs text-neutral-500 mt-1">
-                    Direct Farmgate Origin: <strong>{selectedOrder.fpoName}</strong> ({selectedOrder.farmerName})
+                    {t('orders.directOrigin', 'Direct Farmgate Origin')}: <strong>{selectedOrder.fpoName}</strong> ({selectedOrder.farmerName})
                   </p>
                 </div>
 
@@ -147,7 +152,7 @@ export const OrderManagement: React.FC<OrderManagementProps> = ({
                     title="Share Mandi Bilty slip on WhatsApp"
                   >
                     <Send className="w-3.5 h-3.5" />
-                    <span>WhatsApp मंडी पर्ची</span>
+                    <span>{t('orders.biltySlip', 'WhatsApp मंडी पर्ची')}</span>
                   </button>
 
                   <button
@@ -158,16 +163,41 @@ export const OrderManagement: React.FC<OrderManagementProps> = ({
                     <span>{t('orders.viewInvoice', 'View Invoice / E-Way Bill')}</span>
                   </button>
 
-                  <button
-                    id="btn-advance-simulation-step"
-                    onClick={() => onAdvanceOrderStep(selectedOrder.id)}
-                    className="px-4 py-2 bg-[#6B8E4E] hover:bg-[#5a7942] text-white text-xs font-bold rounded-xl transition shadow-xs flex items-center gap-1.5 cursor-pointer"
-                  >
-                    <Sparkles className="w-3.5 h-3.5" />
-                    <span>{t('orders.simulateNext', 'Simulate Next Step')}</span>
-                  </button>
+                  {/* Role-based actions */}
+                  {selectedOrder.deliveryStatus === 'In Transit' && (userRole === 'buyer' || userRole === 'guest') ? (
+                    <button
+                      id="btn-buyer-confirm-delivery"
+                      onClick={() => onConfirmDelivery ? onConfirmDelivery(selectedOrder.id) : onAdvanceOrderStep(selectedOrder.id)}
+                      className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl transition shadow-xs flex items-center gap-1.5 cursor-pointer animate-pulse"
+                    >
+                      <CheckCircle2 className="w-4 h-4" />
+                      <span>Confirm Delivery & Release Escrow</span>
+                    </button>
+                  ) : userRole !== 'buyer' ? (
+                    <button
+                      id="btn-advance-simulation-step"
+                      onClick={() => onAdvanceOrderStep(selectedOrder.id)}
+                      className="px-4 py-2 bg-[#6B8E4E] hover:bg-[#5a7942] text-white text-xs font-bold rounded-xl transition shadow-xs flex items-center gap-1.5 cursor-pointer"
+                    >
+                      <Sparkles className="w-3.5 h-3.5" />
+                      <span>{t('orders.simulateNext', 'Simulate Next Step')}</span>
+                    </button>
+                  ) : selectedOrder.deliveryStatus === 'Escrow Released' ? (
+                    <span className="px-3.5 py-2 bg-emerald-50 text-emerald-700 text-xs font-bold rounded-xl border border-emerald-200 flex items-center gap-1.5">
+                      <ShieldCheck className="w-4 h-4 text-emerald-600" />
+                      <span>Escrow Settled T+0 to Farmer</span>
+                    </span>
+                  ) : (
+                    <span className="px-3.5 py-2 bg-[#E8EFE8] text-[#3C5148] text-xs font-bold rounded-xl border border-[#D5E1D5] flex items-center gap-1.5">
+                      <Truck className="w-3.5 h-3.5" />
+                      <span>{t('orders.trackShipment', 'Track Shipment')}</span>
+                    </span>
+                  )}
                 </div>
               </div>
+
+              {/* Escrow Visual Flow Diagram */}
+              <EscrowFlowDiagram order={selectedOrder} />
 
               {/* Items Purchased in Consignment */}
               <div className="space-y-2">
@@ -197,10 +227,10 @@ export const OrderManagement: React.FC<OrderManagementProps> = ({
               <div className="space-y-4 pt-2">
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-bold text-neutral-500 uppercase tracking-wider">
-                    Shipment & Escrow Verification Milestones
+                    {t('orders.milestones', 'Shipment & Escrow Verification Milestones')}
                   </span>
                   <span className="text-xs font-mono text-emerald-700 font-bold">
-                    Est Delivery: {selectedOrder.estimatedDelivery}
+                    {t('orders.estDelivery', 'Est Delivery')}: {selectedOrder.estimatedDelivery}
                   </span>
                 </div>
 
@@ -243,10 +273,10 @@ export const OrderManagement: React.FC<OrderManagementProps> = ({
                   <div>
                     <div className="font-bold text-[#1B2727] flex items-center gap-1.5">
                       <Truck className="w-4 h-4 text-[#3C5148]" />
-                      Assigned Transporter: {selectedOrder.transporterName}
+                      {t('orders.assignedTransporter', 'Assigned Transporter')}: {selectedOrder.transporterName}
                     </div>
                     <p className="text-neutral-600 mt-0.5">
-                      Vehicle: <strong>{selectedOrder.vehicleNumber}</strong> • GPS Speed: 52 km/h
+                      {t('orders.vehicle', 'Vehicle')}: <strong>{selectedOrder.vehicleNumber}</strong> • {t('orders.gpsSpeed', 'GPS Speed')}: 52 km/h
                     </p>
                   </div>
                   <a
@@ -283,27 +313,27 @@ export const OrderManagement: React.FC<OrderManagementProps> = ({
 
             <div className="space-y-3 text-xs text-neutral-700 bg-neutral-50 p-4 rounded-2xl border border-neutral-200 font-mono">
               <div className="flex justify-between">
-                <span>Invoice No:</span>
+                <span>{t('orders.invoiceNo', 'Invoice No')}:</span>
                 <span className="font-bold">INV-KS-2026-{invoiceModalOrder.orderNumber}</span>
               </div>
               <div className="flex justify-between">
-                <span>Date:</span>
+                <span>{t('orders.date', 'Date')}:</span>
                 <span>{new Date(invoiceModalOrder.createdAt).toLocaleDateString()}</span>
               </div>
               <div className="flex justify-between">
-                <span>Consignor (Farmer):</span>
+                <span>{t('orders.consignor', 'Consignor (Farmer)')}:</span>
                 <span>{invoiceModalOrder.farmerName} ({invoiceModalOrder.fpoName})</span>
               </div>
               <div className="flex justify-between">
-                <span>Consignee (Buyer):</span>
+                <span>{t('orders.consignee', 'Consignee (Buyer)')}:</span>
                 <span>{invoiceModalOrder.buyerName}</span>
               </div>
               <div className="flex justify-between">
-                <span>Mandi Cess (APMC):</span>
-                <span className="text-emerald-700 font-bold">0.0% (Farmgate Direct Exemption)</span>
+                <span>{t('orders.mandiCess', 'Mandi Cess (APMC)')}:</span>
+                <span className="text-emerald-700 font-bold">{t('orders.farmgateExempt', '0.0% (Farmgate Direct Exemption)')}</span>
               </div>
               <div className="flex justify-between pt-2 border-t border-neutral-200 font-bold text-sm text-[#1B2727]">
-                <span>Total Escrow Amount:</span>
+                <span>{t('orders.totalEscrow', 'Total Escrow Amount')}:</span>
                 <span>₹{invoiceModalOrder.totalAmount.toLocaleString('en-IN')}</span>
               </div>
             </div>
