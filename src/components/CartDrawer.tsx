@@ -9,10 +9,12 @@ import {
   Coins, 
   MapPin, 
   Building2, 
-  Lock 
+  Lock,
+  Send
 } from 'lucide-react';
 import { CartItem, Order } from '../types';
 import { useLanguage } from '../context/LanguageContext';
+import { WhatsAppReceiptModal } from './WhatsAppReceiptModal';
 
 interface CartDrawerProps {
   isOpen: boolean;
@@ -37,6 +39,8 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
   const [deliveryAddress, setDeliveryAddress] = useState('Plot 44, Food Processing Park, Sector 58, Mohali, Punjab - 160059');
   const [paymentMode, setPaymentMode] = useState<'escrow' | 'upi' | 'netbanking'>('escrow');
   const [isSuccess, setIsSuccess] = useState(false);
+  const [lastCreatedOrder, setLastCreatedOrder] = useState<Order | null>(null);
+  const [isBiltyModalOpen, setIsBiltyModalOpen] = useState(false);
   const { t } = useLanguage();
 
   if (!isOpen) return null;
@@ -65,41 +69,37 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
 
   const handleProcessOrder = (e: React.FormEvent) => {
     e.preventDefault();
+
+    const firstItem = items[0];
+    const newOrder: Order = {
+      id: `ord-${Date.now()}`,
+      orderNumber: `KS-2026-${Math.floor(1000 + Math.random() * 9000)}`,
+      createdAt: new Date().toISOString(),
+      buyerName: buyerName || 'Bulk Procurement Partner',
+      buyerType: 'FMCG Wholesaler',
+      farmerName: firstItem ? firstItem.crop.farmerName : 'Assigned Collective',
+      fpoName: firstItem ? firstItem.crop.fpoName : 'Malwa Kisan Producer Org',
+      items: [...items],
+      subtotal,
+      logisticsFee,
+      platformEscrowFee,
+      totalAmount: grandTotal,
+      escrowStatus: 'Held in Escrow',
+      deliveryStatus: 'Order Placed',
+      deliveryAddress,
+      estimatedDelivery: 'Within 48-72 Hours',
+      trackingSteps: [
+        { step: '1', label: 'Order Placed & Escrow Funded', date: 'Just now', completed: true, current: true, description: `₹${grandTotal.toLocaleString('en-IN')} locked securely in Escrow Guarantee` },
+        { step: '2', label: 'Farmgate Quality Assayed', date: 'Pending', completed: false, current: false, description: 'Moisture and digital barcode tagging' },
+        { step: '3', label: 'Dispatched from Farmgate', date: 'Pending', completed: false, current: false, description: 'Direct Reefer / Truck pickup' },
+        { step: '4', label: 'In Transit', date: 'Pending', completed: false, current: false, description: 'Real-time GPS telemetry' },
+        { step: '5', label: 'Delivered & Escrow Released', date: 'Pending', completed: false, current: false, description: 'Direct T+0 settlement to farmer account' },
+      ]
+    };
+
+    setLastCreatedOrder(newOrder);
+    onCheckoutComplete(newOrder);
     setIsSuccess(true);
-
-    setTimeout(() => {
-      const firstItem = items[0];
-      const newOrder: Order = {
-        id: `ord-${Date.now()}`,
-        orderNumber: `KS-2026-${Math.floor(1000 + Math.random() * 9000)}`,
-        createdAt: new Date().toISOString(),
-        buyerName: buyerName || 'Bulk Procurement Partner',
-        buyerType: 'FMCG Wholesaler',
-        farmerName: firstItem ? firstItem.crop.farmerName : 'Assigned Collective',
-        fpoName: firstItem ? firstItem.crop.fpoName : 'Malwa Kisan Producer Org',
-        items: [...items],
-        subtotal,
-        logisticsFee,
-        platformEscrowFee,
-        totalAmount: grandTotal,
-        escrowStatus: 'Held in Escrow',
-        deliveryStatus: 'Order Placed',
-        deliveryAddress,
-        estimatedDelivery: 'Within 48-72 Hours',
-        trackingSteps: [
-          { step: '1', label: 'Order Placed & Escrow Funded', date: 'Just now', completed: true, current: true, description: `₹${grandTotal.toLocaleString('en-IN')} locked securely in Escrow Guarantee` },
-          { step: '2', label: 'Farmgate Quality Assayed', date: 'Pending', completed: false, current: false, description: 'Moisture and digital barcode tagging' },
-          { step: '3', label: 'Dispatched from Farmgate', date: 'Pending', completed: false, current: false, description: 'Direct Reefer / Truck pickup' },
-          { step: '4', label: 'In Transit', date: 'Pending', completed: false, current: false, description: 'Real-time GPS telemetry' },
-          { step: '5', label: 'Delivered & Escrow Released', date: 'Pending', completed: false, current: false, description: 'Direct T+0 settlement to farmer account' },
-        ]
-      };
-
-      onCheckoutComplete(newOrder);
-      setIsSuccess(false);
-      setIsCheckingOut(false);
-      onClose();
-    }, 1500);
   };
 
   return (
@@ -142,6 +142,28 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
             <p className="text-sm text-neutral-600 max-w-xs">
               ₹{grandTotal.toLocaleString('en-IN')} {t('cart.escrowSuccessDesc', 'has been securely deposited into Khet Link Escrow. Transporter and FPO notified!')}
             </p>
+
+            <div className="pt-3 flex flex-col gap-2.5 w-full max-w-xs">
+              <button
+                type="button"
+                onClick={() => setIsBiltyModalOpen(true)}
+                className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-600 via-[#25D366] to-emerald-600 hover:from-emerald-700 hover:to-emerald-700 text-white font-extrabold text-xs shadow-lg shadow-emerald-500/25 flex items-center justify-center gap-2 cursor-pointer active:scale-98 transition-transform"
+              >
+                <Send className="w-4 h-4" />
+                <span>📱 WhatsApp पर मंडी रसीद भेजें</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setIsSuccess(false);
+                  setIsCheckingOut(false);
+                  onClose();
+                }}
+                className="w-full py-2.5 px-4 rounded-xl border border-neutral-300 text-neutral-700 font-bold text-xs hover:bg-neutral-50 transition cursor-pointer"
+              >
+                {t('common.done', 'Done (बंद करें)')}
+              </button>
+            </div>
           </div>
         ) : isCheckingOut ? (
           /* Checkout View */
@@ -391,6 +413,13 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
         )}
 
       </div>
+
+      {/* WhatsApp Mandi Bilty Receipt Modal */}
+      <WhatsAppReceiptModal
+        order={lastCreatedOrder}
+        isOpen={isBiltyModalOpen}
+        onClose={() => setIsBiltyModalOpen(false)}
+      />
     </div>
   );
 };

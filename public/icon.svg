@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#061F16"/>
+      <stop offset="50%" stop-color="#0B2E21"/>
+      <stop offset="100%" stop-color="#144231"/>
+    </linearGradient>
+    <linearGradient id="leafGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#2D6A4F"/>
+      <stop offset="50%" stop-color="#52B788"/>
+      <stop offset="100%" stop-color="#D8F3DC"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F4A261"/>
+      <stop offset="100%" stop-color="#E9C46A"/>
+    </linearGradient>
+  </defs>
+  <!-- Background rounded rect -->
+  <rect width="512" height="512" rx="112" fill="url(#bgGrad)"/>
+  <rect x="16" y="16" width="480" height="480" rx="96" fill="none" stroke="#52B788" stroke-opacity="0.35" stroke-width="8"/>
+  
+  <!-- Sprout Stem & Leaves -->
+  <g transform="translate(96, 76) scale(0.625)">
+    <!-- Soil mound base -->
+    <path d="M 80 440 C 140 410, 372 410, 432 440 C 352 470, 160 470, 80 440 Z" fill="url(#goldGrad)"/>
+    
+    <!-- Central stalk -->
+    <path d="M 256 420 C 256 310, 256 220, 256 120" fill="none" stroke="url(#leafGrad)" stroke-width="24" stroke-linecap="round"/>
+    
+    <!-- Left Leaf -->
+    <path d="M 256 260 C 180 260, 110 200, 110 120 C 180 120, 250 190, 256 260 Z" fill="url(#leafGrad)"/>
+    
+    <!-- Right Leaf -->
+    <path d="M 256 210 C 332 210, 402 150, 402 70 C 332 70, 262 140, 256 210 Z" fill="url(#leafGrad)"/>
+    
+    <!-- Sun / Gold Wheat Ear -->
+    <circle cx="256" cy="70" r="28" fill="url(#goldGrad)"/>
+    <path d="M 256 30 L 256 10 M 290 40 L 305 25 M 222 40 L 207 25" stroke="url(#goldGrad)" stroke-width="8" stroke-linecap="round"/>
+  </g>
+  
+  <!-- Text KhetLink -->
+  <text x="256" y="445" font-family="'Outfit', sans-serif" font-size="46" font-weight="900" fill="#FFFFFF" text-anchor="middle" letter-spacing="2">KHET<tspan fill="#52B788">LINK</tspan></text>
+</svg>

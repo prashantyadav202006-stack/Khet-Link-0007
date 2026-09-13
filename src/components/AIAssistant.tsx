@@ -21,6 +21,8 @@ import {
   Mic,
   MicOff,
   Volume2,
+  VolumeX,
+  Square,
   Move,
   GripVertical,
   RotateCcw
@@ -74,6 +76,7 @@ export const AIAssistant: React.FC<AIAssistantProps> = ({
   };
 
   const handleClose = () => {
+    stopSpeaking();
     setIsOpen(false);
   };
 
@@ -82,6 +85,86 @@ export const AIAssistant: React.FC<AIAssistantProps> = ({
   const [isTyping, setIsTyping] = useState(false);
   const [isListening, setIsListening] = useState(false);
   const [speechFeedback, setSpeechFeedback] = useState<string | null>(null);
+
+  // Speech Synthesis (Text-to-Speech) state
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const [speakingMessageId, setSpeakingMessageId] = useState<string | null>(null);
+  const [autoSpeakEnabled, setAutoSpeakEnabled] = useState(true);
+
+  // Stop any active speech synthesis
+  const stopSpeaking = () => {
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+    }
+    setIsSpeaking(false);
+    setSpeakingMessageId(null);
+  };
+
+  // Speak message text with regional Hindi/English voice awareness
+  const speakMessage = (text: string, messageId?: string) => {
+    if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
+
+    if (isSpeaking && speakingMessageId === messageId) {
+      stopSpeaking();
+      return;
+    }
+
+    window.speechSynthesis.cancel();
+
+    // Clean formatting and emojis for natural human speech
+    const cleanText = text
+      .replace(/[*_#`~>[\]()]/g, '')
+      .replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/gu, '')
+      .replace(/[•✦–—]/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+
+    if (!cleanText) return;
+
+    const utterance = new SpeechSynthesisUtterance(cleanText);
+
+    const hasDevanagari = /[\u0900-\u097F]/.test(cleanText);
+    const targetLangCode = hasDevanagari || language === 'hi' ? 'hi-IN' : language === 'pa' ? 'pa-IN' : 'en-IN';
+    utterance.lang = targetLangCode;
+    utterance.rate = 0.95;
+    utterance.pitch = 1.0;
+
+    const voices = window.speechSynthesis.getVoices();
+    if (voices && voices.length > 0) {
+      const matchedVoice = voices.find(v => v.lang.toLowerCase().includes(targetLangCode.toLowerCase())) ||
+                           voices.find(v => v.lang.toLowerCase().startsWith(targetLangCode.split('-')[0])) ||
+                           voices.find(v => v.lang.includes('IN'));
+      if (matchedVoice) {
+        utterance.voice = matchedVoice;
+      }
+    }
+
+    utterance.onstart = () => {
+      setIsSpeaking(true);
+      setSpeakingMessageId(messageId || 'active');
+    };
+
+    utterance.onend = () => {
+      setIsSpeaking(false);
+      setSpeakingMessageId(null);
+    };
+
+    utterance.onerror = () => {
+      setIsSpeaking(false);
+      setSpeakingMessageId(null);
+    };
+
+    window.speechSynthesis.speak(utterance);
+  };
+
+  // Clean up speech when component unmounts
+  useEffect(() => {
+    return () => {
+      if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
+    };
+  }, []);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
@@ -736,6 +819,10 @@ export const AIAssistant: React.FC<AIAssistantProps> = ({
 
       setMessages((prev) => [...prev, aiMsg]);
       setIsTyping(false);
+
+      if (autoSpeakEnabled) {
+        speakMessage(aiMsg.text, aiMsg.id);
+      }
     }, 600);
   };
 
@@ -870,6 +957,29 @@ export const AIAssistant: React.FC<AIAssistantProps> = ({
 
               {/* Header Action Buttons (Stop propagation so dragging isn't triggered) */}
               <div className="flex items-center gap-1" onPointerDown={(e) => e.stopPropagation()}>
+                {/* Auto-Speech Toggle Button */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (isSpeaking) stopSpeaking();
+                    setAutoSpeakEnabled(!autoSpeakEnabled);
+                  }}
+                  className={`px-2 py-1 rounded-lg transition cursor-pointer flex items-center gap-1 text-[10px] font-bold ${
+                    autoSpeakEnabled 
+                      ? 'text-amber-300 bg-amber-400/20 hover:bg-amber-400/30 border border-amber-400/40 shadow-xs' 
+                      : 'text-emerald-200/50 hover:text-emerald-200 hover:bg-white/10'
+                  }`}
+                  title={autoSpeakEnabled ? "Auto-Speech Enabled: Bot speaks answer aloud (बोलकर उत्तर दें)" : "Auto-Speech Muted (म्यूट)"}
+                  aria-label="Toggle speech audio"
+                >
+                  {autoSpeakEnabled ? (
+                    <Volume2 className={`w-3.5 h-3.5 text-amber-300 ${isSpeaking ? 'animate-pulse' : ''}`} />
+                  ) : (
+                    <VolumeX className="w-3.5 h-3.5 text-neutral-400" />
+                  )}
+                  <span className="hidden sm:inline">{autoSpeakEnabled ? 'आवाज़ ON' : 'म्यूट'}</span>
+                </button>
+
                 <button
                   type="button"
                   onClick={() => setChatResetKey((prev) => prev + 1)}
@@ -896,7 +1006,19 @@ export const AIAssistant: React.FC<AIAssistantProps> = ({
                 <Sparkles className="w-3 h-3 text-amber-300" />
                 <span>e-NAM & Agmarknet Grounded</span>
               </span>
-              <span className="text-neutral-400">English • हिन्दी • Hinglish</span>
+              {isSpeaking ? (
+                <button
+                  type="button"
+                  onClick={stopSpeaking}
+                  className="flex items-center gap-1 px-2 py-0.5 rounded bg-amber-400/20 text-amber-300 font-bold border border-amber-400/40 animate-pulse cursor-pointer hover:bg-amber-400/30"
+                  title="Stop audio playback"
+                >
+                  <Square className="w-2.5 h-2.5 fill-current" />
+                  <span>बोल रहे हैं... रोकें (Stop)</span>
+                </button>
+              ) : (
+                <span className="text-neutral-400">English • हिन्दी • Hinglish</span>
+              )}
             </div>
 
             {/* Chat Body */}
@@ -914,6 +1036,35 @@ export const AIAssistant: React.FC<AIAssistantProps> = ({
                     }`}
                   >
                     <p className="whitespace-pre-line text-xs">{m.text}</p>
+
+                    {/* AI Message Audio Playback & Timestamp Bar */}
+                    {m.sender === 'ai' && (
+                      <div className="flex items-center justify-between mt-2 pt-1.5 border-t border-neutral-100 text-[10px]">
+                        <button
+                          type="button"
+                          onClick={() => speakMessage(m.text, m.id)}
+                          className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md transition cursor-pointer font-bold ${
+                            speakingMessageId === m.id
+                              ? 'bg-amber-400 text-neutral-900 shadow-xs ring-1 ring-amber-500 animate-pulse'
+                              : 'text-[#1B523D] bg-emerald-50 hover:bg-emerald-100 border border-emerald-200/60'
+                          }`}
+                          title={speakingMessageId === m.id ? "Stop voice (आवाज़ रोकें)" : "Listen to answer (उत्तर बोलकर सुनें)"}
+                        >
+                          {speakingMessageId === m.id ? (
+                            <>
+                              <Square className="w-3 h-3 fill-current" />
+                              <span>आवाज़ रोकें (Stop)</span>
+                            </>
+                          ) : (
+                            <>
+                              <Volume2 className="w-3 h-3 text-[#1B523D]" />
+                              <span>सुनें (Listen)</span>
+                            </>
+                          )}
+                        </button>
+                        <span className="text-neutral-400 text-[9px] font-mono">{m.time}</span>
+                      </div>
+                    )}
 
                     {/* Optional Interactive CTA button */}
                     {m.action && (

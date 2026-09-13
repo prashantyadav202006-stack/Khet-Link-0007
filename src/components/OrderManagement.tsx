@@ -11,10 +11,12 @@ import {
   Sparkles, 
   PhoneCall, 
   RotateCcw, 
-  Check 
+  Check,
+  Send
 } from 'lucide-react';
 import { Order } from '../types';
 import { useLanguage } from '../context/LanguageContext';
+import { WhatsAppReceiptModal } from './WhatsAppReceiptModal';
 
 interface OrderManagementProps {
   orders: Order[];
@@ -27,6 +29,7 @@ export const OrderManagement: React.FC<OrderManagementProps> = ({
 }) => {
   const [selectedOrderId, setSelectedOrderId] = useState<string>(orders[0]?.id || '');
   const [invoiceModalOrder, setInvoiceModalOrder] = useState<Order | null>(null);
+  const [whatsAppModalOrder, setWhatsAppModalOrder] = useState<Order | null>(null);
   const { t } = useLanguage();
 
   const selectedOrder = orders.find((o) => o.id === selectedOrderId) || orders[0];
@@ -137,7 +140,16 @@ export const OrderManagement: React.FC<OrderManagementProps> = ({
                   </p>
                 </div>
 
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center gap-2">
+                  <button
+                    onClick={() => setWhatsAppModalOrder(selectedOrder)}
+                    className="px-3.5 py-2 bg-gradient-to-r from-emerald-600 via-[#25D366] to-emerald-600 hover:from-emerald-700 hover:to-emerald-700 text-white text-xs font-bold rounded-xl transition shadow-xs flex items-center gap-1.5 cursor-pointer"
+                    title="Share Mandi Bilty slip on WhatsApp"
+                  >
+                    <Send className="w-3.5 h-3.5" />
+                    <span>WhatsApp मंडी पर्ची</span>
+                  </button>
+
                   <button
                     onClick={() => setInvoiceModalOrder(selectedOrder)}
                     className="px-3.5 py-2 bg-neutral-100 hover:bg-neutral-200 text-neutral-700 text-xs font-bold rounded-xl transition flex items-center gap-1.5 cursor-pointer"
@@ -309,6 +321,13 @@ export const OrderManagement: React.FC<OrderManagementProps> = ({
           </div>
         </div>
       )}
+
+      {/* WhatsApp Mandi Bilty Receipt Modal */}
+      <WhatsAppReceiptModal
+        order={whatsAppModalOrder}
+        isOpen={!!whatsAppModalOrder}
+        onClose={() => setWhatsAppModalOrder(null)}
+      />
 
     </div>
   );

@@ -15,10 +15,12 @@ import {
   ShieldCheck,
   CheckCircle2,
   LogOut,
-  Globe
+  Globe,
+  Smartphone
 } from 'lucide-react';
 import { AppView, UserRole, FarmerProfile } from '../types';
 import { useLanguage } from '../context/LanguageContext';
+import { usePWAInstall } from '../hooks/usePWAInstall';
 
 interface NavbarProps {
   currentView: AppView;
@@ -80,6 +82,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   onSelectLanguage
 }) => {
   const { language, setLanguage, currentLangOption, availableLanguages, t, uiScale, setUiScale } = useLanguage();
+  const { isInstalled, promptInstall } = usePWAInstall();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
@@ -302,6 +305,19 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Right Action Icons & Auth */}
           <div className="flex items-center gap-2 sm:gap-3">
             
+            {/* PWA Install Button on Desktop & Tablet */}
+            {!isInstalled && (
+              <button
+                type="button"
+                onClick={promptInstall}
+                className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-neutral-950 font-bold text-xs shadow-xs border border-amber-300 transition cursor-pointer"
+                title="Install Khet Link app on phone (ऐप इनस्टॉल करें)"
+              >
+                <Smartphone className="w-3.5 h-3.5" />
+                <span>ऐप इनस्टॉल</span>
+              </button>
+            )}
+
             {/* Language Selector Dropdown with Click-Outside Ref */}
             <div ref={langDropdownRef} className="relative hidden md:block">
               <button
@@ -504,6 +520,23 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <X className="w-5 h-5" />
               </button>
             </div>
+
+            {/* Mobile PWA Install Button */}
+            {!isInstalled && (
+              <div className="py-2 border-b border-[#1E523D]">
+                <button
+                  type="button"
+                  onClick={() => {
+                    promptInstall();
+                    setMobileMenuOpen(false);
+                  }}
+                  className="w-full py-2.5 px-3 bg-gradient-to-r from-amber-500 to-amber-600 text-neutral-950 font-extrabold text-xs rounded-xl shadow-md flex items-center justify-center gap-2 cursor-pointer active:scale-98 transition-transform"
+                >
+                  <Smartphone className="w-4 h-4" />
+                  <span>📲 खेत लिंक ऐप फोन पर इनस्टॉल करें</span>
+                </button>
+              </div>
+            )}
 
             {/* Mobile Language Selector */}
             <div className="py-2 border-b border-[#1E523D]">

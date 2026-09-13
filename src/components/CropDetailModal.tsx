@@ -14,10 +14,12 @@ import {
   Truck, 
   MessageSquare, 
   Sparkles, 
-  Phone 
+  Phone,
+  Send
 } from 'lucide-react';
 import { CropProduct } from '../types';
 import { useLanguage } from '../context/LanguageContext';
+import { generateCropShareWhatsApp, openWhatsAppShare } from '../utils/whatsappShare';
 
 interface CropDetailModalProps {
   crop: CropProduct | null;
@@ -287,6 +289,16 @@ export const CropDetailModal: React.FC<CropDetailModalProps> = ({
                 >
                   <ShoppingCart className="w-4 h-4" />
                   <span>{t('common.addToCartQuantity', 'Add to Cart')} {quantity} {unit === 'quintal' ? t('cropDetail.quintalUnit', 'Quintal(s)') : t('cropDetail.kg', 'Kg')}</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => openWhatsAppShare(generateCropShareWhatsApp(crop))}
+                  className="py-3.5 px-4 rounded-xl bg-gradient-to-r from-emerald-600 via-[#25D366] to-emerald-600 hover:from-emerald-700 hover:to-emerald-700 text-white font-bold text-xs shadow-md transition flex items-center justify-center gap-2 cursor-pointer active:scale-98"
+                  title="WhatsApp पर फसल शेयर करें (Share Harvest Lot on WhatsApp)"
+                >
+                  <Send className="w-4 h-4" />
+                  <span>WhatsApp शेयर</span>
                 </button>
               </div>
 
